@@ -11,6 +11,9 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { DataGrid } from '@mui/x-data-grid';
+import ArticleIcon from '@mui/icons-material/Article';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import "./styles/estaciones.css";
 
@@ -21,7 +24,25 @@ const columns = [
   { field: 'brand', headerName: 'Marca', width: 130 },
   { field: 'model', headerName: 'Modelo', width: 130 },
   { field: 'user', headerName: 'Solicitante', width: 130 },
-  { field: 'application_date', headerName: 'Fecha de Solicitud', width: 130 }
+  { field: 'application_date', headerName: 'Fecha de Solicitud', width: 130 },
+  {
+    sortable: false,
+    width: 150,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <>
+        <IconButton>
+          <ArticleIcon />
+        </IconButton>
+        <IconButton>
+          <EditIcon />
+        </IconButton>
+        <IconButton>
+          <DeleteIcon />
+        </IconButton>
+      </>
+    ),
+  },
 ];
 
 const rows = [

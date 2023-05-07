@@ -11,9 +11,12 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { DataGrid } from '@mui/x-data-grid';
-import { Link } from 'react-router-dom';
+import ArticleIcon from '@mui/icons-material/Article';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import "./styles/solicitudes.css";
+import { Details } from "@mui/icons-material";
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -22,7 +25,25 @@ const columns = [
   { field: 'brand', headerName: 'Marca', width: 130 },
   { field: 'model', headerName: 'Modelo', width: 130 },
   { field: 'user', headerName: 'Solicitante', width: 130 },
-  { field: 'application_date', headerName: 'Fecha de Solicitud', width: 130 }
+  { field: 'application_date', headerName: 'Fecha de Solicitud', width: 130 },
+  {
+    sortable: false,
+    width: 150,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <>
+        <IconButton>
+          <ArticleIcon />
+        </IconButton>
+        <IconButton>
+          <EditIcon />
+        </IconButton>
+        <IconButton>
+          <DeleteIcon />
+        </IconButton>
+      </>
+    ),
+  },
 ];
 
 const rows = [
@@ -139,7 +160,9 @@ export const Solicitudes = () => {
                     pageSize={5}
                     rowsPerPageOptions={[5]}
                     checkboxSelection
-              />
+                    
+                  >
+                  </DataGrid>
               </div>
             </div>
           </div>

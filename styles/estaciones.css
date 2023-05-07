@@ -1,9 +1,7 @@
 .e-table-container {
-  position: absolute;
   top: 77px;
   left: 23.5px;
   width: 1259px;
-  overflow: hidden;
 }
 .e-estaciones1,
 .e-label-text {
@@ -11,7 +9,9 @@
   font-weight: 500;
 }
 .e-estaciones1 {
+  position: relative;
   line-height: 32px;
+  font-weight: 500;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -66,7 +66,7 @@
 }
 .e-grid {
   top: 27px;
-  left: 113px;
+  left: calc(50% - 652.5px);
   border-radius: 16px;
   background-color: #d7e1f0;
   border: 1px solid #c4ccd0;
@@ -100,7 +100,6 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 10px;
   gap: 10px;
   position: absolute;
   width: 1259px;
