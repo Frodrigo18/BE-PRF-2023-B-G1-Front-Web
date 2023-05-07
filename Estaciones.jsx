@@ -34,15 +34,19 @@ const rows = [
 
 export const Estaciones = () => {
   return (
-    <div className="estaciones">
-      <div className="top-header">
-        <div className="top-container">
-          <div className="todas">respirAR</div>
-          <div className="navegation-right">
-            <div className="navegation-menu">
-              <div className="estaciones2">Estaciones</div>
-              <div className="solicitudes">Solicitudes</div>
-              <div className="account-section">
+    <div className="e-estaciones">
+      <div className="e-top-header">
+        <div className="e-top-container">
+          <div className="e-todas">respirAR</div>
+          <div className="e-navegation-right">
+            <div className="e-navegation-menu">
+              <div className="e-estaciones2">
+                <a href="/estaciones">Estaciones</a>
+              </div>
+              <div className="e-solicitudes">
+                <a href="/solicitudes">Solicitudes</a>
+              </div>
+              <div className="e-account-section">
                 <IconButton >
                     <DarkModeIcon
                       fontSize="medium" />
@@ -60,12 +64,12 @@ export const Estaciones = () => {
           </div>
         </div>
       </div>
-      <div className="search-form-section">
-        <div className="search-container">
-          <div className="search-seaction">
-            <div className="search-form">
-              <div className="buttons-container">
-                <div className="radios-row">
+      <div className="e-search-form-section">
+        <div className="e-search-container">
+          <div className="e-search-seaction">
+            <div className="e-search-form">
+              <div className="e-buttons-container">
+                <div className="e-radios-row">
                   <RadioGroup
                     row
                     aria-labelledby="filtros-estados-radio"
@@ -76,37 +80,37 @@ export const Estaciones = () => {
                     <FormControlLabel value="Inactivas" control={<Radio />} label="Inactivas" />
                   </RadioGroup>
                 </div>
-                <div className="buttons-row1">
-                  <div className="button-group1">
+                <div className="e-buttons-row1">
+                  <div className="e-button-group1">
                     <Button variant="outlined">Limpiar</Button>
                   </div>
-                  <div className="button-group2">
+                  <div className="e-button-group2">
                     <Button variant="contained">Buscar</Button>
                   </div>
                 </div>
               </div>
-              <div className="inputs-row1">
-                <div className="input-group">
+              <div className="e-inputs-row1">
+                <div className="e-input-group">
                   <TextField
                     id="name-input"
                     label="Nombre"
                   />
                 </div>
-                <div className="input-group">
+                <div className="e-input-group">
                   <TextField
                     id="user-input"
                     label="Solicitante"
                   />
                 </div>
               </div>
-              <div className="inputs-row">
-                <div className="input-group">
+              <div className="e-inputs-row">
+                <div className="e-input-group">
                   <TextField
                     id="serialNumber-input"
                     label="Nº de Serie"
                   />
                 </div>
-                <div className="input-group">
+                <div className="e-input-group">
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker 
                       label="Fecha de Solicitud"
@@ -118,18 +122,18 @@ export const Estaciones = () => {
           </div>
         </div>
       </div>
-      <div className="grid-section">
-        <div className="grid-container">
-          <div className="grid">
-            <div className="header-grid">
-              <div className="estaciones1">Estaciones</div>
-              <div className="buttons-row2">
-                <div className="button-group">
+      <div className="e-grid-section">
+        <div className="e-grid-container">
+          <div className="e-grid">
+            <div className="e-header-grid">
+              <div className="e-estaciones1">Estaciones</div>
+              <div className="e-buttons-row2">
+                <div className="e-button-group">
                   <Button variant="contained">+ Solicitar Estación</Button>
                 </div>
               </div>
             </div>
-            <div className="table-container">
+            <div className="e-table-container">
               <div style={{ height: 250, width: '100%' }}>
                 <DataGrid
                   rows={rows}

@@ -11,6 +11,7 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { DataGrid } from '@mui/x-data-grid';
+import { Link } from 'react-router-dom';
 
 import "./styles/solicitudes.css";
 
@@ -34,15 +35,19 @@ const rows = [
 
 export const Solicitudes = () => {
   return (
-    <div className="solicitudes1">
-      <div className="top-header1">
-        <div className="top-container1">
-          <div className="aprobadas">respirAR</div>
-          <div className="navegation-right1">
-            <div className="navegation-menu1">
-              <div className="estaciones2">Estaciones</div>
-              <div className="solicitudes2">Solicitudes</div>
-              <div className="account-section1">
+    <div className="s-solicitudes1">
+      <div className="s-top-header1">
+        <div className="s-top-container1">
+          <div className="s-aprobadas">respirAR</div>
+          <div className="s-navegation-right1">
+            <div className="s-navegation-menu1">
+              <div className="s-estaciones3">
+                <a href="/estaciones">Estaciones</a>
+              </div>
+              <div className="s-solicitudes2">
+                <a href="/solicitudes">Solicitudes</a>
+              </div>
+              <div className="s-account-section1">
                 <IconButton >
                   <DarkModeIcon
                     fontSize="medium" />
@@ -60,12 +65,12 @@ export const Solicitudes = () => {
           </div>
         </div>
       </div>
-      <div className="search-form-section1">
-        <div className="search-container1">
-          <div className="search-seaction1">
-            <div className="search-form1">
-              <div className="buttons-container1">
-                <div className="radios-row1">
+      <div className="s-search-form-section1">
+        <div className="s-search-container1">
+          <div className="s-search-seaction1">
+            <div className="s-search-form1">
+              <div className="s-buttons-container1">
+                <div className="s-radios-row1">
                   <RadioGroup
                       row
                       aria-labelledby="filtros-estados-radio"
@@ -77,23 +82,23 @@ export const Solicitudes = () => {
                     <FormControlLabel value="Pendientes" control={<Radio />} label="Pendientes" />
                   </RadioGroup>
                 </div>
-                <div className="buttons-row1">
-                  <div className="button-group4">
+                <div className="s-buttons-row1">
+                  <div className="s-button-group4">
                     <Button variant="outlined">Limpiar</Button>
                   </div>
-                  <div className="button-group3">
+                  <div className="s-button-group3">
                     <Button variant="contained">Buscar</Button>
                   </div>
                 </div>
               </div>
-              <div className="inputs-row3">
-                <div className="input-group4">
+              <div className="s-inputs-row3">
+                <div className="s-input-group4">
                 <TextField
                     id="name-input"
                     label="Nombre"
                   />
                 </div>
-                <div className="input-group4">
+                <div className="s-input-group4">
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker 
                       label="Fecha de Solicitud"
@@ -101,15 +106,15 @@ export const Solicitudes = () => {
                   </LocalizationProvider>
                 </div>
               </div>
-              <div className="inputs-row2">
-                <div className="input-group4">
+              <div className="s-inputs-row2">
+                <div className="s-input-group4">
                   <TextField
                     id="email-input"
                     label="Correo Electrónico"
                     type="email"
                   />
                 </div>
-                <div className="input-group4">
+                <div className="s-input-group4">
                   <TextField
                     id="station-input"
                     label="Estación"
@@ -120,13 +125,13 @@ export const Solicitudes = () => {
           </div>
         </div>
       </div>
-      <div className="grid-section1">
-        <div className="grid-container1">
-          <div className="grid1">
-            <div className="header-grid1">
-              <div className="solicitudes3">Solicitudes</div>
+      <div className="s-grid-section1">
+        <div className="s-grid-container1">
+          <div className="s-grid1">
+            <div className="s-header-grid1">
+              <div className="s-solicitudes3">Solicitudes</div>
             </div>
-            <div className="table-container1">
+            <div className="s-table-container1">
               <div style={{ height: 250, width: '100%' }}>
                   <DataGrid
                     rows={rows}

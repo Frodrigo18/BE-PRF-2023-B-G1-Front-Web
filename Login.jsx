@@ -3,8 +3,16 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import IconButton from '@mui/material/IconButton';
+import { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const Login = () => {
+  const navigate = useNavigate();
+
+  const irAEstaciones = useCallback(() => {
+    navigate('/estaciones');
+  }, [navigate]);
+
   return (
     <div className="login">
       <div className="login-logo-section">
@@ -25,7 +33,7 @@ export const Login = () => {
               type="password"
             />
             <div className="login-button-group">
-              <Button variant="contained">Ingresar</Button>
+              <Button variant="contained" onClick={irAEstaciones}>Ingresar</Button>
             </div>
           </div>
         </div>
