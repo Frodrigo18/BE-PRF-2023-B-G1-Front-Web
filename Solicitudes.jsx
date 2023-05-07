@@ -10,9 +10,27 @@ import IconButton from '@mui/material/IconButton';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
+import { DataGrid } from '@mui/x-data-grid';
 
 import "./styles/solicitudes.css";
+
+const columns = [
+  { field: 'id', headerName: 'ID', width: 70 },
+  { field: 'name', headerName: 'Nombre', width: 130 },
+  { field: 'serial_number', headerName: 'Nº de Serie', width: 130 },
+  { field: 'brand', headerName: 'Marca', width: 130 },
+  { field: 'model', headerName: 'Modelo', width: 130 },
+  { field: 'user', headerName: 'Solicitante', width: 130 },
+  { field: 'application_date', headerName: 'Fecha de Solicitud', width: 130 }
+];
+
+const rows = [
+  { id: 1, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Juan Perez', application_date: '21/04/2023' },
+  { id: 2, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Lucas Fernandez', application_date: '15/04/2023' },
+  { id: 3, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Martin Gómez', application_date: '10/02/2023' },
+  { id: 4, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Nicolas Hernández', application_date: '11/02/2023' },
+  { id: 5, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Francisco Álvarez', application_date: '05/01/2023' }
+];
 
 export const Solicitudes = () => {
   return (
@@ -103,7 +121,24 @@ export const Solicitudes = () => {
         </div>
       </div>
       <div className="grid-section1">
-        <div className="grid-container1" />
+        <div className="grid-container1">
+          <div className="grid1">
+            <div className="header-grid1">
+              <div className="solicitudes3">Solicitudes</div>
+            </div>
+            <div className="table-container1">
+              <div style={{ height: 250, width: '100%' }}>
+                  <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    pageSize={5}
+                    rowsPerPageOptions={[5]}
+                    checkboxSelection
+              />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
