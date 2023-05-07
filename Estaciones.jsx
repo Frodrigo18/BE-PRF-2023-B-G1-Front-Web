@@ -14,8 +14,11 @@ import { DataGrid } from '@mui/x-data-grid';
 import ArticleIcon from '@mui/icons-material/Article';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useState , useRef } from 'react';
+import { EstacionFormulario } from "./components/estacion-formulario";
 
 import "./styles/estaciones.css";
+
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -54,6 +57,53 @@ const rows = [
 ];
 
 export const Estaciones = () => {
+  const [open, setOpen] = useState(false);
+  const [fields, setFields] = useState({
+    nombre: '',
+    solicitante: '',
+    serie: '',
+    fechaSolicitud: ''
+  });
+
+  const clearFields = (refs) => {
+    refs.forEach((ref) => {
+      if (ref.current) {
+        ref.current.value = '';
+      } else if (ref.clear) {
+        ref.current.clear();
+      }
+    });
+  };
+
+  const textNombre = useRef();
+  const textSolicitante = useRef();
+  const textSerie = useRef();
+  const dateSolicitud = useRef();
+
+  const handleClearFields = () => {
+    clearFields([textNombre, textSolicitante, textSerie, dateSolicitud]);
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const solicitarEstacion = (event) => {
+    event.preventDefault();
+    // Aquí puedes agregar la lógica para enviar el formulario
+    // y mostrar el mensaje de confirmación
+    setOpen(false);
+  };
+
+  const busquedaEstacion = (event) => {
+    event.preventDefault();
+    // código para enviar los datos del formulario
+  };
+
   return (
     <div className="e-estaciones">
       <div className="e-top-header">
@@ -86,62 +136,69 @@ export const Estaciones = () => {
         </div>
       </div>
       <div className="e-search-form-section">
-        <div className="e-search-container">
-          <div className="e-search-seaction">
-            <div className="e-search-form">
-              <div className="e-buttons-container">
-                <div className="e-radios-row">
-                  <RadioGroup
-                    row
-                    aria-labelledby="filtros-estados-radio"
-                    name="estados-radios-group"
-                  >
-                    <FormControlLabel value="Todas" control={<Radio />} label="Todas" />
-                    <FormControlLabel value="Activas" control={<Radio />} label="Activas" />
-                    <FormControlLabel value="Inactivas" control={<Radio />} label="Inactivas" />
-                  </RadioGroup>
-                </div>
-                <div className="e-buttons-row1">
-                  <div className="e-button-group1">
-                    <Button variant="outlined">Limpiar</Button>
+          <div className="e-search-container">
+            <div className="e-search-seaction">
+              <div className="e-search-form">
+                <form onSubmit={busquedaEstacion}>
+                  <div className="e-inputs-row1">
+                    <div className="e-input-group">
+                      <TextField
+                        inputRef={textNombre}
+                        id="nombre"
+                        label="Nombre"
+                      />
+                    </div>
+                    <div className="e-input-group">
+                      <TextField
+                        inputRef={textSolicitante}
+                        id="solicitante"
+                        label="Solicitante"
+                      />
+                    </div>
                   </div>
-                  <div className="e-button-group2">
-                    <Button variant="contained">Buscar</Button>
+                  <div className="e-inputs-row">
+                    <div className="e-input-group">
+                      <TextField
+                        inputRef={textSerie}
+                        id="serie"
+                        label="Nº de Serie"
+                      />
+                    </div>
+                    <div className="e-input-group">
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker 
+                          inputRef={dateSolicitud}
+                          id="fechaSolicitud"
+                          label="Fecha de Solicitud"
+                        />
+                      </LocalizationProvider>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div className="e-inputs-row1">
-                <div className="e-input-group">
-                  <TextField
-                    id="name-input"
-                    label="Nombre"
-                  />
-                </div>
-                <div className="e-input-group">
-                  <TextField
-                    id="user-input"
-                    label="Solicitante"
-                  />
-                </div>
-              </div>
-              <div className="e-inputs-row">
-                <div className="e-input-group">
-                  <TextField
-                    id="serialNumber-input"
-                    label="Nº de Serie"
-                  />
-                </div>
-                <div className="e-input-group">
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker 
-                      label="Fecha de Solicitud"
-                    />
-                  </LocalizationProvider>
-                </div>
+                  <div className="e-buttons-container">
+                    <div className="e-radios-row">
+                      <RadioGroup
+                        row
+                        aria-labelledby="filtros-estados-radio"
+                        name="estados-radios-group"
+                      >
+                        <FormControlLabel value="Todas" control={<Radio />} label="Todas" />
+                        <FormControlLabel value="Activas" control={<Radio />} label="Activas" />
+                        <FormControlLabel value="Inactivas" control={<Radio />} label="Inactivas" />
+                      </RadioGroup>
+                    </div>
+                    <div className="e-buttons-row1">
+                      <div className="e-button-group1">
+                        <Button variant="outlined" onClick={handleClearFields}>Limpiar</Button>
+                      </div>
+                      <div className="e-button-group2">
+                        <Button variant="contained" type="submit">Buscar</Button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
-        </div>
       </div>
       <div className="e-grid-section">
         <div className="e-grid-container">
@@ -150,7 +207,8 @@ export const Estaciones = () => {
               <div className="e-estaciones1">Estaciones</div>
               <div className="e-buttons-row2">
                 <div className="e-button-group">
-                  <Button variant="contained">+ Solicitar Estación</Button>
+                  <Button variant="contained" onClick={handleClickOpen}>+ Solicitar Estación</Button>
+                  <EstacionFormulario open={open} handleClose={handleClose} handleSubmit={solicitarEstacion} />
                 </div>
               </div>
             </div>

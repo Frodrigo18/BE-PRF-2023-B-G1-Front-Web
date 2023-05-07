@@ -14,9 +14,10 @@ import { DataGrid } from '@mui/x-data-grid';
 import ArticleIcon from '@mui/icons-material/Article';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useState , useRef } from 'react';
 
 import "./styles/solicitudes.css";
-import { Details } from "@mui/icons-material";
+
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -55,6 +56,37 @@ const rows = [
 ];
 
 export const Solicitudes = () => {
+  const [fields, setFields] = useState({
+    nombre: '',
+    fechaSolicitud: '',
+    email: '',
+    estacion: ''
+  });
+
+  const clearFields = (refs) => {
+    refs.forEach((ref) => {
+      if (ref.current) {
+        ref.current.value = '';
+      } else if (ref.clear) {
+        ref.current.clear();
+      }
+    });
+  };
+
+  const textNombre = useRef();
+  const textEmail = useRef();
+  const textEstacion = useRef();
+  const dateSolicitud = useRef();
+
+  const handleClearFields = () => {
+    clearFields([textNombre, textEmail, textEstacion, dateSolicitud]);
+  };
+
+  const busquedaSolicitud = (event) => {
+    event.preventDefault();
+    // código para enviar los datos del formulario
+  };
+
   return (
     <div className="s-solicitudes1">
       <div className="s-top-header1">
@@ -90,58 +122,65 @@ export const Solicitudes = () => {
         <div className="s-search-container1">
           <div className="s-search-seaction1">
             <div className="s-search-form1">
-              <div className="s-buttons-container1">
-                <div className="s-radios-row1">
-                  <RadioGroup
-                      row
-                      aria-labelledby="filtros-estados-radio"
-                      name="estados-radios-group"
-                    >
-                    <FormControlLabel value="Todas" control={<Radio />} label="Todas" />
-                    <FormControlLabel value="Aprobadas" control={<Radio />} label="Aprobadas" />
-                    <FormControlLabel value="Rechazadas" control={<Radio />} label="Rechazadas" />
-                    <FormControlLabel value="Pendientes" control={<Radio />} label="Pendientes" />
-                  </RadioGroup>
-                </div>
-                <div className="s-buttons-row1">
-                  <div className="s-button-group4">
-                    <Button variant="outlined">Limpiar</Button>
-                  </div>
-                  <div className="s-button-group3">
-                    <Button variant="contained">Buscar</Button>
-                  </div>
-                </div>
-              </div>
-              <div className="s-inputs-row3">
-                <div className="s-input-group4">
-                <TextField
-                    id="name-input"
-                    label="Nombre"
-                  />
-                </div>
-                <div className="s-input-group4">
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker 
-                      label="Fecha de Solicitud"
+              <form onSubmit={busquedaSolicitud}>
+                <div className="s-inputs-row3">
+                  <div className="s-input-group4">
+                  <TextField
+                      inputRef={textNombre}
+                      id="name-input"
+                      label="Nombre"
                     />
-                  </LocalizationProvider>
+                  </div>
+                  <div className="s-input-group4">
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DatePicker 
+                        inputRef={dateSolicitud}
+                        id="fechaSolicitud"
+                        label="Fecha de Solicitud"
+                      />
+                    </LocalizationProvider>
+                  </div>
                 </div>
-              </div>
-              <div className="s-inputs-row2">
-                <div className="s-input-group4">
-                  <TextField
-                    id="email-input"
-                    label="Correo Electrónico"
-                    type="email"
-                  />
+                <div className="s-inputs-row2">
+                  <div className="s-input-group4">
+                    <TextField
+                      inputRef={textEmail}
+                      id="email-input"
+                      label="Correo Electrónico"
+                      type="email"
+                    />
+                  </div>
+                  <div className="s-input-group4">
+                    <TextField
+                      inputRef={textEstacion}
+                      id="station-input"
+                      label="Estación"
+                    />
+                  </div>
                 </div>
-                <div className="s-input-group4">
-                  <TextField
-                    id="station-input"
-                    label="Estación"
-                  />
+                <div className="s-buttons-container1">
+                  <div className="s-radios-row1">
+                    <RadioGroup
+                        row
+                        aria-labelledby="filtros-estados-radio"
+                        name="estados-radios-group"
+                      >
+                      <FormControlLabel value="Todas" control={<Radio />} label="Todas" />
+                      <FormControlLabel value="Aprobadas" control={<Radio />} label="Aprobadas" />
+                      <FormControlLabel value="Rechazadas" control={<Radio />} label="Rechazadas" />
+                      <FormControlLabel value="Pendientes" control={<Radio />} label="Pendientes" />
+                    </RadioGroup>
+                  </div>
+                  <div className="s-buttons-row1">
+                    <div className="s-button-group4">
+                      <Button variant="outlined" onClick={handleClearFields}>Limpiar</Button>
+                    </div>
+                    <div className="s-button-group3">
+                      <Button variant="contained" type="submit">Buscar</Button>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>
