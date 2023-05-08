@@ -6,6 +6,8 @@ import ArticleIcon from '@mui/icons-material/Article';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Paper from '@mui/material/Paper';
+import { EstacionFormulario } from './estacion-formulario';
+import { useState } from 'react';
 
 const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
@@ -44,6 +46,22 @@ const rows = [
 ];
 
 export const EstacionesTabla = () => {
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const solicitarEstacion = (event) => {
+        event.preventDefault();
+        // Aquí puedes agregar la lógica para enviar el formulario
+        // y mostrar el mensaje de confirmación
+        setOpen(false);
+    };
   return (
     <Grid container spacing={2} >
         <Grid item xs={1}></Grid>
@@ -65,7 +83,8 @@ export const EstacionesTabla = () => {
                         </Grid>
                         <Grid item xs />
                         <Grid item>
-                            <Button variant="contained" color="primary">+ Solicitar Estacion</Button>
+                            <Button variant="contained" color="primary" onClick={handleClickOpen}>+ Solicitar Estacion</Button>
+                            <EstacionFormulario open={open} handleClose={handleClose} handleSubmit={solicitarEstacion} />
                         </Grid>
                     </Grid>
                     <Grid item sx={{ height: '25px' }}></Grid>
