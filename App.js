@@ -38,7 +38,7 @@ const theme = createTheme({
         <ThemeProvider theme={theme}>
           <BrowserRouter>
             <Routes>
-              <Route path="/login" element={<Login />} />
+              <Route path="/" element={<Login />} />
             </Routes>
             <Routes>
               <Route path="/estaciones" element={<Estaciones />} />

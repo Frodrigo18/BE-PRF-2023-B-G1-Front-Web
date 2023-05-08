@@ -3,14 +3,14 @@ import { useState , useRef } from 'react';
 import { Grid, Accordion, AccordionSummary, AccordionDetails, Box, Typography, TextField, Button, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-export const FiltrosEstacion = () => {
+export const FiltrosSolicitud = () => {
   const [value, setValue] = React.useState('todas');
 
   const [fields, setFields] = useState({
     nombre: '',
-    solicitante: '',
-    serie: '',
-    fechaSolicitud: ''
+    fechaSolicitud: '',
+    email: '',
+    estacion: ''
   });
 
   const clearFields = (refs) => {
@@ -24,12 +24,12 @@ export const FiltrosEstacion = () => {
   };
 
   const textNombre = useRef();
-  const textSolicitante = useRef();
-  const textSerie = useRef();
+  const textEmail = useRef();
+  const textEstacion = useRef();
   const dateSolicitud = useRef();
 
   const handleClearFields = () => {
-    clearFields([textNombre, textSolicitante, textSerie, dateSolicitud]);
+    clearFields([textNombre, textEmail, textEstacion, dateSolicitud]);
   };
 
   const handleChange = (event) => {
@@ -54,21 +54,22 @@ export const FiltrosEstacion = () => {
                             <TextField label="Nombre" inputRef={textNombre} fullWidth />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <TextField label="Solicitante" inputRef={textSolicitante} fullWidth />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField label="Número de serie" inputRef={textSerie} fullWidth />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
                             <TextField label="Fecha de solicitud" inputRef={dateSolicitud} fullWidth type="date" InputLabelProps={{ shrink: true }} />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField label="Correo Electrónico" inputRef={textEmail} fullWidth type="email"/>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField label="Estación" inputRef={textEstacion} fullWidth />
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <Box sx={{ display: 'flex', alignItems: 'center'}}>
                                 <Typography variant="body1">Estado:</Typography>
-                                <RadioGroup value={value} onChange={handleChange} row sx={{ ml: 2 }}>
+                                <RadioGroup value={value} onChange={handleChange} row sx={{ ml: 3 }}>
                                     <FormControlLabel value="todas" control={<Radio />} label="Todas" />
-                                    <FormControlLabel value="activas" control={<Radio />} label="Activas" />
-                                    <FormControlLabel value="inactivas" control={<Radio />} label="Inactivas" />
+                                    <FormControlLabel value="aprobadas" control={<Radio />} label="Activas" />
+                                    <FormControlLabel value="rechazadas" control={<Radio />} label="Rechazadas" />
+                                    <FormControlLabel value="pendientes" control={<Radio />} label="Pendientes" />
                                 </RadioGroup>
                             </Box>
                         </Grid>
