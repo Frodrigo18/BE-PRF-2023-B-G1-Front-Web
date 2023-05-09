@@ -43,7 +43,7 @@ const rows = [
   { id: 5, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Francisco Álvarez', application_date: '05/01/2023' }
 ];
 
-export const SolicitudesTabla = () => {
+export const RequestsTable = () => {
   return (
     <Grid container spacing={2} >
         <Grid item xs={1}></Grid>

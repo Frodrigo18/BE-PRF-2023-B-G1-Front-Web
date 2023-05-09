@@ -9,8 +9,8 @@ import { useNavigate } from 'react-router-dom';
 export const Login = () => {
   const navigate = useNavigate();
 
-  const irAEstaciones = useCallback(() => {
-    navigate('/estaciones');
+  const goToStations = useCallback(() => {
+    navigate('/stations');
   }, [navigate]);
 
   return (
@@ -33,7 +33,7 @@ export const Login = () => {
               type="password"
             />
             <div className="login-button-group">
-              <Button variant="contained" onClick={irAEstaciones}>Ingresar</Button>
+              <Button variant="contained" onClick={goToStations}>Ingresar</Button>
             </div>
           </div>
         </div>

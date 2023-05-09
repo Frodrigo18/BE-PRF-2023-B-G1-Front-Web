@@ -6,7 +6,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Paper from '@mui/material/Paper';
-import { EstacionFormulario } from './estacion-formulario';
+import { RequestForm } from './request-form';
 import { useState } from 'react';
 
 const columns = [
@@ -45,7 +45,7 @@ const rows = [
     { id: 5, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Francisco Álvarez', application_date: '05/01/2023' }
 ];
 
-export const EstacionesTabla = () => {
+export const StationsTable = () => {
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
@@ -84,7 +84,7 @@ export const EstacionesTabla = () => {
                         <Grid item xs />
                         <Grid item>
                             <Button variant="contained" color="primary" onClick={handleClickOpen}>+ Solicitar Estacion</Button>
-                            <EstacionFormulario open={open} handleClose={handleClose} handleSubmit={solicitarEstacion} />
+                            <RequestForm open={open} handleClose={handleClose} handleSubmit={solicitarEstacion} />
                         </Grid>
                     </Grid>
                     <Grid item sx={{ height: '25px' }}></Grid>

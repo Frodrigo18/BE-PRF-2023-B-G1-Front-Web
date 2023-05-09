@@ -15,7 +15,7 @@ const Field = styled(TextField)({
   padding: '8px'
 });
 
-export const EstacionFormulario = ({ open, handleClose, handleSubmit }) => {
+export const RequestForm = ({ open, handleClose, handleSubmit }) => {
 
   return (
     <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">

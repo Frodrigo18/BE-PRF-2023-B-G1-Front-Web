@@ -3,7 +3,7 @@ import { useState , useRef } from 'react';
 import { Grid, Accordion, AccordionSummary, AccordionDetails, Box, Typography, TextField, Button, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-export const FiltrosEstacion = () => {
+export const StationFilters = () => {
   const [value, setValue] = React.useState('todas');
 
   const [fields, setFields] = useState({

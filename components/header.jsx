@@ -14,6 +14,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import Button from '@mui/material/Button';
+import { useNavigate   } from "react-router-dom";
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
@@ -29,12 +30,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export const MenuPrincipal = () => {
+export const Header = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const navigate = useNavigate();
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -72,7 +75,7 @@ export const MenuPrincipal = () => {
     >
       <MenuItem onClick={handleMenuClose}>Perfil</MenuItem>
       <MenuItem onClick={handleMenuClose}>Mi Cuenta</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Cerrar Sesión</MenuItem>
+      <MenuItem onClick={()=>navigate("/")}>Cerrar Sesión</MenuItem>
     </Menu>
   );
 
@@ -94,10 +97,10 @@ export const MenuPrincipal = () => {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <Button href="./estaciones" style={{ color: '#000' }}>Estaciones</Button>
+        <Button href="./stations" style={{ color: '#000' }}>Estaciones</Button>
       </MenuItem>
       <MenuItem>
-        <Button href="./solicitudes" style={{ color: '#000' }}>Solicitudes</Button>
+        <Button href="./requests" style={{ color: '#000' }}>Solicitudes</Button>
       </MenuItem>
       <MenuItem>
         <IconButton
@@ -149,8 +152,8 @@ export const MenuPrincipal = () => {
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <Button href="./estaciones" style={{ color: '#000' }}>Estaciones</Button>
-            <Button href="./solicitudes" style={{ color: '#000' }}>Solicitudes</Button>
+            <Button href="./stations" style={{ color: '#000' }}>Estaciones</Button>
+            <Button href="./requests" style={{ color: '#000' }}>Solicitudes</Button>
               <IconButton
                 size="large"
                 color="inherit"

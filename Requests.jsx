@@ -1,14 +1,14 @@
 import { Grid } from "@mui/material";
-import { MenuPrincipal } from "./components/menu-principal";
-import { FiltrosEstacion } from "./components/estacion-filtros";
-import { EstacionesTabla } from "./components/estaciones-tabla";
+import { Header } from "./components/header";
+import { RequestFilters } from "./components/request-filters";
+import { RequestsTable } from "./components/requests-table";
 import Paper from '@mui/material/Paper';
 
-export const Estaciones = () => {
+export const Requests = () => {
     return(
         <Grid container direction="column">
             <Grid>
-                <MenuPrincipal />
+                <Header />
             </Grid>
             <Grid sx={{ height: '10px' }}></Grid>
             <Grid container justifyContent="center">
@@ -25,13 +25,13 @@ export const Estaciones = () => {
                     
                     </Grid>
                     <Grid>
-                        <FiltrosEstacion />
+                        <RequestFilters />
                     </Grid>
                     <Grid sx={{ height: '20px' }}>
                         
                     </Grid>
                     <Grid>
-                        <EstacionesTabla />
+                        <RequestsTable />
                     </Grid>
                 </Paper>
             </Grid>
