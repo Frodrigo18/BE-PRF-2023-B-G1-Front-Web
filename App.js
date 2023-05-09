@@ -1,7 +1,7 @@
 import React, { useState, useEffect }from "react";
-import { Login } from "./Login";
-import { Stations } from "./Stations";
-import { Requests } from "./Requests";
+import { Login } from "./Login.jsx";
+import { Stations } from "./Stations.jsx";
+import { Requests } from "./Requests.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import * as Font from 'expo-font';
 import { ThemeProvider, createTheme } from '@mui/material/styles';

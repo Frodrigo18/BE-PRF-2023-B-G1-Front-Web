@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
-import { Header } from "./components/header";
-import { StationFilters } from "./components/station-filters";
-import { StationsTable } from "./components/stations-table";
+import { Header } from "./components/header.jsx";
+import { StationFilters } from "./components/station-filters.jsx";
+import { StationsTable } from "./components/stations-table.jsx";
 import Paper from '@mui/material/Paper';
 
 export const Stations = () => {

@@ -6,7 +6,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Paper from '@mui/material/Paper';
-import { RequestForm } from './request-form';
+import { RequestForm } from './request-form.jsx';
 import { useState } from 'react';
 
 const columns = [

@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
-import { Header } from "./components/header";
-import { RequestFilters } from "./components/request-filters";
-import { RequestsTable } from "./components/requests-table";
+import { Header } from "./components/header.jsx";
+import { RequestFilters } from "./components/request-filters.jsx";
+import { RequestsTable } from "./components/requests-table.jsx";
 import Paper from '@mui/material/Paper';
 
 export const Requests = () => {
