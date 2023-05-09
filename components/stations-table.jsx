@@ -42,7 +42,8 @@ const rows = [
     { id: 2, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Lucas Fernandez', application_date: '15/04/2023' },
     { id: 3, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Martin Gómez', application_date: '10/02/2023' },
     { id: 4, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Nicolas Hernández', application_date: '11/02/2023' },
-    { id: 5, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Francisco Álvarez', application_date: '05/01/2023' }
+    { id: 5, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Francisco Álvarez', application_date: '05/01/2023' },
+    { id: 6, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Facundo Lopez', application_date: '19/12/2022' }
 ];
 
 export const StationsTable = () => {
@@ -94,6 +95,10 @@ export const StationsTable = () => {
                                 rows={rows} 
                                 columns={columns} 
                                 pageSize={5} 
+                                initialState={{
+                                    pagination: { paginationModel: { pageSize: 5 } }
+                                }}
+                                pageSizeOptions={[5, 10, 25]}
                                 checkboxSelection 
                                 style={{ overflowX: 'auto', backgroundColor: '#A9B4C4'}}
                             />
