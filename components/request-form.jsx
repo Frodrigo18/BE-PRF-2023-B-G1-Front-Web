@@ -20,7 +20,7 @@ export const RequestForm = ({ open, handleClose, handleSubmit }) => {
   return (
     <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
       <DialogTitle id="form-dialog-title">Solicitar Estación</DialogTitle>
-      <DialogContent>
+      <DialogContent dividers>
         <Form onSubmit={handleSubmit}>
             <Grid container spacing={2}>
                 <Grid item xs={6}>

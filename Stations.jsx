@@ -11,6 +11,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { StationDetails } from './components/station-details.jsx';
+import { InactivateStation } from './components/inactivate-station.jsx';
 
 export const Stations = () => {
     const [value, setValue] = React.useState('todas');
@@ -77,7 +78,7 @@ export const Stations = () => {
                 <IconButton>
                     <EditIcon />
                 </IconButton>
-                <IconButton>
+                <IconButton onClick={() => handleOpenInactivate(params.row)}>
                     <DeleteIcon />
                 </IconButton>
             </>
@@ -104,6 +105,17 @@ export const Stations = () => {
 
     const handleCloseDetails = () => {
         setOpenDetails(false);
+    };
+
+    const [openInactivate, setOpenInactivate] = useState(false);
+
+    const handleOpenInactivate = (row) => {
+        setSelectedRow(row);
+        setOpenInactivate(true);
+    };
+
+    const handleCloseInactivate = () => {
+        setOpenInactivate(false);
     };
 
     return(
@@ -232,6 +244,14 @@ export const Stations = () => {
                 <StationDetails
                     open={openDetails}
                     onClose={handleCloseDetails}
+                    rowData={selectedRow}
+                />
+            )}
+
+            {selectedRow && (
+                <InactivateStation
+                    open={openInactivate}
+                    onClose={handleCloseInactivate}
                     rowData={selectedRow}
                 />
             )}

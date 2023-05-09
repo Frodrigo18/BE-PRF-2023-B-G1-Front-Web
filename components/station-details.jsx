@@ -16,7 +16,7 @@ export const StationDetails = ({ open, onClose, rowData }) =>{
                     <CloseIcon />
                 </IconButton>
             </DialogTitle>
-            <DialogContent>
+            <DialogContent dividers>
                 <Grid container spacing={2}>
                     <Grid item xs={5}>
                         <Typography>Nombre</Typography>

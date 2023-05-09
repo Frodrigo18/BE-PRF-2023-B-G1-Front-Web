@@ -11,6 +11,8 @@ import ArticleIcon from '@mui/icons-material/Article';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { RequestDetails } from './components/request-details.jsx';
+import { ApprobeRequest } from './components/approve-request.jsx';
+import { RejectRequest } from './components/reject-request.jsx';
 
 export const Requests = () => {
     const [value, setValue] = React.useState('todas');
@@ -58,10 +60,10 @@ export const Requests = () => {
                 <IconButton onClick={() => handleOpenDetails(params.row)}>
                     <ArticleIcon />
                 </IconButton>
-                <IconButton>
+                <IconButton onClick={() => handleOpenApprove(params.row)}>
                     <CheckIcon />
                 </IconButton>
-                <IconButton>
+                <IconButton onClick={() => handleOpenReject(params.row)}>
                     <CloseIcon />
                 </IconButton>
             </>
@@ -88,6 +90,28 @@ export const Requests = () => {
 
     const handleCloseDetails = () => {
         setOpenDetails(false);
+    };
+
+    const [openApprove, setOpenApprove] = useState(false);
+
+    const handleOpenApprove = (row) => {
+        setSelectedRow(row);
+        setOpenApprove(true);
+    };
+
+    const handleCloseApprove = () => {
+        setOpenApprove(false);
+    };
+
+    const [openReject, setOpenReject] = useState(false);
+
+    const handleOpenReject = (row) => {
+        setSelectedRow(row);
+        setOpenReject(true);
+    };
+
+    const handleCloseReject = () => {
+        setOpenReject(false);
     };
 
     return(
@@ -213,6 +237,22 @@ export const Requests = () => {
                 <RequestDetails
                     open={openDetails}
                     onClose={handleCloseDetails}
+                    rowData={selectedRow}
+                />
+            )}
+
+            {selectedRow && (
+                <ApprobeRequest
+                    open={openApprove}
+                    onClose={handleCloseApprove}
+                    rowData={selectedRow}
+                />
+            )}
+
+            {selectedRow && (
+                <RejectRequest
+                    open={openReject}
+                    onClose={handleCloseReject}
                     rowData={selectedRow}
                 />
             )}
