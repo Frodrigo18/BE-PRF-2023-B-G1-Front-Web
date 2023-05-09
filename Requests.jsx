@@ -10,16 +10,10 @@ import IconButton from '@mui/material/IconButton';
 import ArticleIcon from '@mui/icons-material/Article';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
+import { RequestDetails } from './components/request-details.jsx';
 
 export const Requests = () => {
     const [value, setValue] = React.useState('todas');
-
-    const [fields, setFields] = useState({
-        nombre: '',
-        fechaSolicitud: '',
-        email: '',
-        estacion: ''
-    });
 
     const clearFields = (refs) => {
         refs.forEach((ref) => {
@@ -45,7 +39,7 @@ export const Requests = () => {
     };
 
     const handleBuscarClick = () => {
-        // Aquí podrías implementar la lógica para buscar según los filtros seleccionados
+       
     }
 
     const columns = [
@@ -61,14 +55,14 @@ export const Requests = () => {
             disableColumnMenu: true,
             renderCell: (params) => (
             <>
-                <IconButton>
-                <ArticleIcon />
+                <IconButton onClick={() => handleOpenDetails(params.row)}>
+                    <ArticleIcon />
                 </IconButton>
                 <IconButton>
-                <CheckIcon />
+                    <CheckIcon />
                 </IconButton>
                 <IconButton>
-                <CloseIcon />
+                    <CloseIcon />
                 </IconButton>
             </>
             ),
@@ -83,6 +77,18 @@ export const Requests = () => {
       { id: 5, name: 'Francisco Álvarez', email: 'fran_alvarez@yahoo.com', application_date: '05/01/2023', station: 'X', serial_number: 'X'  },
       { id: 6, name: 'Facundo Lopez', email: 'facundo_0421@hotmail.com', application_date: '19/12/2022', station: 'X', serial_number: 'X'  }
     ];
+
+    const [openDetails, setOpenDetails] = useState(false);
+    const [selectedRow, setSelectedRow] = useState(null);
+
+    const handleOpenDetails = (row) => {
+        setSelectedRow(row);
+        setOpenDetails(true);
+    };
+
+    const handleCloseDetails = () => {
+        setOpenDetails(false);
+    };
 
     return(
         <Grid container direction="column">
@@ -188,7 +194,7 @@ export const Requests = () => {
                                                         pagination: { paginationModel: { pageSize: 5 } }
                                                     }}
                                                     pageSizeOptions={[5, 10, 25]}
-                                                    checkboxSelection 
+                                                    checkboxSelection={false}
                                                     style={{ overflowX: 'auto', backgroundColor: '#A9B4C4'}}
                                                 />
                                             </div>
@@ -202,6 +208,14 @@ export const Requests = () => {
                     </Grid>
                 </Paper>
             </Grid>
+
+            {selectedRow && (
+                <RequestDetails
+                    open={openDetails}
+                    onClose={handleCloseDetails}
+                    rowData={selectedRow}
+                />
+            )}
         </Grid>
     )
 }

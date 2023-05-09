@@ -10,16 +10,10 @@ import IconButton from '@mui/material/IconButton';
 import ArticleIcon from '@mui/icons-material/Article';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { StationDetails } from './components/station-details.jsx';
 
 export const Stations = () => {
     const [value, setValue] = React.useState('todas');
-
-    const [fields, setFields] = useState({
-        nombre: '',
-        solicitante: '',
-        serie: '',
-        fechaSolicitud: ''
-    });
 
     const clearFields = (refs) => {
         refs.forEach((ref) => {
@@ -45,23 +39,21 @@ export const Stations = () => {
     };
 
     const handleBuscarClick = () => {
-        // Aquí podrías implementar la lógica para buscar según los filtros seleccionados
+        
     }
 
-    const [open, setOpen] = useState(false);
+    const [openFormRequest, setOpenFormRequest] = useState(false);
 
-    const handleClickOpen = () => {
-        setOpen(true);
+    const handleOpenFormRequest = () => {
+        setOpenFormRequest(true);
     };
 
-    const handleClose = () => {
-        setOpen(false);
+    const handleCloseFormRequest = () => {
+        setOpenFormRequest(false);
     };
 
     const solicitarEstacion = (event) => {
         event.preventDefault();
-        // Aquí puedes agregar la lógica para enviar el formulario
-        // y mostrar el mensaje de confirmación
         setOpen(false);
     };
 
@@ -79,14 +71,14 @@ export const Stations = () => {
             disableColumnMenu: true,
             renderCell: (params) => (
             <>
-                <IconButton>
-                <ArticleIcon />
+                <IconButton onClick={() => handleOpenDetails(params.row)}>
+                    <ArticleIcon />
                 </IconButton>
                 <IconButton>
-                <EditIcon />
+                    <EditIcon />
                 </IconButton>
                 <IconButton>
-                <DeleteIcon />
+                    <DeleteIcon />
                 </IconButton>
             </>
             ),
@@ -101,6 +93,18 @@ export const Stations = () => {
         { id: 5, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Francisco Álvarez', application_date: '05/01/2023' },
         { id: 6, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Facundo Lopez', application_date: '19/12/2022' }
     ];
+
+    const [openDetails, setOpenDetails] = useState(false);
+    const [selectedRow, setSelectedRow] = useState(null);
+
+    const handleOpenDetails = (row) => {
+        setSelectedRow(row);
+        setOpenDetails(true);
+    };
+
+    const handleCloseDetails = () => {
+        setOpenDetails(false);
+    };
 
     return(
         <Grid container direction="column">
@@ -194,8 +198,8 @@ export const Stations = () => {
                                             </Grid>
                                             <Grid item xs />
                                             <Grid item>
-                                                <Button variant="contained" color="primary" onClick={handleClickOpen}>+ Solicitar Estacion</Button>
-                                                <RequestForm open={open} handleClose={handleClose} handleSubmit={solicitarEstacion} />
+                                                <Button variant="contained" color="primary" onClick={handleOpenFormRequest}>+ Solicitar Estacion</Button>
+                                                <RequestForm open={openFormRequest} handleClose={handleCloseFormRequest} handleSubmit={solicitarEstacion} />
                                             </Grid>
                                         </Grid>
                                         <Grid item sx={{ height: '25px' }}></Grid>
@@ -209,7 +213,7 @@ export const Stations = () => {
                                                         pagination: { paginationModel: { pageSize: 5 } }
                                                     }}
                                                     pageSizeOptions={[5, 10, 25]}
-                                                    checkboxSelection 
+                                                    checkboxSelection={false} 
                                                     style={{ overflowX: 'auto', backgroundColor: '#A9B4C4'}}
                                                 />
                                             </div>
@@ -223,6 +227,14 @@ export const Stations = () => {
                     </Grid>
                 </Paper>
             </Grid>
+
+            {selectedRow && (
+                <StationDetails
+                    open={openDetails}
+                    onClose={handleCloseDetails}
+                    rowData={selectedRow}
+                />
+            )}
         </Grid>
     )
 }
