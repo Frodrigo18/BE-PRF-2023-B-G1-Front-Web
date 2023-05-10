@@ -20,8 +20,8 @@ export const RequestDetails = ({ open, onClose, rowData }) =>{
             <DialogContent dividers>
                 <Grid container spacing={2}>
                     <Grid item xs={5}>
-                        <Typography>Nombre</Typography>
-                        <Typography variant="h6">{rowData.name}</Typography>
+                        <Typography>Solicitante</Typography>
+                        <Typography variant="h6">{rowData.created_by}</Typography>
                     </Grid>
                     <Grid item xs={5}>
                         <Typography>Correo Electrónico</Typography>
@@ -29,15 +29,28 @@ export const RequestDetails = ({ open, onClose, rowData }) =>{
                     </Grid>
                     <Grid item xs={5}>
                         <Typography>Fecha de Solicitud</Typography>
-                        <Typography variant="h6">{rowData.application_date}</Typography>
+                        <Typography variant="h6">{rowData.created_at}</Typography>
                     </Grid>
                     <Grid item xs={5}>
                         <Typography>Estado</Typography>
-                        <Typography variant="h6">{rowData.status}</Typography>
+                        <Typography variant="h6">
+                            {(() => {
+                                switch (rowData.status) {
+                                case 'APPROVED':
+                                    return 'Aprobada';
+                                case 'REJECTED':
+                                    return 'Rechazada';
+                                case 'PENDING':
+                                    return 'Pendiente';
+                                default:
+                                    return rowData.status;
+                                }
+                            })()}
+                        </Typography>
                     </Grid>
                     <Grid item xs={5}>
                         <Typography>Estación</Typography>
-                        <Typography variant="h6">{rowData.station}</Typography>
+                        <Typography variant="h6">{rowData.name}</Typography>
                     </Grid>
                     <Grid item xs={5}>
                         <Typography>Nº de Serie</Typography>

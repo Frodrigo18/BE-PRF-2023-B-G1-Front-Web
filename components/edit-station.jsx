@@ -72,7 +72,7 @@ export const EditStation = ({ open, onClose, rowData }) =>{
                         required
                         autoFocus
                         margin="dense"
-                        id="length"
+                        id="longitude"
                         label="Longitud"
                         variant="outlined"
                         value="X"

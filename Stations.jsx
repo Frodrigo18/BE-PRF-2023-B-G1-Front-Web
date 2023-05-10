@@ -75,8 +75,8 @@ export const Stations = () => {
         { field: 'serial_number', headerName: 'Nº de Serie', width: 130 },
         { field: 'brand', headerName: 'Marca', width: 130 },
         { field: 'model', headerName: 'Modelo', width: 130 },
-        { field: 'user', headerName: 'Solicitante', width: 130 },
-        { field: 'application_date', headerName: 'Fecha de Solicitud', width: 130 },
+        { field: 'created_by', headerName: 'Solicitante', width: 130 },
+        { field: 'created_at', headerName: 'Fecha de Creación', width: 130 },
         {
             field: 'status',
             headerName: 'Estado',
@@ -115,12 +115,12 @@ export const Stations = () => {
     ];
     
     const rows = [
-        { id: 1, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Juan Perez', application_date: '21/04/2023', status: 'ACTIVE' },
-        { id: 2, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Lucas Fernandez', application_date: '15/04/2023', status: 'INACTIVE' },
-        { id: 3, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Martin Gómez', application_date: '10/02/2023', status: 'ACTIVE' },
-        { id: 4, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Nicolas Hernández', application_date: '11/02/2023', status: 'ACTIVE' },
-        { id: 5, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Francisco Álvarez', application_date: '05/01/2023', status: 'INACTIVE' },
-        { id: 6, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Facundo Lopez', application_date: '19/12/2022', status: 'ACTIVE' }
+        { id: 1, name: 'X', serial_number: 'X', brand: 'X', model: 'X', created_by: 'Juan Perez', created_at: '21/04/2023', status: 'ACTIVE' },
+        { id: 2, name: 'X', serial_number: 'X', brand: 'X', model: 'X', created_by: 'Lucas Fernandez', created_at: '15/04/2023', status: 'INACTIVE' },
+        { id: 3, name: 'X', serial_number: 'X', brand: 'X', model: 'X', created_by: 'Martin Gómez', created_at: '10/02/2023', status: 'ACTIVE' },
+        { id: 4, name: 'X', serial_number: 'X', brand: 'X', model: 'X', created_by: 'Nicolas Hernández', created_at: '11/02/2023', status: 'ACTIVE' },
+        { id: 5, name: 'X', serial_number: 'X', brand: 'X', model: 'X', created_by: 'Francisco Álvarez', created_at: '05/01/2023', status: 'INACTIVE' },
+        { id: 6, name: 'X', serial_number: 'X', brand: 'X', model: 'X', created_by: 'Facundo Lopez', created_at: '19/12/2022', status: 'ACTIVE' }
     ];
 
     const [openDetails, setOpenDetails] = useState(false);

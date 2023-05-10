@@ -28,7 +28,7 @@ export const RequestForm = ({ open, handleClose, handleSubmit }) => {
                         required
                         autoFocus
                         margin="dense"
-                        id="nombre"
+                        id="name"
                         label="Nombre"
                         variant="outlined"
                     />
@@ -37,7 +37,7 @@ export const RequestForm = ({ open, handleClose, handleSubmit }) => {
                     <Field
                         required
                         margin="dense"
-                        id="modelo"
+                        id="model"
                         label="Modelo"
                         variant="outlined"
                     />
@@ -46,7 +46,7 @@ export const RequestForm = ({ open, handleClose, handleSubmit }) => {
                     <Field
                         required
                         margin="dense"
-                        id="serie"
+                        id="serial_number"
                         label="Nº de Serie"
                         variant="outlined"
                     />
@@ -64,7 +64,7 @@ export const RequestForm = ({ open, handleClose, handleSubmit }) => {
                     <Field
                         required
                         margin="dense"
-                        id="marca"
+                        id="brand"
                         label="Marca"
                         variant="outlined"
                     />
@@ -73,7 +73,7 @@ export const RequestForm = ({ open, handleClose, handleSubmit }) => {
                     <Field
                         required
                         margin="dense"
-                        id="longitud"
+                        id="longitude"
                         label="Longitud"
                         variant="outlined"
                     />

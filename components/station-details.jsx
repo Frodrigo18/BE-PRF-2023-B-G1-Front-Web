@@ -28,7 +28,18 @@ export const StationDetails = ({ open, onClose, rowData }) =>{
                     </Grid>
                     <Grid item xs={5}>
                         <Typography>Estado</Typography>
-                        <Typography variant="h6">{rowData.status}</Typography>
+                        <Typography variant="h6">
+                            {(() => {
+                                switch (rowData.status) {
+                                case 'ACTIVE':
+                                    return 'Activa';
+                                case 'INACTIVE':
+                                    return 'Inactiva';
+                                default:
+                                    return rowData.status;
+                                }
+                            })()}
+                        </Typography>
                     </Grid>
                     <Grid item xs={5}>
                         <Typography>Marca</Typography>
@@ -56,15 +67,15 @@ export const StationDetails = ({ open, onClose, rowData }) =>{
                     </Grid>
                     <Grid item xs={5}>
                         <Typography>Solicitante</Typography>
-                        <Typography variant="h6">{rowData.user}</Typography>
+                        <Typography variant="h6">{rowData.created_by}</Typography>
                     </Grid>
                     <Grid item xs={5}>
                         <Typography>Correo Electrónico</Typography>
                         <Typography variant="h6">X</Typography>
                     </Grid>
                     <Grid item xs={5}>
-                        <Typography>Fecha de Solicitud</Typography>
-                        <Typography variant="h6">{rowData.application_date}</Typography>
+                        <Typography>Fecha de Creación</Typography>
+                        <Typography variant="h6">{rowData.created_at}</Typography>
                     </Grid>
                 </Grid>
             </DialogContent>

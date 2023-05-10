@@ -60,10 +60,10 @@ export const Requests = () => {
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 70 },
-        { field: 'name', headerName: 'Nombre', width: 150 },
+        { field: 'created_by', headerName: 'Solicitante', width: 150 },
         { field: 'email', headerName: 'Correo Electrónico', width: 170 },
-        { field: 'application_date', headerName: 'Fecha de Solicitud', width: 130 },
-        { field: 'station', headerName: 'Estación', width: 130 },
+        { field: 'created_at', headerName: 'Fecha de Solicitud', width: 130 },
+        { field: 'name', headerName: 'Estación', width: 130 },
         { field: 'serial_number', headerName: 'Nº de Serie', width: 130 },
         {
             field: 'status',
@@ -104,15 +104,15 @@ export const Requests = () => {
     ];
     
     const rows = [
-      { id: 1, name: 'Ezequiel Hoyos', email: 'ezequielhoyos@outlook.com', application_date: '09/05/2022', station: 'X', serial_number: 'X', status: 'PENDING'  },
-      { id: 2, name: 'Juan Perez', email: 'juanperez@gmail.com', application_date: '21/04/2023', station: 'X', serial_number: 'X', status: 'APPROVED' },
-      { id: 3, name: 'Lucas Fernandez', email: 'lucas_f@outlook.com', application_date: '15/04/2023', station: 'X', serial_number: 'X', status: 'APPROVED'  },
-      { id: 4, name: 'Martin Gómez', email: 'm-gomez1990@hotmail.com', application_date: '10/02/2023', station: 'X', serial_number: 'X', status: 'APPROVED'  },
-      { id: 5, name: 'Nicolas Hernández', email: 'nicolas_445@gmail.com', application_date: '11/02/2023', station: 'X', serial_number: 'X', status: 'APPROVED'  },
-      { id: 6, name: 'Francisco Álvarez', email: 'fran_alvarez@yahoo.com', application_date: '05/01/2023', station: 'X', serial_number: 'X', status: 'APPROVED' },
-      { id: 7, name: 'Facundo Lopez', email: 'facundo_0421@hotmail.com', application_date: '19/12/2022', station: 'X', serial_number: 'X', status: 'APPROVED'  },
-      { id: 8, name: 'German Martinez', email: 'germanm20@gmail.com', application_date: '13/11/2022', station: 'X', serial_number: 'X', status: 'PENDING'  },
-      { id: 9, name: 'Juan Ferreyros', email: 'juan_ferreyros@hotmail.com', application_date: '05/11/2022', station: 'X', serial_number: 'X', status: 'REJECTED'  }
+      { id: 1, created_by: 'Ezequiel Hoyos', email: 'ezequielhoyos@outlook.com', created_at: '09/05/2022', name: 'X', serial_number: 'X', status: 'PENDING'  },
+      { id: 2, created_by: 'Juan Perez', email: 'juanperez@gmail.com', created_at: '21/04/2023', name: 'X', serial_number: 'X', status: 'APPROVED' },
+      { id: 3, created_by: 'Lucas Fernandez', email: 'lucas_f@outlook.com', created_at: '15/04/2023', name: 'X', serial_number: 'X', status: 'APPROVED'  },
+      { id: 4, created_by: 'Martin Gómez', email: 'm-gomez1990@hotmail.com', created_at: '10/02/2023', name: 'X', serial_number: 'X', status: 'APPROVED'  },
+      { id: 5, created_by: 'Nicolas Hernández', email: 'nicolas_445@gmail.com', created_at: '11/02/2023', name: 'X', serial_number: 'X', status: 'APPROVED'  },
+      { id: 6, created_by: 'Francisco Álvarez', email: 'fran_alvarez@yahoo.com', created_at: '05/01/2023', name: 'X', serial_number: 'X', status: 'APPROVED' },
+      { id: 7, created_by: 'Facundo Lopez', email: 'facundo_0421@hotmail.com', created_at: '19/12/2022', name: 'X', serial_number: 'X', status: 'APPROVED'  },
+      { id: 8, created_by: 'German Martinez', email: 'germanm20@gmail.com', created_at: '13/11/2022', name: 'X', serial_number: 'X', status: 'PENDING'  },
+      { id: 9, created_by: 'Juan Ferreyros', email: 'juan_ferreyros@hotmail.com', created_at: '05/11/2022', name: 'X', serial_number: 'X', status: 'REJECTED'  }
     ];
 
     const [openDetails, setOpenDetails] = useState(false);
