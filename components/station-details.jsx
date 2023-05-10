@@ -27,6 +27,10 @@ export const StationDetails = ({ open, onClose, rowData }) =>{
                         <Typography variant="h6">{rowData.serial_number}</Typography>
                     </Grid>
                     <Grid item xs={5}>
+                        <Typography>Estado</Typography>
+                        <Typography variant="h6">{rowData.status}</Typography>
+                    </Grid>
+                    <Grid item xs={5}>
                         <Typography>Marca</Typography>
                         <Typography variant="h6">{rowData.brand}</Typography>
                     </Grid>
@@ -48,10 +52,6 @@ export const StationDetails = ({ open, onClose, rowData }) =>{
                     </Grid>
                     <Grid item xs={5}>
                         <Typography>Puerto</Typography>
-                        <Typography variant="h6">X</Typography>
-                    </Grid>
-                    <Grid item xs={5}>
-                        <Typography>Estado</Typography>
                         <Typography variant="h6">X</Typography>
                     </Grid>
                     <Grid item xs={5}>

@@ -32,12 +32,16 @@ export const RequestDetails = ({ open, onClose, rowData }) =>{
                         <Typography variant="h6">{rowData.application_date}</Typography>
                     </Grid>
                     <Grid item xs={5}>
+                        <Typography>Estado</Typography>
+                        <Typography variant="h6">{rowData.status}</Typography>
+                    </Grid>
+                    <Grid item xs={5}>
                         <Typography>Estación</Typography>
-                        <Typography variant="h6">{rowData.serial_number}</Typography>
+                        <Typography variant="h6">{rowData.station}</Typography>
                     </Grid>
                     <Grid item xs={5}>
                         <Typography>Nº de Serie</Typography>
-                        <Typography variant="h6">X</Typography>
+                        <Typography variant="h6">{rowData.serial_number}</Typography>
                     </Grid>
                     <Grid item xs={5}>
                         <Typography>Marca</Typography>

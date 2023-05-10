@@ -1,7 +1,9 @@
 import React from 'react';
 import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid } from '@mui/material' ;
+import { useState } from "react";
+import Switch from '@mui/material/Switch';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import { styled } from '@mui/system';
-
 
 const Form = styled('form')({
   display: 'flex',
@@ -15,68 +17,89 @@ const Field = styled(TextField)({
   padding: '8px'
 });
 
-export const RequestForm = ({ open, handleClose, handleSubmit }) => {
+export const EditStation = ({ open, onClose, rowData }) =>{
+  const [isActive, setIsActive] = useState(rowData.status === "ACTIVE");
+
+  const handleSwitchChange = (event) => {
+    setIsActive(event.target.checked);
+  };
+
+  const handleClose = () => {
+      onClose();
+  };
 
   return (
     <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-      <DialogTitle id="form-dialog-title">Solicitar Estación</DialogTitle>
+      <DialogTitle id="form-dialog-title">Editar Estación</DialogTitle>
       <DialogContent dividers>
-        <Form onSubmit={handleSubmit}>
+        <Form>
             <Grid container spacing={2}>
                 <Grid item xs={6}>
                     <Field
                         required
                         autoFocus
                         margin="dense"
-                        id="nombre"
+                        id="name"
                         label="Nombre"
                         variant="outlined"
+                        value={rowData.name}
                     />
                 </Grid>
                 <Grid item xs={6}>
                     <Field
                         required
+                        autoFocus
                         margin="dense"
-                        id="modelo"
-                        label="Modelo"
+                        id="protocol"
+                        label="Protocolo"
                         variant="outlined"
+                        value="X"
                     />
                 </Grid>
                 <Grid item xs={6}>
                     <Field
                         required
+                        autoFocus
                         margin="dense"
-                        id="serie"
-                        label="Nº de Serie"
+                        id="port"
+                        label="Puerto"
                         variant="outlined"
+                        value="X"
                     />
                 </Grid>
                 <Grid item xs={6}>
                     <Field
                         required
+                        autoFocus
+                        margin="dense"
+                        id="length"
+                        label="Longitud"
+                        variant="outlined"
+                        value="X"
+                    />
+                </Grid>
+                <Grid item xs={6}>
+                    <Field
+                        required
+                        autoFocus
                         margin="dense"
                         id="latitud"
                         label="Latitud"
                         variant="outlined"
+                        value="X"
                     />
                 </Grid>
                 <Grid item xs={6}>
-                    <Field
-                        required
-                        margin="dense"
-                        id="marca"
-                        label="Marca"
-                        variant="outlined"
-                    />
-                </Grid>
-                <Grid item xs={6}>
-                    <Field
-                        required
-                        margin="dense"
-                        id="longitud"
-                        label="Longitud"
-                        variant="outlined"
-                    />
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={isActive}
+                        onChange={handleSwitchChange}
+                        color="primary"
+                      />
+                    }
+                    label={isActive ? "Activa" : "Inactiva"}
+                  />
                 </Grid>
             </Grid>
           <DialogActions>
@@ -84,7 +107,7 @@ export const RequestForm = ({ open, handleClose, handleSubmit }) => {
               Cancelar
             </Button>
             <Button type="submit" color="primary">
-              Solicitar
+              Guardar
             </Button>
           </DialogActions>
         </Form>

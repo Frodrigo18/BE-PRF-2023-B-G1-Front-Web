@@ -11,6 +11,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { StationDetails } from './components/station-details.jsx';
+import { EditStation } from "./components/edit-station.jsx";
 import { InactivateStation } from './components/inactivate-station.jsx';
 
 export const Stations = () => {
@@ -66,6 +67,7 @@ export const Stations = () => {
         { field: 'model', headerName: 'Modelo', width: 130 },
         { field: 'user', headerName: 'Solicitante', width: 130 },
         { field: 'application_date', headerName: 'Fecha de Solicitud', width: 130 },
+        { field: 'status', headerName: 'Estado', width: 100 },
         {
             sortable: false,
             width: 150,
@@ -75,7 +77,7 @@ export const Stations = () => {
                 <IconButton onClick={() => handleOpenDetails(params.row)}>
                     <ArticleIcon />
                 </IconButton>
-                <IconButton>
+                <IconButton onClick={() => handleOpenEdit(params.row)}>
                     <EditIcon />
                 </IconButton>
                 <IconButton onClick={() => handleOpenInactivate(params.row)}>
@@ -87,12 +89,12 @@ export const Stations = () => {
     ];
     
     const rows = [
-        { id: 1, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Juan Perez', application_date: '21/04/2023' },
-        { id: 2, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Lucas Fernandez', application_date: '15/04/2023' },
-        { id: 3, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Martin Gómez', application_date: '10/02/2023' },
-        { id: 4, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Nicolas Hernández', application_date: '11/02/2023' },
-        { id: 5, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Francisco Álvarez', application_date: '05/01/2023' },
-        { id: 6, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Facundo Lopez', application_date: '19/12/2022' }
+        { id: 1, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Juan Perez', application_date: '21/04/2023', status: 'ACTIVE' },
+        { id: 2, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Lucas Fernandez', application_date: '15/04/2023', status: 'INACTIVE' },
+        { id: 3, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Martin Gómez', application_date: '10/02/2023', status: 'ACTIVE' },
+        { id: 4, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Nicolas Hernández', application_date: '11/02/2023', status: 'ACTIVE' },
+        { id: 5, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Francisco Álvarez', application_date: '05/01/2023', status: 'INACTIVE' },
+        { id: 6, name: 'X', serial_number: 'X', brand: 'X', model: 'X', user: 'Facundo Lopez', application_date: '19/12/2022', status: 'ACTIVE' }
     ];
 
     const [openDetails, setOpenDetails] = useState(false);
@@ -105,6 +107,17 @@ export const Stations = () => {
 
     const handleCloseDetails = () => {
         setOpenDetails(false);
+    };
+
+    const [openEdit, setOpenEdit] = useState(false);
+
+    const handleOpenEdit = (row) => {
+        setSelectedRow(row);
+        setOpenEdit(true);
+    };
+
+    const handleCloseEdit = () => {
+        setOpenEdit(false);
     };
 
     const [openInactivate, setOpenInactivate] = useState(false);
@@ -163,9 +176,9 @@ export const Stations = () => {
                                                 <Box sx={{ display: 'flex', alignItems: 'center'}}>
                                                     <Typography variant="body1">Estado:</Typography>
                                                     <RadioGroup value={value} onChange={handleChange} row sx={{ ml: 2 }}>
-                                                        <FormControlLabel value="todas" control={<Radio />} label="Todas" />
-                                                        <FormControlLabel value="activas" control={<Radio />} label="Activas" />
-                                                        <FormControlLabel value="inactivas" control={<Radio />} label="Inactivas" />
+                                                        <FormControlLabel value="ALL" control={<Radio />} label="Todas" />
+                                                        <FormControlLabel value="ACTIVE" control={<Radio />} label="Activas" />
+                                                        <FormControlLabel value="INACTIVE" control={<Radio />} label="Inactivas" />
                                                     </RadioGroup>
                                                 </Box>
                                             </Grid>
@@ -244,6 +257,14 @@ export const Stations = () => {
                 <StationDetails
                     open={openDetails}
                     onClose={handleCloseDetails}
+                    rowData={selectedRow}
+                />
+            )}
+
+            {selectedRow && (
+                <EditStation
+                    open={openEdit}
+                    onClose={handleCloseEdit}
                     rowData={selectedRow}
                 />
             )}
