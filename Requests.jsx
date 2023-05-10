@@ -254,6 +254,7 @@ export const Requests = () => {
                                                     }}
                                                     pageSizeOptions={[5, 10, 25]}
                                                     checkboxSelection={false}
+                                                    disableColumnFilter
                                                     style={{ overflowX: 'auto', backgroundColor: '#A9B4C4'}}
                                                 />
                                             </div>

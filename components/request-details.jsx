@@ -49,6 +49,10 @@ export const RequestDetails = ({ open, onClose, rowData }) =>{
                         </Typography>
                     </Grid>
                     <Grid item xs={5}>
+                        <Typography>Fecha de Solicitud</Typography>
+                        <Typography variant="h6">{rowData.created_at}</Typography>
+                    </Grid>
+                    <Grid item xs={5}>
                         <Typography>Estación</Typography>
                         <Typography variant="h6">{rowData.name}</Typography>
                     </Grid>
@@ -72,14 +76,18 @@ export const RequestDetails = ({ open, onClose, rowData }) =>{
                         <Typography>Latitud</Typography>
                         <Typography variant="h6">X</Typography>
                     </Grid>
-                    <Grid item xs={5}>
-                        <Typography>Protocolo</Typography>
-                        <Typography variant="h6">X</Typography>
-                    </Grid>
-                    <Grid item xs={5}>
-                        <Typography>Puerto</Typography>
-                        <Typography variant="h6">X</Typography>
-                    </Grid>
+                    {rowData.status === 'APPROVED' ? (
+                        <>  
+                            <Grid item xs={5}>
+                                <Typography>Aprobada Por</Typography>
+                                <Typography variant="h6">{rowData.approved_by}</Typography>
+                            </Grid>
+                            <Grid item xs={5}>
+                                <Typography>Fecha de Aprobación</Typography>
+                                <Typography variant="h6">{rowData.approved_at}</Typography>
+                            </Grid>
+                        </>
+                    ) : null}
                 </Grid>
             </DialogContent>
         </Dialog>

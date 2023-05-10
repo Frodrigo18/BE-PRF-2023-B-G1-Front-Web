@@ -58,14 +58,6 @@ export const StationDetails = ({ open, onClose, rowData }) =>{
                         <Typography variant="h6">X</Typography>
                     </Grid>
                     <Grid item xs={5}>
-                        <Typography>Protocolo</Typography>
-                        <Typography variant="h6">X</Typography>
-                    </Grid>
-                    <Grid item xs={5}>
-                        <Typography>Puerto</Typography>
-                        <Typography variant="h6">X</Typography>
-                    </Grid>
-                    <Grid item xs={5}>
                         <Typography>Solicitante</Typography>
                         <Typography variant="h6">{rowData.created_by}</Typography>
                     </Grid>

@@ -50,28 +50,6 @@ export const EditStation = ({ open, onClose, rowData }) =>{
                         required
                         autoFocus
                         margin="dense"
-                        id="protocol"
-                        label="Protocolo"
-                        variant="outlined"
-                        value="X"
-                    />
-                </Grid>
-                <Grid item xs={6}>
-                    <Field
-                        required
-                        autoFocus
-                        margin="dense"
-                        id="port"
-                        label="Puerto"
-                        variant="outlined"
-                        value="X"
-                    />
-                </Grid>
-                <Grid item xs={6}>
-                    <Field
-                        required
-                        autoFocus
-                        margin="dense"
                         id="longitude"
                         label="Longitud"
                         variant="outlined"
@@ -88,19 +66,6 @@ export const EditStation = ({ open, onClose, rowData }) =>{
                         variant="outlined"
                         value="X"
                     />
-                </Grid>
-                <Grid item xs={6}>
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={isActive}
-                        onChange={handleSwitchChange}
-                        color="primary"
-                        disabled={false}
-                      />
-                    }
-                    label={isActive ? "Activa" : "Inactiva"}
-                  />
                 </Grid>
             </Grid>
           <DialogActions>

@@ -102,7 +102,7 @@ export const Stations = () => {
                         <IconButton onClick={() => handleOpenDetails(params.row)}>
                             <ArticleIcon />
                         </IconButton>
-                        <IconButton onClick={() => handleOpenEdit(params.row)}>
+                        <IconButton onClick={() => handleOpenEdit(params.row)} disabled={isInactive}>
                             <EditIcon />
                         </IconButton>
                         <IconButton onClick={() => handleOpenInactivate(params.row)} disabled={isInactive}>
@@ -265,6 +265,7 @@ export const Stations = () => {
                                                     }}
                                                     pageSizeOptions={[5, 10, 25]}
                                                     checkboxSelection={false} 
+                                                    disableColumnFilter
                                                     style={{ overflowX: 'auto', backgroundColor: '#A9B4C4'}}
                                                 />
                                             </div>
