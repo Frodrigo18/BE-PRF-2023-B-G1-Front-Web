@@ -13,6 +13,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import { RequestDetails } from './components/request-details.jsx';
 import { ApprobeRequest } from './components/approve-request.jsx';
 import { RejectRequest } from './components/reject-request.jsx';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 export const Requests = () => {
     const [value, setValue] = React.useState('todas');
@@ -44,6 +47,17 @@ export const Requests = () => {
        
     }
 
+    const getStatusIcon = (status) => {
+        if (status === 'APPROVED') {
+          return { icon: <CheckCircleOutlineIcon style={{ color: 'green' }} />, label: 'Aprobada' };
+        } else if (status === 'PENDING')
+        {
+          return { icon: <PauseCircleOutlineIcon style={{ color: 'yellow' }} />, label: 'Pendiente' };
+        } else {
+          return { icon: <HighlightOffIcon style={{ color: 'red' }} />, label: 'Rechazada' };
+        }
+    };
+
     const columns = [
         { field: 'id', headerName: 'ID', width: 70 },
         { field: 'name', headerName: 'Nombre', width: 150 },
@@ -51,7 +65,20 @@ export const Requests = () => {
         { field: 'application_date', headerName: 'Fecha de Solicitud', width: 130 },
         { field: 'station', headerName: 'Estación', width: 130 },
         { field: 'serial_number', headerName: 'Nº de Serie', width: 130 },
-        { field: 'status', headerName: 'Estado', width: 100 },
+        {
+            field: 'status',
+            headerName: 'Estado',
+            width: 120,
+            renderCell: (params) => {
+              const { icon, label } = getStatusIcon(params.value);
+              return (
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  {icon}
+                  <span style={{ marginLeft: '0.5rem' }}>{label}</span>
+                </div>
+              );
+            },
+        },
         {
             sortable: false,
             width: 150,

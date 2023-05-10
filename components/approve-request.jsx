@@ -11,7 +11,7 @@ export const ApprobeRequest = ({ open, onClose, rowData }) => {
             <DialogTitle id="form-dialog-title">Aprobar Solicitud de Estación</DialogTitle>
             <DialogContent>
                 <DialogContent dividers>
-                    <Typography align="center">¿Esta seguro de aprobar la Estacion { rowData.station } con Nº de Serie { rowData.serial_number }?<br/>Se enviaria un Email de aviso a la dirección { rowData.email }</Typography>
+                    <Typography align="center">¿Esta seguro de aprobar la Estacion {rowData.station} con Nº de Serie {rowData.serial_number}?<br/>Se enviaria un Email de aviso a la dirección {rowData.email}</Typography>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">

@@ -13,6 +13,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { StationDetails } from './components/station-details.jsx';
 import { EditStation } from "./components/edit-station.jsx";
 import { InactivateStation } from './components/inactivate-station.jsx';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 export const Stations = () => {
     const [value, setValue] = React.useState('todas');
@@ -59,6 +61,14 @@ export const Stations = () => {
         setOpen(false);
     };
 
+    const getStatusIcon = (status) => {
+        if (status === 'ACTIVE') {
+          return { icon: <CheckCircleOutlineIcon style={{ color: 'green' }} />, label: 'Activa' };
+        } else {
+          return { icon: <HighlightOffIcon style={{ color: 'red' }} />, label: 'Inactiva' };
+        }
+    };
+
     const columns = [
         { field: 'id', headerName: 'ID', width: 70 },
         { field: 'name', headerName: 'Nombre', width: 130 },
@@ -67,7 +77,20 @@ export const Stations = () => {
         { field: 'model', headerName: 'Modelo', width: 130 },
         { field: 'user', headerName: 'Solicitante', width: 130 },
         { field: 'application_date', headerName: 'Fecha de Solicitud', width: 130 },
-        { field: 'status', headerName: 'Estado', width: 100 },
+        {
+            field: 'status',
+            headerName: 'Estado',
+            width: 120,
+            renderCell: (params) => {
+              const { icon, label } = getStatusIcon(params.value);
+              return (
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  {icon}
+                  <span style={{ marginLeft: '0.5rem' }}>{label}</span>
+                </div>
+              );
+            },
+        },
         {
             sortable: false,
             width: 150,

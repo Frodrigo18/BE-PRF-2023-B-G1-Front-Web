@@ -20,8 +20,8 @@ const Field = styled(TextField)({
 export const EditStation = ({ open, onClose, rowData }) =>{
   const [isActive, setIsActive] = useState(rowData.status === "ACTIVE");
 
-  const handleSwitchChange = (event) => {
-    setIsActive(event.target.checked);
+  const handleSwitchChange = () => {
+    setIsActive(!isActive);
   };
 
   const handleClose = () => {
@@ -96,6 +96,7 @@ export const EditStation = ({ open, onClose, rowData }) =>{
                         checked={isActive}
                         onChange={handleSwitchChange}
                         color="primary"
+                        disabled={false}
                       />
                     }
                     label={isActive ? "Activa" : "Inactiva"}
