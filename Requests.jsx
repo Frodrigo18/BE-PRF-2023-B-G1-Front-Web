@@ -83,29 +83,36 @@ export const Requests = () => {
             sortable: false,
             width: 150,
             disableColumnMenu: true,
-            renderCell: (params) => (
-            <>
-                <IconButton onClick={() => handleOpenDetails(params.row)}>
-                    <ArticleIcon />
-                </IconButton>
-                <IconButton onClick={() => handleOpenApprove(params.row)}>
-                    <CheckIcon />
-                </IconButton>
-                <IconButton onClick={() => handleOpenReject(params.row)}>
-                    <CloseIcon />
-                </IconButton>
-            </>
-            ),
+            renderCell: (params) => {
+                const isInactive = params.row.status === 'APPROVED' || params.row.status === 'REJECTED';
+
+                return (
+                    <>
+                        <IconButton onClick={() => handleOpenDetails(params.row)}>
+                            <ArticleIcon />
+                        </IconButton>
+                        <IconButton onClick={() => handleOpenApprove(params.row)} disabled={isInactive}>
+                            <CheckIcon />
+                        </IconButton>
+                        <IconButton onClick={() => handleOpenReject(params.row)} disabled={isInactive}>
+                            <CloseIcon />
+                        </IconButton>
+                    </>
+                );
+            },
         },
     ];
     
     const rows = [
-      { id: 1, name: 'Juan Perez', email: 'juanperez@gmail.com', application_date: '21/04/2023', station: 'X', serial_number: 'X', status: 'PENDING' },
-      { id: 2, name: 'Lucas Fernandez', email: 'lucas_f@outlook.com', application_date: '15/04/2023', station: 'X', serial_number: 'X', status: 'PENDING'  },
-      { id: 3, name: 'Martin Gómez', email: 'm-gomez1990@hotmail.com', application_date: '10/02/2023', station: 'X', serial_number: 'X', status: 'PENDING'  },
-      { id: 4, name: 'Nicolas Hernández', email: 'nicolas_445@gmail.com', application_date: '11/02/2023', station: 'X', serial_number: 'X', status: 'PENDING'  },
-      { id: 5, name: 'Francisco Álvarez', email: 'fran_alvarez@yahoo.com', application_date: '05/01/2023', station: 'X', serial_number: 'X', status: 'PENDING' },
-      { id: 6, name: 'Facundo Lopez', email: 'facundo_0421@hotmail.com', application_date: '19/12/2022', station: 'X', serial_number: 'X', status: 'PENDING'  }
+      { id: 1, name: 'Ezequiel Hoyos', email: 'ezequielhoyos@outlook.com', application_date: '09/05/2022', station: 'X', serial_number: 'X', status: 'PENDING'  },
+      { id: 2, name: 'Juan Perez', email: 'juanperez@gmail.com', application_date: '21/04/2023', station: 'X', serial_number: 'X', status: 'APPROVED' },
+      { id: 3, name: 'Lucas Fernandez', email: 'lucas_f@outlook.com', application_date: '15/04/2023', station: 'X', serial_number: 'X', status: 'APPROVED'  },
+      { id: 4, name: 'Martin Gómez', email: 'm-gomez1990@hotmail.com', application_date: '10/02/2023', station: 'X', serial_number: 'X', status: 'APPROVED'  },
+      { id: 5, name: 'Nicolas Hernández', email: 'nicolas_445@gmail.com', application_date: '11/02/2023', station: 'X', serial_number: 'X', status: 'APPROVED'  },
+      { id: 6, name: 'Francisco Álvarez', email: 'fran_alvarez@yahoo.com', application_date: '05/01/2023', station: 'X', serial_number: 'X', status: 'APPROVED' },
+      { id: 7, name: 'Facundo Lopez', email: 'facundo_0421@hotmail.com', application_date: '19/12/2022', station: 'X', serial_number: 'X', status: 'APPROVED'  },
+      { id: 8, name: 'German Martinez', email: 'germanm20@gmail.com', application_date: '13/11/2022', station: 'X', serial_number: 'X', status: 'PENDING'  },
+      { id: 9, name: 'Juan Ferreyros', email: 'juan_ferreyros@hotmail.com', application_date: '05/11/2022', station: 'X', serial_number: 'X', status: 'REJECTED'  }
     ];
 
     const [openDetails, setOpenDetails] = useState(false);

@@ -95,19 +95,22 @@ export const Stations = () => {
             sortable: false,
             width: 150,
             disableColumnMenu: true,
-            renderCell: (params) => (
-            <>
-                <IconButton onClick={() => handleOpenDetails(params.row)}>
-                    <ArticleIcon />
-                </IconButton>
-                <IconButton onClick={() => handleOpenEdit(params.row)}>
-                    <EditIcon />
-                </IconButton>
-                <IconButton onClick={() => handleOpenInactivate(params.row)}>
-                    <DeleteIcon />
-                </IconButton>
-            </>
-            ),
+            renderCell: (params) => {
+                const isInactive = params.row.status === 'INACTIVE';
+                return (
+                    <>
+                        <IconButton onClick={() => handleOpenDetails(params.row)}>
+                            <ArticleIcon />
+                        </IconButton>
+                        <IconButton onClick={() => handleOpenEdit(params.row)}>
+                            <EditIcon />
+                        </IconButton>
+                        <IconButton onClick={() => handleOpenInactivate(params.row)} disabled={isInactive}>
+                            <DeleteIcon />
+                        </IconButton>
+                    </>
+                );
+            },
         },
     ];
     
