@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid } from "@mui/material";
 import { Header } from "./components/header.jsx";
-import { useState , useRef } from 'react';
+import { useState , useRef, useEffect } from 'react';
 import { Accordion, AccordionSummary, AccordionDetails, Box, Typography, TextField, Button, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Paper from '@mui/material/Paper';
@@ -16,7 +16,8 @@ import { RejectRequest } from './components/reject-request.jsx';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
- 
+
+
 
 export const RequestsAdmin = () => {
     const [value, setValue] = React.useState('todas');
@@ -59,8 +60,52 @@ export const RequestsAdmin = () => {
         }
     };
 
+    const [openDetails, setOpenDetails] = useState(false);
+    const [selectedRow, setSelectedRow] = useState(null);
+
+    const handleOpenDetails = (row) => {
+        setSelectedRow(row);
+        setOpenDetails(true);
+    };
+
+    const handleCloseDetails = () => {
+        setOpenDetails(false);
+    };
+
+    const [openApprove, setOpenApprove] = useState(false);
+
+    const handleOpenApprove = (row) => {
+        setSelectedRow(row);
+        setOpenApprove(true);
+    };
+
+    const handleCloseApprove = () => {
+        setOpenApprove(false);
+    };
+
+    const [openReject, setOpenReject] = useState(false);
+
+    const handleOpenReject = (row) => {
+        setSelectedRow(row);
+        setOpenReject(true);
+    };
+
+    const handleCloseReject = () => {
+        setOpenReject(false);
+    };
+
+    const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXNwaXJBUiIsImlhdCI6MTY4MzE1NjQzMSwiZXhwIjoxNzQ2MjI4NDMxLCJhdWQiOiJ3d3cuZXhhbXBsZS5jb20iLCJzdWIiOiJqcm9ja2V0QGV4YW1wbGUuY29tIiwiaWQiOiIxIiwidXNlcm5hbWUiOiJKb2huRG9lIiwicm9sIjoiYWRtaW4ifQ.4AdK8vzb0ec-m6jjGp8aLFoO4Prn6fFwjJmeqiwBS8s";
+    
+    const headers = new Headers();
+    headers.append("Authorization", `${token}`);
+
+    const options = {
+        method: "GET",
+        headers: headers
+    };
+
     const columns = [
-        { field: 'id', headerName: 'ID', width: 70 },
+        { field: 'id', headerName: 'Id', width: 70 },
         { field: 'created_by', headerName: 'Solicitante', width: 150 },
         { field: 'email', headerName: 'Correo Electrónico', width: 170 },
         { field: 'created_at', headerName: 'Fecha de Solicitud', width: 130 },
@@ -103,52 +148,32 @@ export const RequestsAdmin = () => {
             },
         },
     ];
-    
-    const rows = [
-      { id: 1, created_by: 'Ezequiel Hoyos', email: 'ezequielhoyos@outlook.com', created_at: '09/05/2022', name: 'X', serial_number: 'X', status: 'PENDING'  },
-      { id: 2, created_by: 'Juan Perez', email: 'juanperez@gmail.com', created_at: '21/04/2023', name: 'X', serial_number: 'X', status: 'APPROVED' },
-      { id: 3, created_by: 'Lucas Fernandez', email: 'lucas_f@outlook.com', created_at: '15/04/2023', name: 'X', serial_number: 'X', status: 'APPROVED'  },
-      { id: 4, created_by: 'Martin Gómez', email: 'm-gomez1990@hotmail.com', created_at: '10/02/2023', name: 'X', serial_number: 'X', status: 'APPROVED'  },
-      { id: 5, created_by: 'Nicolas Hernández', email: 'nicolas_445@gmail.com', created_at: '11/02/2023', name: 'X', serial_number: 'X', status: 'APPROVED'  },
-      { id: 6, created_by: 'Francisco Álvarez', email: 'fran_alvarez@yahoo.com', created_at: '05/01/2023', name: 'X', serial_number: 'X', status: 'APPROVED' },
-      { id: 7, created_by: 'Facundo Lopez', email: 'facundo_0421@hotmail.com', created_at: '19/12/2022', name: 'X', serial_number: 'X', status: 'APPROVED'  },
-      { id: 8, created_by: 'German Martinez', email: 'germanm20@gmail.com', created_at: '13/11/2022', name: 'X', serial_number: 'X', status: 'PENDING'  },
-      { id: 9, created_by: 'Juan Ferreyros', email: 'juan_ferreyros@hotmail.com', created_at: '05/11/2022', name: 'X', serial_number: 'X', status: 'REJECTED'  }
-    ];
 
-    const [openDetails, setOpenDetails] = useState(false);
-    const [selectedRow, setSelectedRow] = useState(null);
+    const [rows, setRows] = useState([]);
 
-    const handleOpenDetails = (row) => {
-        setSelectedRow(row);
-        setOpenDetails(true);
-    };
-
-    const handleCloseDetails = () => {
-        setOpenDetails(false);
-    };
-
-    const [openApprove, setOpenApprove] = useState(false);
-
-    const handleOpenApprove = (row) => {
-        setSelectedRow(row);
-        setOpenApprove(true);
-    };
-
-    const handleCloseApprove = () => {
-        setOpenApprove(false);
-    };
-
-    const [openReject, setOpenReject] = useState(false);
-
-    const handleOpenReject = (row) => {
-        setSelectedRow(row);
-        setOpenReject(true);
-    };
-
-    const handleCloseReject = () => {
-        setOpenReject(false);
-    };
+    useEffect(() => {
+        fetch("http://localhost:8080/requests?pageSize=0&page=0", options)
+        .then(response => response.json())
+        .then((data) =>
+            setRows(
+              data.map((item) => ({
+                id: item._id,
+                serial_number: item.serial_number,
+                name: item.name,
+                longitud: item.longitud,
+                latitude: item.latitude,
+                brand: item.brand,
+                model: item.model,
+                status: item.status,
+                created_by: item.created_by,
+                created_at: item.created_at,
+                approved_by: item.approved_by,
+                approved_at: item.approved_at
+              }))
+            )
+        )
+        .catch(error => console.error(error));
+    }, []);
 
     return(
         <Grid container direction="column">
@@ -256,6 +281,10 @@ export const RequestsAdmin = () => {
                                                     pageSizeOptions={[5, 10, 25]}
                                                     checkboxSelection={false}
                                                     disableColumnFilter
+                                                    columnVisibilityModel={{
+                                                        id: false,
+                                                    }}
+                                                    disableColumnSelector 
                                                     style={{ overflowX: 'auto', backgroundColor: '#A9B4C4'}}
                                                 />
                                             </div>
