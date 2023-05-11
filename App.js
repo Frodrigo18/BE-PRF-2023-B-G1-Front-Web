@@ -1,7 +1,7 @@
 import React, { useState, useEffect }from "react";
-import { Login } from "./Login";
-import { Estaciones } from "./Estaciones";
-import { Solicitudes } from "./Solicitudes";
+import { Login } from "./Login.jsx";
+import { Stations } from "./Stations.jsx";
+import { Requests } from "./Requests.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import * as Font from 'expo-font';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -15,7 +15,7 @@ async function loadFonts() {
 
 export default function App() {
   const [isLoaded, setIsLoaded] = useState(false);
-  // Carga las fuentes cuando se monta el componente
+
   useEffect(() => {
     async function load() {
       await loadFonts();
@@ -30,21 +30,19 @@ const theme = createTheme({
   },
 });
 
-  // Renderiza el contenido de la aplicación si las fuentes se han cargado
-
   return (
     <>
       {isLoaded && (
         <ThemeProvider theme={theme}>
           <BrowserRouter>
             <Routes>
-              <Route path="/login" element={<Login />} />
+              <Route path="/" element={<Login />} />
             </Routes>
             <Routes>
-              <Route path="/estaciones" element={<Estaciones />} />
+              <Route path="/stations" element={<Stations />} />
             </Routes>
             <Routes>
-              <Route path="/solicitudes" element={<Solicitudes />} />
+              <Route path="/requests" element={<Requests />} />
             </Routes>
           </BrowserRouter>
         </ThemeProvider>
