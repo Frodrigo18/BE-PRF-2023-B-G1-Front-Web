@@ -16,8 +16,9 @@ import { RejectRequest } from './components/reject-request.jsx';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+ 
 
-export const Requests = () => {
+export const RequestsAdmin = () => {
     const [value, setValue] = React.useState('todas');
 
     const clearFields = (refs) => {

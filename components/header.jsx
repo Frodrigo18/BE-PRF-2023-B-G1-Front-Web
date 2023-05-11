@@ -100,7 +100,7 @@ export const Header = () => {
         <Button href="./stations" style={{ color: '#000' }}>Estaciones</Button>
       </MenuItem>
       <MenuItem>
-        <Button href="./requests" style={{ color: '#000' }}>Solicitudes</Button>
+        <Button href="./requestsAdmin" style={{ color: '#000' }}>Solicitudes</Button>
       </MenuItem>
       <MenuItem>
         <IconButton
@@ -153,7 +153,7 @@ export const Header = () => {
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <Button href="./stations" style={{ color: '#000' }}>Estaciones</Button>
-            <Button href="./requests" style={{ color: '#000' }}>Solicitudes</Button>
+            <Button href="./requestsAdmin" style={{ color: '#000' }}>Solicitudes</Button>
               <IconButton
                 size="large"
                 color="inherit"

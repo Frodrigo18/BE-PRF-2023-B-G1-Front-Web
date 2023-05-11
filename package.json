@@ -16,6 +16,7 @@
     "@mui/material": "^5.12.3",
     "@mui/x-data-grid": "^6.3.1",
     "@mui/x-date-pickers": "^6.3.1",
+    "axios": "^1.4.0",
     "dayjs": "^1.11.7",
     "expo": "~48.0.15",
     "expo-app-loading": "^2.1.1",
