@@ -1,15 +1,13 @@
 import React from 'react';
 import { Grid } from "@mui/material";
 import { Header } from "./components/header.jsx";
-import { useState , useRef } from 'react';
+import { useState , useRef, useEffect } from 'react';
 import { Accordion, AccordionSummary, AccordionDetails, Box, Typography, TextField, Button, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Paper from '@mui/material/Paper';
 import { DataGrid } from '@mui/x-data-grid';
 import IconButton from '@mui/material/IconButton';
 import ArticleIcon from '@mui/icons-material/Article';
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
 import { RequestDetails } from './components/request-details.jsx';
 import { ApprobeRequest } from './components/approve-request.jsx';
 import { RejectRequest } from './components/reject-request.jsx';
@@ -58,6 +56,28 @@ export const RequestsUser = () => {
         }
     };
 
+    const [openDetails, setOpenDetails] = useState(false);
+    const [selectedRow, setSelectedRow] = useState(null);
+
+    const handleOpenDetails = (row) => {
+        setSelectedRow(row);
+        setOpenDetails(true);
+    };
+
+    const handleCloseDetails = () => {
+        setOpenDetails(false);
+    };
+
+    const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXNwaXJBUiIsImlhdCI6MTY4MzE1NjQzMSwiZXhwIjoxNzQ2MjI4NDMxLCJhdWQiOiJ3d3cuZXhhbXBsZS5jb20iLCJzdWIiOiJqcm9ja2V0QGV4YW1wbGUuY29tIiwiaWQiOiIxIiwidXNlcm5hbWUiOiJKb2huRG9lIiwicm9sIjoidXNlciJ9.RPweKkWBmGOMR0z8-HLMgH-6dAzmGBak2dBoSGbCS9U";
+    
+    const headers = new Headers();
+    headers.append("Authorization", `${token}`);
+
+    const options = {
+        method: "GET",
+        headers: headers
+    };
+
     const columns = [
         { field: 'id', headerName: 'ID', width: 70 },
         { field: 'created_by', headerName: 'Solicitante', width: 150 },
@@ -84,8 +104,6 @@ export const RequestsUser = () => {
             width: 150,
             disableColumnMenu: true,
             renderCell: (params) => {
-                const isInactive = params.row.status === 'APPROVED' || params.row.status === 'REJECTED';
-
                 return (
                     <>
                         <IconButton onClick={() => handleOpenDetails(params.row)}>
@@ -96,44 +114,32 @@ export const RequestsUser = () => {
             },
         },
     ];
-    
-    const rows = [
-      { id: 1, created_by: 'Ezequiel Hoyos', email: 'ezequielhoyos@outlook.com', created_at: '09/05/2022', name: 'X', serial_number: 'X', status: 'PENDING'  }
-    ];
 
-    const [openDetails, setOpenDetails] = useState(false);
-    const [selectedRow, setSelectedRow] = useState(null);
+    const [rows, setRows] = useState([]);
 
-    const handleOpenDetails = (row) => {
-        setSelectedRow(row);
-        setOpenDetails(true);
-    };
-
-    const handleCloseDetails = () => {
-        setOpenDetails(false);
-    };
-
-    const [openApprove, setOpenApprove] = useState(false);
-
-    const handleOpenApprove = (row) => {
-        setSelectedRow(row);
-        setOpenApprove(true);
-    };
-
-    const handleCloseApprove = () => {
-        setOpenApprove(false);
-    };
-
-    const [openReject, setOpenReject] = useState(false);
-
-    const handleOpenReject = (row) => {
-        setSelectedRow(row);
-        setOpenReject(true);
-    };
-
-    const handleCloseReject = () => {
-        setOpenReject(false);
-    };
+    useEffect(() => {
+        fetch("http://localhost:8080/requests?pageSize=0&page=0", options)
+        .then(response => response.json())
+        .then((data) =>
+            setRows(
+              data.map((item) => ({
+                id: item._id,
+                serial_number: item.serial_number,
+                name: item.name,
+                longitud: item.longitud,
+                latitude: item.latitude,
+                brand: item.brand,
+                model: item.model,
+                status: item.status,
+                created_by: item.created_by,
+                created_at: item.created_at,
+                approved_by: item.approved_by,
+                approved_at: item.approved_at
+              }))
+            )
+        )
+        .catch(error => console.error(error));
+    }, []);
 
     return(
         <Grid container direction="column">
@@ -241,6 +247,10 @@ export const RequestsUser = () => {
                                                     pageSizeOptions={[5, 10, 25]}
                                                     checkboxSelection={false}
                                                     disableColumnFilter
+                                                    columnVisibilityModel={{
+                                                        id: false,
+                                                    }}
+                                                    disableColumnSelector
                                                     style={{ overflowX: 'auto', backgroundColor: '#A9B4C4'}}
                                                 />
                                             </div>
@@ -259,22 +269,6 @@ export const RequestsUser = () => {
                 <RequestDetails
                     open={openDetails}
                     onClose={handleCloseDetails}
-                    rowData={selectedRow}
-                />
-            )}
-
-            {selectedRow && (
-                <ApprobeRequest
-                    open={openApprove}
-                    onClose={handleCloseApprove}
-                    rowData={selectedRow}
-                />
-            )}
-
-            {selectedRow && (
-                <RejectRequest
-                    open={openReject}
-                    onClose={handleCloseReject}
                     rowData={selectedRow}
                 />
             )}

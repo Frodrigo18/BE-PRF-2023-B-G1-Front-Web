@@ -17,8 +17,6 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
-
-
 export const RequestsAdmin = () => {
     const [value, setValue] = React.useState('todas');
 
@@ -283,8 +281,7 @@ export const RequestsAdmin = () => {
                                                     disableColumnFilter
                                                     columnVisibilityModel={{
                                                         id: false,
-                                                    }}
-                                                    disableColumnSelector 
+                                                    }} 
                                                     style={{ overflowX: 'auto', backgroundColor: '#A9B4C4'}}
                                                 />
                                             </div>
@@ -312,6 +309,7 @@ export const RequestsAdmin = () => {
                     open={openApprove}
                     onClose={handleCloseApprove}
                     rowData={selectedRow}
+                    TransitionProps={{ timeout: 100 }}
                 />
             )}
 
@@ -320,6 +318,7 @@ export const RequestsAdmin = () => {
                     open={openReject}
                     onClose={handleCloseReject}
                     rowData={selectedRow}
+                    TransitionProps={{ timeout: 100 }}
                 />
             )}
         </Grid>
