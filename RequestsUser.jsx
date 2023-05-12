@@ -9,8 +9,6 @@ import { DataGrid } from '@mui/x-data-grid';
 import IconButton from '@mui/material/IconButton';
 import ArticleIcon from '@mui/icons-material/Article';
 import { RequestDetails } from './components/request-details.jsx';
-import { ApprobeRequest } from './components/approve-request.jsx';
-import { RejectRequest } from './components/reject-request.jsx';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
@@ -42,8 +40,21 @@ export const RequestsUser = () => {
     };
 
     const handleBuscarClick = () => {
-       
-    }
+        const nombre = textNombre.current.value;
+        const fechaSolicitud = dateSolicitud.current.value;
+        const email = textEmail.current.value;
+        const estacion = textEstacion.current.value;
+      
+        const filteredRows = rows.filter(row => {
+          return row.created_by === nombre &&
+                 row.created_at === fechaSolicitud &&
+                 row.name === estacion &&
+                 row.email === email;
+        });
+
+        setRows(filteredRows);
+    };
+
 
     const getStatusIcon = (status) => {
         if (status === 'APPROVED') {

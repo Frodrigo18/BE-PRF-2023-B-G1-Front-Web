@@ -16,9 +16,10 @@ import { RejectRequest } from './components/reject-request.jsx';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import { format } from 'date-fns';
 
 export const RequestsAdmin = () => {
-    const [value, setValue] = React.useState('todas');
+    const [radioStatus, setRadioStatus] = useState('ALL');
 
     const clearFields = (refs) => {
         refs.forEach((ref) => {
@@ -30,21 +31,42 @@ export const RequestsAdmin = () => {
         });
     };
 
-    const textNombre = useRef();
+    const textSolicitante = useRef();
     const textEmail = useRef();
     const textEstacion = useRef();
     const dateSolicitud = useRef();
 
     const handleClearFields = () => {
-        clearFields([textNombre, textEmail, textEstacion, dateSolicitud]);
+        clearFields([textSolicitante, textEmail, textEstacion, dateSolicitud]);
+        fetchData();
     };
 
     const handleChange = (event) => {
-        setValue(event.target.value);
+        setRadioStatus(event.target.value);
     };
 
     const handleBuscarClick = () => {
-       
+        let created_by = textSolicitante.current.value;
+        let created_at = dateSolicitud.current.value;
+        let email = textEmail.current.value;
+        let name = textEstacion.current.value;
+        let status = '';
+
+        if (radioStatus !== 'ALL') {
+            status = radioStatus;
+        }
+
+        const filteredRows = rows.filter(row => {
+          return (
+                (created_by === '' || row.created_by === created_by) &&
+                (created_at === '' || row.created_at.slice(0, 10).includes(created_at)) &&
+                (name === '' || row.name.toUpperCase().includes(name.toUpperCase())) &&
+                (email === '' || row.email.toUpperCase().includes(email.toUpperCase()) &&
+                (status === '' || row.status === status))
+            );
+        });
+
+        setRows(filteredRows);
     }
 
     const getStatusIcon = (status) => {
@@ -92,6 +114,11 @@ export const RequestsAdmin = () => {
         setOpenReject(false);
     };
 
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return format(date, 'MM/dd/yyyy');
+    }
+
     const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXNwaXJBUiIsImlhdCI6MTY4MzE1NjQzMSwiZXhwIjoxNzQ2MjI4NDMxLCJhdWQiOiJ3d3cuZXhhbXBsZS5jb20iLCJzdWIiOiJqcm9ja2V0QGV4YW1wbGUuY29tIiwiaWQiOiIxIiwidXNlcm5hbWUiOiJKb2huRG9lIiwicm9sIjoiYWRtaW4ifQ.4AdK8vzb0ec-m6jjGp8aLFoO4Prn6fFwjJmeqiwBS8s";
     
     const headers = new Headers();
@@ -106,7 +133,7 @@ export const RequestsAdmin = () => {
         { field: 'id', headerName: 'Id', width: 70 },
         { field: 'created_by', headerName: 'Solicitante', width: 150 },
         { field: 'email', headerName: 'Correo Electrónico', width: 170 },
-        { field: 'created_at', headerName: 'Fecha de Solicitud', width: 130 },
+        { field: 'created_at', headerName: 'Fecha de Solicitud', width: 130, valueFormatter: (params) => formatDate(params.value) },
         { field: 'name', headerName: 'Estación', width: 130 },
         { field: 'serial_number', headerName: 'Nº de Serie', width: 130 },
         {
@@ -173,6 +200,30 @@ export const RequestsAdmin = () => {
         .catch(error => console.error(error));
     }, []);
 
+    const fetchData = () => {
+        fetch("http://localhost:8080/requests?pageSize=0&page=0", options)
+        .then(response => response.json())
+        .then((data) =>
+            setRows(
+              data.map((item) => ({
+                id: item._id,
+                serial_number: item.serial_number,
+                name: item.name,
+                longitud: item.longitud,
+                latitude: item.latitude,
+                brand: item.brand,
+                model: item.model,
+                status: item.status,
+                created_by: item.created_by,
+                created_at: item.created_at,
+                approved_by: item.approved_by,
+                approved_at: item.approved_at
+              }))
+            )
+        )
+        .catch(error => console.error(error));
+    };
+
     return(
         <Grid container direction="column">
             <Grid>
@@ -203,10 +254,10 @@ export const RequestsAdmin = () => {
                                         <AccordionDetails sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', width: '80%', margin: 'auto' }}>
                                             <Grid container spacing={2}>
                                                 <Grid item xs={12} sm={6}>
-                                                    <TextField label="Nombre" inputRef={textNombre} fullWidth />
+                                                    <TextField label="Solicitante" inputRef={textSolicitante} fullWidth />
                                                 </Grid>
                                                 <Grid item xs={12} sm={6}>
-                                                    <TextField label="Fecha de solicitud" inputRef={dateSolicitud} fullWidth type="date" InputLabelProps={{ shrink: true }} />
+                                                    <TextField label="Fecha de Solicitud" inputRef={dateSolicitud} fullWidth type="date" InputLabelProps={{ shrink: true }} />
                                                 </Grid>
                                                 <Grid item xs={12} sm={6}>
                                                     <TextField label="Correo Electrónico" inputRef={textEmail} fullWidth type="email"/>
@@ -216,13 +267,13 @@ export const RequestsAdmin = () => {
                                                 </Grid>
                                                 <Grid item xs={12} sm={6}>
                                                     <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                                                    <Typography variant="body1" sx={{ mr: 1 }} >Estado:</Typography>
-                                                    <RadioGroup value={value} onChange={handleChange} row sx={{ alignItems: 'center' }}>
-                                                        <FormControlLabel value="ALL" control={<Radio />} label="Todas" />
-                                                        <FormControlLabel value="APPROVED" control={<Radio />} label="Aprobadas" />
-                                                        <FormControlLabel value="REJECTED" control={<Radio />} label="Rechazadas" />
-                                                        <FormControlLabel value="PENDING" control={<Radio />} label="Pendientes" />
-                                                    </RadioGroup>
+                                                        <Typography variant="body1" sx={{ mr: 1 }} >Estado:</Typography>
+                                                        <RadioGroup value={radioStatus} onChange={handleChange} row sx={{ alignItems: 'center' }}>
+                                                            <FormControlLabel value="ALL" control={<Radio />} label="Todas" />
+                                                            <FormControlLabel value="APPROVED" control={<Radio />} label="Aprobadas" />
+                                                            <FormControlLabel value="REJECTED" control={<Radio />} label="Rechazadas" />
+                                                            <FormControlLabel value="PENDING" control={<Radio />} label="Pendientes" />
+                                                        </RadioGroup>
                                                     </Box>
                                                 </Grid>
                                                 <Grid item xs={12} sm={6}>
