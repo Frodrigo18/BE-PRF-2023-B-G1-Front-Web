@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import IconButton from '@mui/material/IconButton';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export const Login = () => {
@@ -20,12 +20,13 @@ export const Login = () => {
       </div>
       <div className="login-section">
         <div className="login-container">
-          <div className="login-form">
+          <form className="login-form">
             <div className="iniciar-sesion">Iniciar Sesión</div>
             <TextField
               id="email-input"
               label="Correo Electrónico"
               type="email"
+              
             />
             <TextField
               id="password-input"
@@ -33,9 +34,9 @@ export const Login = () => {
               type="password"
             />
             <div className="login-button-group">
-              <Button variant="contained" onClick={goToStations}>Ingresar</Button>
+              <Button variant="contained" type="submit" onClick={goToStations}>Ingresar</Button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
       <div className="login-bottom-section">

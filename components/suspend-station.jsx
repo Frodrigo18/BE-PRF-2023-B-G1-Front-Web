@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material' ;
 
-export const ApprobeRequest = ({ open, onClose, rowData }) => {
+export const SuspendStation = ({ open, onClose, rowData }) => {
     const handleClose = () => {
         onClose();
     };
@@ -15,10 +15,10 @@ export const ApprobeRequest = ({ open, onClose, rowData }) => {
         method: "PATCH",
         headers: headers
     };
-    
-    const handleApprove = async () => {
+
+    const handleSuspend = async () => {
         try {
-           await fetch(`http://localhost:8080/users/${rowData.created_by}/requests/${rowData.id}/accept`, options);
+           await fetch(`http://localhost:8080/users/${rowData.created_by}/stations/${rowData.id}/suspend`, options);
            handleClose();
            window.location.reload();
         } catch (error) {
@@ -28,17 +28,17 @@ export const ApprobeRequest = ({ open, onClose, rowData }) => {
 
     return (
         <Dialog onClose={handleClose} open={open}>
-            <DialogTitle id="form-dialog-title">Aprobar Solicitud de Estación</DialogTitle>
+            <DialogTitle id="form-dialog-title">Inactivar Estación</DialogTitle>
             <DialogContent>
                 <DialogContent dividers>
-                    <Typography align="center">¿Esta seguro de aprobar la Estación {rowData.station} con Nº de Serie {rowData.serial_number}?<br/>Se enviaria un Email de aviso a la dirección {rowData.email}</Typography>
+                    <Typography align="center">¿Esta seguro de inactivar la Estacion { rowData.name } con Nº de Serie { rowData.serial_number }?</Typography>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
                     Cancelar
                     </Button>
-                    <Button onClick={handleApprove} color="primary">
-                    Aprobar
+                    <Button onClick={handleSuspend} color="primary">
+                    Inactivar
                     </Button>
                 </DialogActions>
             </DialogContent>

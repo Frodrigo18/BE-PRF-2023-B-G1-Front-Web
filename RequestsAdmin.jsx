@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid } from "@mui/material";
 import { Header } from "./components/header.jsx";
-import { useState , useRef } from 'react';
+import { useState , useRef, useEffect } from 'react';
 import { Accordion, AccordionSummary, AccordionDetails, Box, Typography, TextField, Button, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Paper from '@mui/material/Paper';
@@ -16,10 +16,10 @@ import { RejectRequest } from './components/reject-request.jsx';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
- 
+import { format } from 'date-fns';
 
 export const RequestsAdmin = () => {
-    const [value, setValue] = React.useState('todas');
+    const [radioStatus, setRadioStatus] = useState('ALL');
 
     const clearFields = (refs) => {
         refs.forEach((ref) => {
@@ -31,21 +31,42 @@ export const RequestsAdmin = () => {
         });
     };
 
-    const textNombre = useRef();
+    const textSolicitante = useRef();
     const textEmail = useRef();
     const textEstacion = useRef();
     const dateSolicitud = useRef();
 
     const handleClearFields = () => {
-        clearFields([textNombre, textEmail, textEstacion, dateSolicitud]);
+        clearFields([textSolicitante, textEmail, textEstacion, dateSolicitud]);
+        fetchData();
     };
 
     const handleChange = (event) => {
-        setValue(event.target.value);
+        setRadioStatus(event.target.value);
     };
 
     const handleBuscarClick = () => {
-       
+        let created_by = textSolicitante.current.value;
+        let created_at = dateSolicitud.current.value;
+        let email = textEmail.current.value;
+        let name = textEstacion.current.value;
+        let status = '';
+
+        if (radioStatus !== 'ALL') {
+            status = radioStatus;
+        }
+
+        const filteredRows = rows.filter(row => {
+          return (
+                (created_by === '' || row.created_by === created_by) &&
+                (created_at === '' || row.created_at.slice(0, 10).includes(created_at)) &&
+                (name === '' || row.name.toUpperCase().includes(name.toUpperCase())) &&
+                (email === '' || row.email.toUpperCase().includes(email.toUpperCase()) &&
+                (status === '' || row.status === status))
+            );
+        });
+
+        setRows(filteredRows);
     }
 
     const getStatusIcon = (status) => {
@@ -59,11 +80,60 @@ export const RequestsAdmin = () => {
         }
     };
 
+    const [openDetails, setOpenDetails] = useState(false);
+    const [selectedRow, setSelectedRow] = useState(null);
+
+    const handleOpenDetails = (row) => {
+        setSelectedRow(row);
+        setOpenDetails(true);
+    };
+
+    const handleCloseDetails = () => {
+        setOpenDetails(false);
+    };
+
+    const [openApprove, setOpenApprove] = useState(false);
+
+    const handleOpenApprove = (row) => {
+        setSelectedRow(row);
+        setOpenApprove(true);
+    };
+
+    const handleCloseApprove = () => {
+        setOpenApprove(false);
+    };
+
+    const [openReject, setOpenReject] = useState(false);
+
+    const handleOpenReject = (row) => {
+        setSelectedRow(row);
+        setOpenReject(true);
+    };
+
+    const handleCloseReject = () => {
+        setOpenReject(false);
+    };
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return format(date, 'MM/dd/yyyy');
+    }
+
+    const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXNwaXJBUiIsImlhdCI6MTY4MzE1NjQzMSwiZXhwIjoxNzQ2MjI4NDMxLCJhdWQiOiJ3d3cuZXhhbXBsZS5jb20iLCJzdWIiOiJqcm9ja2V0QGV4YW1wbGUuY29tIiwiaWQiOiIxIiwidXNlcm5hbWUiOiJKb2huRG9lIiwicm9sIjoiYWRtaW4ifQ.4AdK8vzb0ec-m6jjGp8aLFoO4Prn6fFwjJmeqiwBS8s";
+    
+    const headers = new Headers();
+    headers.append("Authorization", `${token}`);
+
+    const options = {
+        method: "GET",
+        headers: headers
+    };
+
     const columns = [
-        { field: 'id', headerName: 'ID', width: 70 },
+        { field: 'id', headerName: 'Id', width: 70 },
         { field: 'created_by', headerName: 'Solicitante', width: 150 },
         { field: 'email', headerName: 'Correo Electrónico', width: 170 },
-        { field: 'created_at', headerName: 'Fecha de Solicitud', width: 130 },
+        { field: 'created_at', headerName: 'Fecha de Solicitud', width: 130, valueFormatter: (params) => formatDate(params.value) },
         { field: 'name', headerName: 'Estación', width: 130 },
         { field: 'serial_number', headerName: 'Nº de Serie', width: 130 },
         {
@@ -103,51 +173,55 @@ export const RequestsAdmin = () => {
             },
         },
     ];
-    
-    const rows = [
-      { id: 1, created_by: 'Ezequiel Hoyos', email: 'ezequielhoyos@outlook.com', created_at: '09/05/2022', name: 'X', serial_number: 'X', status: 'PENDING'  },
-      { id: 2, created_by: 'Juan Perez', email: 'juanperez@gmail.com', created_at: '21/04/2023', name: 'X', serial_number: 'X', status: 'APPROVED' },
-      { id: 3, created_by: 'Lucas Fernandez', email: 'lucas_f@outlook.com', created_at: '15/04/2023', name: 'X', serial_number: 'X', status: 'APPROVED'  },
-      { id: 4, created_by: 'Martin Gómez', email: 'm-gomez1990@hotmail.com', created_at: '10/02/2023', name: 'X', serial_number: 'X', status: 'APPROVED'  },
-      { id: 5, created_by: 'Nicolas Hernández', email: 'nicolas_445@gmail.com', created_at: '11/02/2023', name: 'X', serial_number: 'X', status: 'APPROVED'  },
-      { id: 6, created_by: 'Francisco Álvarez', email: 'fran_alvarez@yahoo.com', created_at: '05/01/2023', name: 'X', serial_number: 'X', status: 'APPROVED' },
-      { id: 7, created_by: 'Facundo Lopez', email: 'facundo_0421@hotmail.com', created_at: '19/12/2022', name: 'X', serial_number: 'X', status: 'APPROVED'  },
-      { id: 8, created_by: 'German Martinez', email: 'germanm20@gmail.com', created_at: '13/11/2022', name: 'X', serial_number: 'X', status: 'PENDING'  },
-      { id: 9, created_by: 'Juan Ferreyros', email: 'juan_ferreyros@hotmail.com', created_at: '05/11/2022', name: 'X', serial_number: 'X', status: 'REJECTED'  }
-    ];
 
-    const [openDetails, setOpenDetails] = useState(false);
-    const [selectedRow, setSelectedRow] = useState(null);
+    const [rows, setRows] = useState([]);
 
-    const handleOpenDetails = (row) => {
-        setSelectedRow(row);
-        setOpenDetails(true);
-    };
+    useEffect(() => {
+        fetch("http://localhost:8080/requests?pageSize=0&page=0", options)
+        .then(response => response.json())
+        .then((data) =>
+            setRows(
+              data.map((item) => ({
+                id: item._id,
+                serial_number: item.serial_number,
+                name: item.name,
+                longitud: item.longitud,
+                latitude: item.latitude,
+                brand: item.brand,
+                model: item.model,
+                status: item.status,
+                created_by: item.created_by,
+                created_at: item.created_at,
+                approved_by: item.approved_by,
+                approved_at: item.approved_at
+              }))
+            )
+        )
+        .catch(error => console.error(error));
+    }, []);
 
-    const handleCloseDetails = () => {
-        setOpenDetails(false);
-    };
-
-    const [openApprove, setOpenApprove] = useState(false);
-
-    const handleOpenApprove = (row) => {
-        setSelectedRow(row);
-        setOpenApprove(true);
-    };
-
-    const handleCloseApprove = () => {
-        setOpenApprove(false);
-    };
-
-    const [openReject, setOpenReject] = useState(false);
-
-    const handleOpenReject = (row) => {
-        setSelectedRow(row);
-        setOpenReject(true);
-    };
-
-    const handleCloseReject = () => {
-        setOpenReject(false);
+    const fetchData = () => {
+        fetch("http://localhost:8080/requests?pageSize=0&page=0", options)
+        .then(response => response.json())
+        .then((data) =>
+            setRows(
+              data.map((item) => ({
+                id: item._id,
+                serial_number: item.serial_number,
+                name: item.name,
+                longitud: item.longitud,
+                latitude: item.latitude,
+                brand: item.brand,
+                model: item.model,
+                status: item.status,
+                created_by: item.created_by,
+                created_at: item.created_at,
+                approved_by: item.approved_by,
+                approved_at: item.approved_at
+              }))
+            )
+        )
+        .catch(error => console.error(error));
     };
 
     return(
@@ -180,10 +254,10 @@ export const RequestsAdmin = () => {
                                         <AccordionDetails sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', width: '80%', margin: 'auto' }}>
                                             <Grid container spacing={2}>
                                                 <Grid item xs={12} sm={6}>
-                                                    <TextField label="Nombre" inputRef={textNombre} fullWidth />
+                                                    <TextField label="Solicitante" inputRef={textSolicitante} fullWidth />
                                                 </Grid>
                                                 <Grid item xs={12} sm={6}>
-                                                    <TextField label="Fecha de solicitud" inputRef={dateSolicitud} fullWidth type="date" InputLabelProps={{ shrink: true }} />
+                                                    <TextField label="Fecha de Solicitud" inputRef={dateSolicitud} fullWidth type="date" InputLabelProps={{ shrink: true }} />
                                                 </Grid>
                                                 <Grid item xs={12} sm={6}>
                                                     <TextField label="Correo Electrónico" inputRef={textEmail} fullWidth type="email"/>
@@ -193,13 +267,13 @@ export const RequestsAdmin = () => {
                                                 </Grid>
                                                 <Grid item xs={12} sm={6}>
                                                     <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                                                    <Typography variant="body1" sx={{ mr: 1 }} >Estado:</Typography>
-                                                    <RadioGroup value={value} onChange={handleChange} row sx={{ alignItems: 'center' }}>
-                                                        <FormControlLabel value="ALL" control={<Radio />} label="Todas" />
-                                                        <FormControlLabel value="APPROVED" control={<Radio />} label="Aprobadas" />
-                                                        <FormControlLabel value="REJECTED" control={<Radio />} label="Rechazadas" />
-                                                        <FormControlLabel value="PENDING" control={<Radio />} label="Pendientes" />
-                                                    </RadioGroup>
+                                                        <Typography variant="body1" sx={{ mr: 1 }} >Estado:</Typography>
+                                                        <RadioGroup value={radioStatus} onChange={handleChange} row sx={{ alignItems: 'center' }}>
+                                                            <FormControlLabel value="ALL" control={<Radio />} label="Todas" />
+                                                            <FormControlLabel value="APPROVED" control={<Radio />} label="Aprobadas" />
+                                                            <FormControlLabel value="REJECTED" control={<Radio />} label="Rechazadas" />
+                                                            <FormControlLabel value="PENDING" control={<Radio />} label="Pendientes" />
+                                                        </RadioGroup>
                                                     </Box>
                                                 </Grid>
                                                 <Grid item xs={12} sm={6}>
@@ -256,6 +330,9 @@ export const RequestsAdmin = () => {
                                                     pageSizeOptions={[5, 10, 25]}
                                                     checkboxSelection={false}
                                                     disableColumnFilter
+                                                    columnVisibilityModel={{
+                                                        id: false,
+                                                    }} 
                                                     style={{ overflowX: 'auto', backgroundColor: '#A9B4C4'}}
                                                 />
                                             </div>
@@ -283,6 +360,7 @@ export const RequestsAdmin = () => {
                     open={openApprove}
                     onClose={handleCloseApprove}
                     rowData={selectedRow}
+                    TransitionProps={{ timeout: 100 }}
                 />
             )}
 
@@ -291,6 +369,7 @@ export const RequestsAdmin = () => {
                     open={openReject}
                     onClose={handleCloseReject}
                     rowData={selectedRow}
+                    TransitionProps={{ timeout: 100 }}
                 />
             )}
         </Grid>

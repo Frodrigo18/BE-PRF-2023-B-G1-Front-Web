@@ -2,11 +2,17 @@ import React from 'react';
 import { Grid, Dialog, DialogContent, DialogTitle, Typography } from '@mui/material' ;
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import { format } from 'date-fns';
 
 export const StationDetails = ({ open, onClose, rowData }) =>{
     const handleClose = () => {
         onClose();
     };
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return format(date, 'MM/dd/yyyy');
+    }
 
     return (
         <Dialog onClose={handleClose} open={open}>
@@ -67,7 +73,7 @@ export const StationDetails = ({ open, onClose, rowData }) =>{
                     </Grid>
                     <Grid item xs={5}>
                         <Typography>Fecha de Creación</Typography>
-                        <Typography variant="h6">{rowData.created_at}</Typography>
+                        <Typography variant="h6">{formatDate(rowData.created_at)}</Typography>
                     </Grid>
                 </Grid>
             </DialogContent>

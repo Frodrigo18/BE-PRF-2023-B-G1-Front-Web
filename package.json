@@ -17,19 +17,34 @@
     "@mui/x-data-grid": "^6.3.1",
     "@mui/x-date-pickers": "^6.3.1",
     "axios": "^1.4.0",
+    "crypto": "^1.0.1",
+    "crypto-browserify": "^3.12.0",
+    "date-fns": "^2.30.0",
     "dayjs": "^1.11.7",
     "expo": "~48.0.15",
     "expo-app-loading": "^2.1.1",
     "expo-font": "^11.1.1",
     "expo-status-bar": "~1.4.4",
+    "jsonwebtoken-promisified": "^1.0.3",
+    "jsrsasign": "^10.8.6",
+    "jwa": "^2.0.0",
+    "jws": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-native": "0.71.7",
     "react-native-web": "~0.18.10",
-    "react-router-dom": "^6.11.1"
+    "react-router-dom": "^6.11.1",
+    "stream": "^0.0.2",
+    "universal-cookie": "^4.0.4",
+    "util": "^0.12.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "browserify": "^17.0.0",
+    "jsonwebtoken": "^9.0.0"
+  },
+  "browser": {
+    "crypto": false
   },
   "private": true
 }
