@@ -13,8 +13,5 @@ RUN npm install
 # Copiar el resto de los archivos del proyecto
 COPY . .
 
-# Exponer el puerto en el que se ejecutará la aplicación de React
-EXPOSE 19006
-
 # Iniciar la aplicación de Expo
 CMD [ "npm", "start" ]
