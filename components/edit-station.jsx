@@ -1,8 +1,6 @@
 import React from 'react';
 import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid } from '@mui/material' ;
 import { useState } from "react";
-import Switch from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import { styled } from '@mui/system';
 
 const Form = styled('form')({
@@ -18,14 +16,40 @@ const Field = styled(TextField)({
 });
 
 export const EditStation = ({ open, onClose, rowData }) =>{
-  const [isActive, setIsActive] = useState(rowData.status === "ACTIVE");
-
-  const handleSwitchChange = () => {
-    setIsActive(!isActive);
-  };
-
   const handleClose = () => {
       onClose();
+  };
+
+  const [formData, setFormData] = useState({
+    name: rowData.name
+  });
+
+  const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXNwaXJBUiIsImlhdCI6MTY4MzE1NjQzMSwiZXhwIjoxNzQ2MjI4NDMxLCJhdWQiOiJ3d3cuZXhhbXBsZS5jb20iLCJzdWIiOiJqcm9ja2V0QGV4YW1wbGUuY29tIiwiaWQiOiIxIiwidXNlcm5hbWUiOiJKb2huRG9lIiwicm9sIjoiYWRtaW4ifQ.4AdK8vzb0ec-m6jjGp8aLFoO4Prn6fFwjJmeqiwBS8s";
+
+  const handleEdit = async () => {
+    try {
+      const userId = 1;
+
+      const data = {
+        name: formData.name
+      };
+      
+      const options = {
+        method: 'PATCH',
+        headers: {
+          'Authorization': `${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      };
+  
+      const response = await fetch(`http://localhost:8080/users/${userId}/stations/${rowData.id}/rename`, options);
+  
+      handleClose();
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -42,29 +66,13 @@ export const EditStation = ({ open, onClose, rowData }) =>{
                         id="name"
                         label="Nombre"
                         variant="outlined"
-                        value={rowData.name}
-                    />
-                </Grid>
-                <Grid item xs={6}>
-                    <Field
-                        required
-                        autoFocus
-                        margin="dense"
-                        id="longitude"
-                        label="Longitud"
-                        variant="outlined"
-                        value="X"
-                    />
-                </Grid>
-                <Grid item xs={6}>
-                    <Field
-                        required
-                        autoFocus
-                        margin="dense"
-                        id="latitud"
-                        label="Latitud"
-                        variant="outlined"
-                        value="X"
+                        value={formData.name}
+                        onChange={(e) =>
+                          setFormData((prevFormData) => ({
+                            ...prevFormData,
+                            name: e.target.value,
+                          }))
+                        }
                     />
                 </Grid>
             </Grid>
@@ -72,7 +80,7 @@ export const EditStation = ({ open, onClose, rowData }) =>{
             <Button onClick={handleClose} color="primary">
               Cancelar
             </Button>
-            <Button type="submit" color="primary">
+            <Button onClick={handleEdit} color="primary">
               Guardar
             </Button>
           </DialogActions>

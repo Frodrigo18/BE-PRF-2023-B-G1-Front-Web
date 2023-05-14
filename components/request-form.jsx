@@ -34,7 +34,6 @@ export const RequestForm = ({ open, handleClose }) => {
         longitud: parseInt(formData.longitud)
       };
       
-      debugger;
       const options = {
         method: 'POST',
         headers: {
