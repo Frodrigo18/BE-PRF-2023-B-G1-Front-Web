@@ -78,11 +78,6 @@ export const Stations = () => {
         setOpenFormRequest(false);
     };
 
-    const solicitarEstacion = (event) => {
-        event.preventDefault();
-        setOpen(false);
-    };
-
     const getStatusIcon = (status) => {
         if (status === 'ACTIVE') {
           return { icon: <CheckCircleOutlineIcon style={{ color: 'green' }} />, label: 'Activa' };
@@ -325,7 +320,6 @@ export const Stations = () => {
                                             <Grid item xs />
                                             <Grid item>
                                                 <Button variant="contained" color="primary" onClick={handleOpenFormRequest}>+ Solicitar Estacion</Button>
-                                                <RequestForm open={openFormRequest} handleClose={handleCloseFormRequest} handleSubmit={solicitarEstacion} />
                                             </Grid>
                                         </Grid>
                                         <Grid item sx={{ height: '25px' }}></Grid>
@@ -358,6 +352,8 @@ export const Stations = () => {
                 </Paper>
             </Grid>
 
+            <RequestForm open={openFormRequest} handleClose={handleCloseFormRequest} TransitionProps={{ timeout: 100 }} />
+
             {selectedRow && (
                 <StationDetails
                     open={openDetails}
@@ -371,6 +367,7 @@ export const Stations = () => {
                     open={openEdit}
                     onClose={handleCloseEdit}
                     rowData={selectedRow}
+                    TransitionProps={{ timeout: 100 }}
                 />
             )}
 
@@ -379,6 +376,7 @@ export const Stations = () => {
                     open={openSuspend}
                     onClose={handleCloseSuspend}
                     rowData={selectedRow}
+                    TransitionProps={{ timeout: 100 }}
                 />
             )}
         </Grid>
