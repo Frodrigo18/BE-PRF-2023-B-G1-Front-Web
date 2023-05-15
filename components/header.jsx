@@ -1,20 +1,11 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
+import { useNavigate } from "react-router-dom";
+import { AppBar, Box, Toolbar, IconButton, Typography, InputBase, Badge, MenuItem, Menu, Button } from '@mui/material';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import Button from '@mui/material/Button';
-import { useNavigate } from "react-router-dom";
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
@@ -100,7 +91,7 @@ export const Header = () => {
         <Button href="./stations" style={{ color: '#000' }}>Estaciones</Button>
       </MenuItem>
       <MenuItem>
-        <Button href="./requestsAdmin" style={{ color: '#000' }}>Solicitudes</Button>
+        <Button href="./requests" style={{ color: '#000' }}>Solicitudes</Button>
       </MenuItem>
       <MenuItem>
         <IconButton
@@ -153,7 +144,7 @@ export const Header = () => {
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <Button href="./stations" style={{ color: '#000' }}>Estaciones</Button>
-            <Button href="./requestsAdmin" style={{ color: '#000' }}>Solicitudes</Button>
+            <Button href="./requests" style={{ color: '#000' }}>Solicitudes</Button>
               <IconButton
                 size="large"
                 color="inherit"

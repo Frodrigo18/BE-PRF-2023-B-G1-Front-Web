@@ -1,23 +1,40 @@
-import { Header } from "./components/header.jsx";
-import Paper from '@mui/material/Paper';
-import React from 'react';
-import { useState , useRef, useEffect } from 'react';
-import { Grid, Accordion, AccordionSummary, AccordionDetails, Box, Typography, TextField, Button, RadioGroup, FormControlLabel, Radio } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { RequestForm } from './components/request-form.jsx';
+import { React, useState , useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Grid, Accordion, AccordionSummary, AccordionDetails, Box, Typography, TextField, Button, RadioGroup, FormControlLabel, Radio, Paper, IconButton } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
-import IconButton from '@mui/material/IconButton';
-import ArticleIcon from '@mui/icons-material/Article';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Header } from './components/header.jsx';
+import { RequestForm } from './components/request-form.jsx';
 import { StationDetails } from './components/station-details.jsx';
-import { EditStation } from "./components/edit-station.jsx";
+import { EditStation } from './components/edit-station.jsx';
 import { SuspendStation } from './components/suspend-station.jsx';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { format } from 'date-fns';
+import Cookies from "universal-cookie";
+import ArticleIcon from '@mui/icons-material/Article';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 export const Stations = () => {
+    const cookies = new Cookies();
+    const navigate = useNavigate();
+
+    let token = cookies.get("token");
+    let rol = cookies.get("rol");
+
+    if (!token) {
+        navigate('/');
+    }
+
+    const headers = new Headers();
+    headers.append("Authorization", `${token}`);
+
+    const options = {
+        method: "GET",
+        headers: headers
+    };
+
     const [radioStatus, setRadioStatus] = useState('ALL');
 
     const clearFields = (refs) => {
@@ -91,16 +108,6 @@ export const Stations = () => {
         return format(date, 'MM/dd/yyyy');
     }
 
-    const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXNwaXJBUiIsImlhdCI6MTY4MzE1NjQzMSwiZXhwIjoxNzQ2MjI4NDMxLCJhdWQiOiJ3d3cuZXhhbXBsZS5jb20iLCJzdWIiOiJqcm9ja2V0QGV4YW1wbGUuY29tIiwiaWQiOiIxIiwidXNlcm5hbWUiOiJKb2huRG9lIiwicm9sIjoiYWRtaW4ifQ.4AdK8vzb0ec-m6jjGp8aLFoO4Prn6fFwjJmeqiwBS8s";
-    
-    const headers = new Headers();
-    headers.append("Authorization", `${token}`);
-
-    const options = {
-        method: "GET",
-        headers: headers
-    };
-
     const columns = [
         { field: 'id', headerName: 'Id', width: 70 },
         { field: 'name', headerName: 'Estación', width: 130 },
@@ -134,12 +141,16 @@ export const Stations = () => {
                         <IconButton onClick={() => handleOpenDetails(params.row)}>
                             <ArticleIcon />
                         </IconButton>
-                        <IconButton onClick={() => handleOpenEdit(params.row)} disabled={isInactive}>
-                            <EditIcon />
-                        </IconButton>
-                        <IconButton onClick={() => handleOpenSuspend(params.row)} disabled={isInactive}>
-                            <DeleteIcon />
-                        </IconButton>
+                        {rol === "admin" && (
+                            <>
+                                <IconButton onClick={() => handleOpenEdit(params.row)} disabled={isInactive}>
+                                    <EditIcon />
+                                </IconButton>
+                                <IconButton onClick={() => handleOpenSuspend(params.row)} disabled={isInactive}>
+                                    <DeleteIcon />
+                                </IconButton>
+                            </>
+                        )}
                     </>
                 );
             },
@@ -157,7 +168,7 @@ export const Stations = () => {
                 id: item._id,
                 serial_number: item.serial_number,
                 name: item.name,
-                longitud: item.longitud,
+                longitude: item.longitude,
                 latitude: item.latitude,
                 brand: item.brand,
                 model: item.model,
