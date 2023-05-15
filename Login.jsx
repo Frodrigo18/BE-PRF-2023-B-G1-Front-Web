@@ -1,15 +1,41 @@
-import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Grid, TextField, Button, Typography, Paper } from "@mui/material";
+import { Grid, TextField, Button, Typography, Paper, IconButton } from "@mui/material";
 import DarkModeIcon from '@mui/icons-material/DarkMode';
-import IconButton from '@mui/material/IconButton';
+import Cookies from "universal-cookie";
+import jwt_decode from 'jwt-decode';
 
 export const Login = () => {
+  const cookies = new Cookies();
   const navigate = useNavigate();
+  let token = "";
 
-  const goToStations = useCallback(() => {
+  const handleLoginAdmin = async () => {
+    token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXNwaXJBUiIsImlhdCI6MTY4MzE1NjQzMSwiZXhwIjoxNzQ2MjI4NDMxLCJhdWQiOiJ3d3cuZXhhbXBsZS5jb20iLCJzdWIiOiJqcm9ja2V0QGV4YW1wbGUuY29tIiwiaWQiOiIxIiwidXNlcm5hbWUiOiJKb2huRG9lIiwicm9sIjoiYWRtaW4ifQ.4AdK8vzb0ec-m6jjGp8aLFoO4Prn6fFwjJmeqiwBS8s";
+    setData(token);
     navigate('/stations');
-  }, [navigate]);
+  }
+
+  const handleLoginUser = async () => {
+    token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXNwaXJBUiIsImlhdCI6MTY4MzE1NjQzMSwiZXhwIjoxNzQ2MjI4NDMxLCJhdWQiOiJ3d3cuZXhhbXBsZS5jb20iLCJzdWIiOiJqcm9ja2V0QGV4YW1wbGUuY29tIiwiaWQiOiIxIiwidXNlcm5hbWUiOiJKb2huRG9lIiwicm9sIjoidXNlciJ9.RPweKkWBmGOMR0z8-HLMgH-6dAzmGBak2dBoSGbCS9U";
+    setData(token);
+    navigate('/stations');
+  }
+
+  const setData = async (token) => {
+    const decodedToken = jwt_decode(token);
+    const id_user = decodedToken.id;
+    const userName = decodedToken.username;
+    const email = decodedToken.sub;
+    const rol = decodedToken.rol;
+
+    cookies.set("token", JSON.stringify(token));
+    cookies.set("id_user", JSON.stringify(id_user));
+    cookies.set("userName", JSON.stringify(userName));
+    cookies.set("email", JSON.stringify(email));
+    cookies.set("rol", JSON.stringify(rol));
+
+    console.log(cookies);
+  }
 
   return (
     <Grid container component="main" alignItems="center" justifyContent="center" >
@@ -51,10 +77,10 @@ export const Login = () => {
               </Grid>
               <Grid item xs={4}></Grid>
               <Grid item xs={4}>
-                <Button type="submit" fullWidth variant="contained" color="primary" style={{ marginBottom: 10 }}>
+                <Button onClick={handleLoginAdmin} fullWidth variant="contained" color="primary" style={{ marginBottom: 10 }}>
                   Ingresar como Admin
                 </Button>
-                <Button type="submit" fullWidth variant="contained" color="primary">
+                <Button onClick={handleLoginUser} fullWidth variant="contained" color="primary">
                   Ingresar como User
                 </Button>
               </Grid>
@@ -62,7 +88,12 @@ export const Login = () => {
             </Grid>
           </form>
         </Paper>
+        <Grid item style={{ position: "fixed", bottom: 0, right: 0 }}>
+          <IconButton>
+            <DarkModeIcon />
+          </IconButton>
+        </Grid>
       </Grid>
-    </Grid >
+    </Grid>
   );
 };
