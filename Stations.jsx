@@ -59,10 +59,13 @@ export const Stations = () => {
     const textEstacion = useRef();
     const textSolicitante = useRef();
     const textSerie = useRef();
-    const dateSolicitud = useRef();
+    const textMarca = useRef();
+    const textModelo = useRef();
+    const fechaCreacion = useRef();
 
     const handleClearFields = () => {
-        clearFields([textEstacion, textSolicitante, textSerie, dateSolicitud]);
+        clearFields([textEstacion, textSolicitante, textSerie, textMarca, textModelo, fechaCreacion]);
+        setRadioStatus('ALL');
         fetchData();
     };
 
@@ -73,9 +76,20 @@ export const Stations = () => {
     const handleBuscarClick = () => {
         let name = textEstacion.current.value;
         let serial_number = textSerie.current.value;
-        let created_by = textSolicitante.current.value;
-        let created_at = dateSolicitud.current.value;
+        let created_by = '';
+        let created_at = '';
+        let brand = '';
+        let model = '';
         let status = '';
+
+        if (rol === "admin") {
+            created_by = textSolicitante.current.value;
+            created_at = fechaCreacion.current.value;
+        }
+        else {
+            brand = textMarca.current.value;
+            model = textModelo.current.value;
+        }
 
         if (radioStatus !== 'ALL') {
             status = radioStatus;
@@ -87,6 +101,8 @@ export const Stations = () => {
                 (serial_number === '' || row.serial_number.toUpperCase().includes(serial_number.toUpperCase())) &&
                 (created_by === '' || row.created_by === created_by) &&
                 (created_at === '' || row.created_at.slice(0, 10).includes(created_at)) &&
+                (brand === '' || row.brand.toUpperCase().includes(brand.toUpperCase())) &&
+                (model === '' || row.model.toUpperCase().includes(model.toUpperCase())) &&
                 (status === '' || row.status === status)
             );
         });
@@ -276,14 +292,33 @@ export const Stations = () => {
                                                 <TextField label="Estación" inputRef={textEstacion} fullWidth />
                                             </Grid>
                                             <Grid item xs={12} sm={6}>
-                                                <TextField label="Solicitante" inputRef={textSolicitante} fullWidth />
-                                            </Grid>
-                                            <Grid item xs={12} sm={6}>
                                                 <TextField label="Número de Serie" inputRef={textSerie} fullWidth />
                                             </Grid>
-                                            <Grid item xs={12} sm={6}>
-                                                <TextField label="Fecha de Solicitud" inputRef={dateSolicitud} fullWidth type="date" InputLabelProps={{ shrink: true }} />
-                                            </Grid>
+
+                                            {
+                                                rol === "admin" && (
+                                                    <>
+                                                        <Grid item xs={12} sm={6}>
+                                                            <TextField label="Solicitante" inputRef={textSolicitante} fullWidth />
+                                                        </Grid>
+                                                        <Grid item xs={12} sm={6}>
+                                                            <TextField label="Fecha de Creación" inputRef={fechaCreacion} fullWidth type="date" InputLabelProps={{ shrink: true }} />
+                                                        </Grid>
+                                                    </>
+                                                )
+                                            }
+                                            {
+                                                rol === "user" && (
+                                                    <>
+                                                        <Grid item xs={12} sm={6}>
+                                                            <TextField label="Marca" inputRef={textMarca} fullWidth />
+                                                        </Grid>
+                                                        <Grid item xs={12} sm={6}>
+                                                            <TextField label="Modelo" inputRef={textModelo} fullWidth />
+                                                        </Grid>
+                                                    </>
+                                                )
+                                            }
                                             <Grid item xs={12} sm={6}>
                                                 <Box sx={{ display: 'flex', alignItems: 'center'}}>
                                                     <Typography variant="body1">Estado:</Typography>

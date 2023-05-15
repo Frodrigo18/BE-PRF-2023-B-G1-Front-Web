@@ -59,10 +59,13 @@ export const Requests = () => {
     const textSolicitante = useRef();
     const textEmail = useRef();
     const textEstacion = useRef();
-    const dateSolicitud = useRef();
+    const textSerie = useRef();
+    const textMarca = useRef();
+    const fechaSolicitud = useRef();
 
     const handleClearFields = () => {
-        clearFields([textSolicitante, textEmail, textEstacion, dateSolicitud]);
+        clearFields([textSolicitante, textEmail, textEstacion, textSerie, textMarca, fechaSolicitud]);
+        setRadioStatus('ALL');
         fetchData();
     };
 
@@ -71,11 +74,22 @@ export const Requests = () => {
     };
 
     const handleBuscarClick = () => {
-        let created_by = textSolicitante.current.value;
-        let created_at = dateSolicitud.current.value;
-        let email = textEmail.current.value;
         let name = textEstacion.current.value;
+        let created_at = fechaSolicitud.current.value;
+        let created_by = '';
+        let email = '';
+        let serial_number = '';
+        let brand = '';
         let status = '';
+
+        if (rol === "admin") {
+            created_by = textSolicitante.current.value;
+            email = textEmail.current.value;
+        }
+        else {
+            serial_number = textSerie.current.value;
+            brand = textMarca.current.value;
+        }
 
         if (radioStatus !== 'ALL') {
             status = radioStatus;
@@ -87,6 +101,8 @@ export const Requests = () => {
                 (created_at === '' || row.created_at.slice(0, 10).includes(created_at)) &&
                 (name === '' || row.name.toUpperCase().includes(name.toUpperCase())) &&
                 (email === '' || row.email.toUpperCase().includes(email.toUpperCase())) &&
+                (serial_number === '' || row.serial_number.toUpperCase().includes(serial_number.toUpperCase())) &&
+                (brand === '' || row.brand.toUpperCase().includes(brand.toUpperCase())) &&
                 (status === '' || row.status === status)
             );
         });
@@ -275,17 +291,35 @@ export const Requests = () => {
                                         <AccordionDetails sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', width: '80%', margin: 'auto' }}>
                                             <Grid container spacing={2}>
                                                 <Grid item xs={12} sm={6}>
-                                                    <TextField label="Solicitante" inputRef={textSolicitante} fullWidth />
-                                                </Grid>
-                                                <Grid item xs={12} sm={6}>
-                                                    <TextField label="Fecha de Solicitud" inputRef={dateSolicitud} fullWidth type="date" InputLabelProps={{ shrink: true }} />
-                                                </Grid>
-                                                <Grid item xs={12} sm={6}>
-                                                    <TextField label="Correo Electrónico" inputRef={textEmail} fullWidth type="email"/>
-                                                </Grid>
-                                                <Grid item xs={12} sm={6}>
                                                     <TextField label="Estación" inputRef={textEstacion} fullWidth />
                                                 </Grid>
+                                                <Grid item xs={12} sm={6}>
+                                                    <TextField label="Fecha de Solicitud" inputRef={fechaSolicitud} fullWidth type="date" InputLabelProps={{ shrink: true }} />
+                                                </Grid>
+                                                {
+                                                    rol === "admin" && (
+                                                        <>
+                                                            <Grid item xs={12} sm={6}>
+                                                                <TextField label="Solicitante" inputRef={textSolicitante} fullWidth />
+                                                            </Grid>
+                                                            <Grid item xs={12} sm={6}>
+                                                                <TextField label="Correo Electrónico" inputRef={textEmail} fullWidth type="email"/>
+                                                            </Grid>
+                                                        </>
+                                                    )
+                                                }
+                                                {
+                                                    rol === "user" && (
+                                                        <>
+                                                            <Grid item xs={12} sm={6}>
+                                                                <TextField label="Nº de Serie" inputRef={textSerie} fullWidth />
+                                                            </Grid>
+                                                            <Grid item xs={12} sm={6}>
+                                                                <TextField label="Marca" inputRef={textMarca} fullWidth />
+                                                            </Grid>
+                                                        </>
+                                                    )
+                                                }
                                                 <Grid item xs={12} sm={6}>
                                                     <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
                                                         <Typography variant="body1" sx={{ mr: 1 }} >Estado:</Typography>
