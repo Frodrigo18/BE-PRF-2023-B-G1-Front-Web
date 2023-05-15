@@ -1,51 +1,99 @@
-import "./styles/login.css";
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
-import IconButton from '@mui/material/IconButton';
-import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Grid, TextField, Button, Typography, Paper, IconButton } from "@mui/material";
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import Cookies from "universal-cookie";
+import jwt_decode from 'jwt-decode';
 
 export const Login = () => {
+  const cookies = new Cookies();
   const navigate = useNavigate();
+  let token = "";
 
-  const goToStations = useCallback(() => {
+  const handleLoginAdmin = async () => {
+    token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXNwaXJBUiIsImlhdCI6MTY4MzE1NjQzMSwiZXhwIjoxNzQ2MjI4NDMxLCJhdWQiOiJ3d3cuZXhhbXBsZS5jb20iLCJzdWIiOiJqcm9ja2V0QGV4YW1wbGUuY29tIiwiaWQiOiIxIiwidXNlcm5hbWUiOiJKb2huRG9lIiwicm9sIjoiYWRtaW4ifQ.4AdK8vzb0ec-m6jjGp8aLFoO4Prn6fFwjJmeqiwBS8s";
+    setData(token);
     navigate('/stations');
-  }, [navigate]);
+  }
+
+  const handleLoginUser = async () => {
+    token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXNwaXJBUiIsImlhdCI6MTY4MzE1NjQzMSwiZXhwIjoxNzQ2MjI4NDMxLCJhdWQiOiJ3d3cuZXhhbXBsZS5jb20iLCJzdWIiOiJqcm9ja2V0QGV4YW1wbGUuY29tIiwiaWQiOiIxIiwidXNlcm5hbWUiOiJKb2huRG9lIiwicm9sIjoidXNlciJ9.RPweKkWBmGOMR0z8-HLMgH-6dAzmGBak2dBoSGbCS9U";
+    setData(token);
+    navigate('/stations');
+  }
+
+  const setData = async (token) => {
+    const decodedToken = jwt_decode(token);
+    const id_user = decodedToken.id;
+    const userName = decodedToken.username;
+    const email = decodedToken.sub;
+    const rol = decodedToken.rol;
+
+    cookies.set("token", JSON.stringify(token));
+    cookies.set("id_user", JSON.stringify(id_user));
+    cookies.set("userName", JSON.stringify(userName));
+    cookies.set("email", JSON.stringify(email));
+    cookies.set("rol", JSON.stringify(rol));
+
+    console.log(cookies);
+  }
 
   return (
-    <div className="login">
-      <div className="login-logo-section">
-        <div className="logo1">respirAR</div>
-      </div>
-      <div className="login-section">
-        <div className="login-container">
-          <form className="login-form">
-            <div className="iniciar-sesion">Iniciar Sesión</div>
-            <TextField
-              id="email-input"
-              label="Correo Electrónico"
-              type="email"
-              
-            />
-            <TextField
-              id="password-input"
-              label="Password"
-              type="password"
-            />
-            <div className="login-button-group">
-              <Button variant="contained" type="submit" onClick={goToStations}>Ingresar</Button>
-            </div>
+    <Grid container component="main" alignItems="center" justifyContent="center" >
+      <Grid item xs={12} sm={8} md={5} square style={{textAlign: "center"}}>
+        <Typography component="h1" variant="h1" style={{ marginBottom: 50 }}>
+          respirAR
+        </Typography>
+        <Paper elevation={3} style={{padding: 20, backgroundColor: '#D7E1F0' }}>
+          <Typography component="h1" variant="h5">
+            Iniciar Sesión
+          </Typography>
+          <form noValidate alignItems="center" justifyContent="center" >
+            <Grid container spacing={2} style={{textAlign: "center"}}>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  style = {{width: 300}}
+                  id="email"
+                  label="Correo Electrónico"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  style = {{width: 300}}
+                  name="password"
+                  label="Contraseña"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                />
+              </Grid>
+              <Grid item xs={4}></Grid>
+              <Grid item xs={4}>
+                <Button onClick={handleLoginAdmin} fullWidth variant="contained" color="primary" style={{ marginBottom: 10 }}>
+                  Ingresar como Admin
+                </Button>
+                <Button onClick={handleLoginUser} fullWidth variant="contained" color="primary">
+                  Ingresar como User
+                </Button>
+              </Grid>
+              <Grid item xs={4}></Grid>
+            </Grid>
           </form>
-        </div>
-      </div>
-      <div className="login-bottom-section">
-        <IconButton>
-          <DarkModeIcon
-            fontSize="large" 
-          />
-        </IconButton>
-      </div>
-    </div>
+        </Paper>
+        <Grid item style={{ position: "fixed", bottom: 0, right: 0 }}>
+          <IconButton>
+            <DarkModeIcon />
+          </IconButton>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 };

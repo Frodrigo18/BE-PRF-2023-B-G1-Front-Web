@@ -1,19 +1,29 @@
-import React from 'react';
+import { React } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material' ;
+import Cookies from "universal-cookie";
 
 export const ApprobeRequest = ({ open, onClose, rowData }) => {
-    const handleClose = () => {
-        onClose();
-    };
+    const cookies = new Cookies();
+    const navigate = useNavigate();
 
-    const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXNwaXJBUiIsImlhdCI6MTY4MzE1NjQzMSwiZXhwIjoxNzQ2MjI4NDMxLCJhdWQiOiJ3d3cuZXhhbXBsZS5jb20iLCJzdWIiOiJqcm9ja2V0QGV4YW1wbGUuY29tIiwiaWQiOiIxIiwidXNlcm5hbWUiOiJKb2huRG9lIiwicm9sIjoiYWRtaW4ifQ.4AdK8vzb0ec-m6jjGp8aLFoO4Prn6fFwjJmeqiwBS8s";
-    
+    let token = cookies.get("token");
+    let rol = cookies.get("rol");
+
+    if (!token && rol !== "admin") {
+        navigate('/');
+    }
+
     const headers = new Headers();
     headers.append("Authorization", `${token}`);
 
     const options = {
         method: "PATCH",
         headers: headers
+    };
+
+    const handleClose = () => {
+        onClose();
     };
     
     const handleApprove = async () => {

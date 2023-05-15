@@ -1,7 +1,8 @@
-import React from 'react';
-import { useState } from 'react';
+import { React , useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid } from '@mui/material' ;
 import { styled } from '@mui/system';
+import Cookies from "universal-cookie";
 
 const Field = styled(TextField)({
   margin: theme => theme.spacing(1),
@@ -10,28 +11,34 @@ const Field = styled(TextField)({
 });
 
 export const RequestForm = ({ open, handleClose }) => {
+  const cookies = new Cookies();
+  const navigate = useNavigate();
+
+  let token = cookies.get("token");
+  let id_user = parseInt(cookies.get("id_user"));
+
+  if (!token) {
+      navigate('/');
+  }
+
   const [formData, setFormData] = useState({
     name: '',
     model: '',
     serial_number: '',
     latitude: '',
     brand: '',
-    longitud: '',
+    longitude: '',
   });
-
-  const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyZXNwaXJBUiIsImlhdCI6MTY4MzE1NjQzMSwiZXhwIjoxNzQ2MjI4NDMxLCJhdWQiOiJ3d3cuZXhhbXBsZS5jb20iLCJzdWIiOiJqcm9ja2V0QGV4YW1wbGUuY29tIiwiaWQiOiIxIiwidXNlcm5hbWUiOiJKb2huRG9lIiwicm9sIjoiYWRtaW4ifQ.4AdK8vzb0ec-m6jjGp8aLFoO4Prn6fFwjJmeqiwBS8s";
     
   const handleRequest = async () => {
     try {
-      const userId = 1;
-
       const data = {
         name: formData.name,
         model: formData.model,
         serial_number: formData.serial_number,
         latitude: parseInt(formData.latitude),
         brand: formData.brand,
-        longitud: parseInt(formData.longitud)
+        longitude: parseInt(formData.longitude)
       };
       
       const options = {
@@ -43,7 +50,7 @@ export const RequestForm = ({ open, handleClose }) => {
         body: JSON.stringify(data)
       };
   
-      const response = await fetch(`http://localhost:8080/users/${userId}/requests`, options);
+      await fetch(`http://localhost:8080/users/${id_user}/requests`, options);
   
       handleClose();
       window.location.reload();
@@ -143,15 +150,15 @@ export const RequestForm = ({ open, handleClose }) => {
                     <Field
                         required
                         margin="dense"
-                        id="longitud"
+                        id="longitude"
                         label="Longitud"
                         variant="outlined"
                         type="number"
-                        value={formData.longitud}
+                        value={formData.longitude}
                         onChange={(e) =>
                           setFormData((prevFormData) => ({
                             ...prevFormData,
-                            longitud: e.target.value,
+                            longitude: e.target.value,
                           }))
                         }
                     />

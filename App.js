@@ -1,8 +1,7 @@
 import React, { useState, useEffect }from "react";
 import { Login } from "./Login.jsx";
 import { Stations } from "./Stations.jsx";
-import { RequestsAdmin } from "./RequestsAdmin.jsx";
-import { RequestsUser } from "./RequestsUser.jsx";
+import { Requests } from "./Requests.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import * as Font from 'expo-font';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -43,10 +42,7 @@ const theme = createTheme({
               <Route path="/stations" element={<Stations />} />
             </Routes>
             <Routes>
-              <Route path="/requestsAdmin" element={<RequestsAdmin />} />
-            </Routes>
-            <Routes>
-              <Route path="/requestsUser" element={<RequestsUser />} />
+              <Route path="/requests" element={<Requests />} />
             </Routes>
           </BrowserRouter>
         </ThemeProvider>

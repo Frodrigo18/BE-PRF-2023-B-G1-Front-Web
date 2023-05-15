@@ -1,10 +1,21 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Grid, Dialog, DialogContent, DialogTitle, Typography } from '@mui/material' ;
+import { format } from 'date-fns';
+import Cookies from "universal-cookie";
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { format } from 'date-fns';
 
 export const StationDetails = ({ open, onClose, rowData }) =>{
+    const cookies = new Cookies();
+    const navigate = useNavigate();
+
+    let token = cookies.get("token");
+    
+    if (!token) {
+        navigate('/');
+    }
+
     const handleClose = () => {
         onClose();
     };
@@ -57,11 +68,11 @@ export const StationDetails = ({ open, onClose, rowData }) =>{
                     </Grid>
                     <Grid item xs={5}>
                         <Typography>Longitud</Typography>
-                        <Typography variant="h6">X</Typography>
+                        <Typography variant="h6">{rowData.longitude}</Typography>
                     </Grid>
                     <Grid item xs={5}>
                         <Typography>Latitud</Typography>
-                        <Typography variant="h6">X</Typography>
+                        <Typography variant="h6">{rowData.latitude}</Typography>
                     </Grid>
                     <Grid item xs={5}>
                         <Typography>Solicitante</Typography>
