@@ -21,7 +21,9 @@ export const Stations = () => {
     const navigate = useNavigate();
 
     let token = cookies.get("token");
+    let id_user = cookies.get("id_user");
     let rol = cookies.get("rol");
+    let url = "";
 
     if (!token) {
         navigate('/');
@@ -34,6 +36,13 @@ export const Stations = () => {
         method: "GET",
         headers: headers
     };
+
+    if (rol === "admin") {
+        url = "http://localhost:8080/stations?pageSize=0&page=0";
+    }
+    else {
+        url = `http://localhost:8080/users/${id_user}/stations`;
+    }
 
     const [radioStatus, setRadioStatus] = useState('ALL');
 
@@ -141,16 +150,12 @@ export const Stations = () => {
                         <IconButton onClick={() => handleOpenDetails(params.row)}>
                             <ArticleIcon />
                         </IconButton>
-                        {rol === "admin" && (
-                            <>
-                                <IconButton onClick={() => handleOpenEdit(params.row)} disabled={isInactive}>
-                                    <EditIcon />
-                                </IconButton>
-                                <IconButton onClick={() => handleOpenSuspend(params.row)} disabled={isInactive}>
-                                    <DeleteIcon />
-                                </IconButton>
-                            </>
-                        )}
+                        <IconButton onClick={() => handleOpenEdit(params.row)} disabled={isInactive}>
+                            <EditIcon />
+                        </IconButton>
+                        <IconButton onClick={() => handleOpenSuspend(params.row)} disabled={isInactive}>
+                            <DeleteIcon />
+                        </IconButton>
                     </>
                 );
             },
@@ -160,7 +165,7 @@ export const Stations = () => {
     const [rows, setRows] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:8080/stations?pageSize=0&page=0", options)
+        fetch(url, options)
         .then(response => response.json())
         .then((data) =>
             setRows(
@@ -182,7 +187,7 @@ export const Stations = () => {
     }, []);
 
     const fetchData = () => {
-        fetch("http://localhost:8080/stations?pageSize=0&page=0", options)
+        fetch(url, options)
         .then(response => response.json())
         .then((data) =>
             setRows(

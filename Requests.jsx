@@ -21,7 +21,9 @@ export const Requests = () => {
     const navigate = useNavigate();
 
     let token = cookies.get("token");
+    let id_user = cookies.get("id_user");
     let rol = cookies.get("rol");
+    let url = "";
 
     if (!token) {
         navigate('/');
@@ -34,6 +36,13 @@ export const Requests = () => {
         method: "GET",
         headers: headers
     };
+
+    if (rol === "admin") {
+        url = "http://localhost:8080/requests?pageSize=0&page=0";
+    }
+    else {
+        url = `http://localhost:8080/users/${id_user}/requests`;
+    }
 
     const [radioStatus, setRadioStatus] = useState('ALL');
 
@@ -77,8 +86,8 @@ export const Requests = () => {
                 (created_by === '' || row.created_by === created_by) &&
                 (created_at === '' || row.created_at.slice(0, 10).includes(created_at)) &&
                 (name === '' || row.name.toUpperCase().includes(name.toUpperCase())) &&
-                (email === '' || row.email.toUpperCase().includes(email.toUpperCase()) &&
-                (status === '' || row.status === status))
+                (email === '' || row.email.toUpperCase().includes(email.toUpperCase())) &&
+                (status === '' || row.status === status)
             );
         });
 
@@ -88,10 +97,12 @@ export const Requests = () => {
     const getStatusIcon = (status) => {
         if (status === 'APPROVED') {
           return { icon: <CheckCircleOutlineIcon style={{ color: 'green' }} />, label: 'Aprobada' };
-        } else if (status === 'PENDING')
+        } 
+        else if (status === 'PENDING')
         {
           return { icon: <PauseCircleOutlineIcon style={{ color: 'yellow' }} />, label: 'Pendiente' };
-        } else {
+        } 
+        else {
           return { icon: <HighlightOffIcon style={{ color: 'red' }} />, label: 'Rechazada' };
         }
     };
@@ -187,7 +198,7 @@ export const Requests = () => {
     const [rows, setRows] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:8080/requests?pageSize=0&page=0", options)
+        fetch(url, options)
         .then(response => response.json())
         .then((data) =>
             setRows(
@@ -211,27 +222,27 @@ export const Requests = () => {
     }, []);
 
     const fetchData = () => {
-        fetch("http://localhost:8080/requests?pageSize=0&page=0", options)
-        .then(response => response.json())
+        fetch(url, options)
+        .then((response) => response.json())
         .then((data) =>
             setRows(
-              data.map((item) => ({
-                id: item._id,
-                serial_number: item.serial_number,
-                name: item.name,
-                longitud: item.longitud,
-                latitude: item.latitude,
-                brand: item.brand,
-                model: item.model,
-                status: item.status,
-                created_by: item.created_by,
-                created_at: item.created_at,
-                approved_by: item.approved_by,
-                approved_at: item.approved_at
-              }))
+                data.map((item) => ({
+                    id: item._id,
+                    serial_number: item.serial_number,
+                    name: item.name,
+                    longitud: item.longitud,
+                    latitude: item.latitude,
+                    brand: item.brand,
+                    model: item.model,
+                    status: item.status,
+                    created_by: item.created_by,
+                    created_at: item.created_at,
+                    approved_by: item.approved_by,
+                    approved_at: item.approved_at,
+                }))
             )
         )
-        .catch(error => console.error(error));
+        .catch((error) => console.error(error))
     };
 
     return(
