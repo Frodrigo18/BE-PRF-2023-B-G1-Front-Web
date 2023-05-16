@@ -95,7 +95,7 @@ export const Stations = () => {
             status = radioStatus;
         }
 
-        const filteredRows = rows.filter(row => {
+        const filteredRows = originalRows.filter(row => {
           return (
                 (name === '' || row.name.toUpperCase().includes(name.toUpperCase())) &&
                 (serial_number === '' || row.serial_number.toUpperCase().includes(serial_number.toUpperCase())) &&
@@ -178,14 +178,14 @@ export const Stations = () => {
         },
     ];
     
+    const [originalRows, setOriginalRows] = useState([]);
     const [rows, setRows] = useState([]);
 
     useEffect(() => {
         fetch(url, options)
         .then(response => response.json())
-        .then((data) =>
-            setRows(
-              data.map((item) => ({
+        .then((data) => {
+            const formattedData = data.map(item => ({
                 id: item._id,
                 serial_number: item.serial_number,
                 name: item.name,
@@ -196,31 +196,34 @@ export const Stations = () => {
                 status: item.status,
                 created_by: item.created_by,
                 created_at: item.created_at
-              }))
-            )
-        )
+            }));
+
+            setRows(formattedData);
+            setOriginalRows(formattedData);
+        })
         .catch(error => console.error(error));
     }, []);
 
     const fetchData = () => {
         fetch(url, options)
         .then(response => response.json())
-        .then((data) =>
-            setRows(
-              data.map((item) => ({
+        .then((data) => {
+            const formattedData = data.map(item => ({
                 id: item._id,
                 serial_number: item.serial_number,
                 name: item.name,
-                longitud: item.longitud,
+                longitude: item.longitude,
                 latitude: item.latitude,
                 brand: item.brand,
                 model: item.model,
                 status: item.status,
                 created_by: item.created_by,
                 created_at: item.created_at
-              }))
-            )
-        )
+            }));
+
+            setRows(formattedData);
+            setOriginalRows(formattedData);
+        })
         .catch(error => console.error(error));
     };
 
