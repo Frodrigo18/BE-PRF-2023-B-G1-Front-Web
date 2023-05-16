@@ -95,7 +95,7 @@ export const Requests = () => {
             status = radioStatus;
         }
 
-        const filteredRows = rows.filter(row => {
+        const filteredRows = originalRows.filter(row => {
           return (
                 (created_by === '' || row.created_by === created_by) &&
                 (created_at === '' || row.created_at.slice(0, 10).includes(created_at)) &&
@@ -211,14 +211,14 @@ export const Requests = () => {
         },
     ];
 
+    const [originalRows, setOriginalRows] = useState([]);
     const [rows, setRows] = useState([]);
 
     useEffect(() => {
         fetch(url, options)
         .then(response => response.json())
-        .then((data) =>
-            setRows(
-              data.map((item) => ({
+        .then((data) => {
+            const formattedData = data.map((item) => ({
                 id: item._id,
                 serial_number: item.serial_number,
                 name: item.name,
@@ -231,34 +231,37 @@ export const Requests = () => {
                 created_at: item.created_at,
                 approved_by: item.approved_by,
                 approved_at: item.approved_at
-              }))
-            )
-        )
+            }));
+
+            setRows(formattedData);
+            setOriginalRows(formattedData);
+        })
         .catch(error => console.error(error));
     }, []);
 
     const fetchData = () => {
         fetch(url, options)
-        .then((response) => response.json())
-        .then((data) =>
-            setRows(
-                data.map((item) => ({
-                    id: item._id,
-                    serial_number: item.serial_number,
-                    name: item.name,
-                    longitud: item.longitud,
-                    latitude: item.latitude,
-                    brand: item.brand,
-                    model: item.model,
-                    status: item.status,
-                    created_by: item.created_by,
-                    created_at: item.created_at,
-                    approved_by: item.approved_by,
-                    approved_at: item.approved_at,
-                }))
-            )
-        )
-        .catch((error) => console.error(error))
+        .then(response => response.json())
+        .then((data) => {
+            const formattedData = data.map((item) => ({
+                id: item._id,
+                serial_number: item.serial_number,
+                name: item.name,
+                longitude: item.longitude,
+                latitude: item.latitude,
+                brand: item.brand,
+                model: item.model,
+                status: item.status,
+                created_by: item.created_by,
+                created_at: item.created_at,
+                approved_by: item.approved_by,
+                approved_at: item.approved_at
+            }));
+
+            setRows(formattedData);
+            setOriginalRows(formattedData);
+        })
+        .catch(error => console.error(error));
     };
 
     return(
