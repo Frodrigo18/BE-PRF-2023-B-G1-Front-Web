@@ -50,7 +50,7 @@ export const RequestForm = ({ open, handleClose }) => {
         body: JSON.stringify(data)
       };
   
-      await fetch(`http://localhost:8080/users/${id_user}/requests`, options);
+      await fetch(`http://localhost:8080/api/v1/users/${id_user}/requests`, options);
   
       handleClose();
       window.location.reload();

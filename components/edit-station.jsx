@@ -37,7 +37,7 @@ export const EditStation = ({ open, onClose, rowData }) =>{
         body: JSON.stringify(data)
       };
   
-      await fetch(`http://localhost:8080/users/${id_user}/stations/${rowData.id}/rename`, options);
+      await fetch(`http://localhost:8080/api/v1/users/${rowData.created_by}/stations/${rowData.id}/rename`, options);
   
       handleClose();
       window.location.reload();

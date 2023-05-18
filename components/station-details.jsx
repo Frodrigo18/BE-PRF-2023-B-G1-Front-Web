@@ -76,11 +76,11 @@ export const StationDetails = ({ open, onClose, rowData }) =>{
                     </Grid>
                     <Grid item xs={5}>
                         <Typography>Solicitante</Typography>
-                        <Typography variant="h6">{rowData.created_by}</Typography>
+                        <Typography variant="h6">{rowData.user_name}</Typography>
                     </Grid>
                     <Grid item xs={5}>
                         <Typography>Correo Electrónico</Typography>
-                        <Typography variant="h6">X</Typography>
+                        <Typography variant="h6">{rowData.mail}</Typography>
                     </Grid>
                     <Grid item xs={5}>
                         <Typography>Fecha de Creación</Typography>
