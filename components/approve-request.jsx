@@ -28,7 +28,7 @@ export const ApprobeRequest = ({ open, onClose, rowData }) => {
     
     const handleApprove = async () => {
         try {
-           await fetch(`http://localhost:8080/users/${rowData.created_by}/requests/${rowData.id}/accept`, options);
+           await fetch(`http://localhost:8080/api/v1/users/${rowData.created_by}/requests/${rowData.id}/approve`, options);
            handleClose();
            window.location.reload();
         } catch (error) {
@@ -41,7 +41,7 @@ export const ApprobeRequest = ({ open, onClose, rowData }) => {
             <DialogTitle id="form-dialog-title">Aprobar Solicitud de Estación</DialogTitle>
             <DialogContent>
                 <DialogContent dividers>
-                    <Typography align="center">¿Esta seguro de aprobar la Estación {rowData.station} con Nº de Serie {rowData.serial_number}?<br/>Se enviaria un Email de aviso a la dirección {rowData.email}</Typography>
+                    <Typography align="center">¿Esta seguro de aprobar la Estación {rowData.station} con Nº de Serie {rowData.serial_number}?<br/>Se enviaria un Email de aviso a la dirección {rowData.mail}</Typography>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">

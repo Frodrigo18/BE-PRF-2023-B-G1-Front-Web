@@ -27,7 +27,7 @@ export const SuspendStation = ({ open, onClose, rowData }) => {
     
     const handleSuspend = async () => {
         try {
-           await fetch(`http://localhost:8080/users/${rowData.created_by}/stations/${rowData.id}/suspend`, options);
+           await fetch(`http://localhost:8080/api/v1/users/${rowData.created_by}/stations/${rowData.id}/suspend`, options);
            handleClose();
            window.location.reload();
         } catch (error) {

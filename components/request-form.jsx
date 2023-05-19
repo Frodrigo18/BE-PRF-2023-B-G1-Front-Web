@@ -29,9 +29,17 @@ export const RequestForm = ({ open, handleClose }) => {
     brand: '',
     longitude: '',
   });
+
+  const [formError, setFormError] = useState(true);
     
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+
   const handleRequest = async () => {
     try {
+      if (formError) {
+        return;
+      }
+
       const data = {
         name: formData.name,
         model: formData.model,
@@ -50,13 +58,50 @@ export const RequestForm = ({ open, handleClose }) => {
         body: JSON.stringify(data)
       };
   
-      await fetch(`http://localhost:8080/users/${id_user}/requests`, options);
+      const response = await fetch(`http://localhost:8080/api/v1/users/${id_user}/requests`, options);
+
+      if (response.status === 200) {
+        setShowSuccessDialog(true);
+      }
   
       handleClose();
       window.location.reload();
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const validateForm = () => {  
+    if (formData.name === '' || formData.model === '' || formData.serial_number === '' || formData.brand === '' || formData.latitude === '' || formData.longitude === '') {
+      setFormError(true);
+    } 
+    else {
+      setFormError(false);
+    }
+  };
+
+  const handleInputChange = (field, value) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [field]: value,
+    }));
+  
+    validateForm();
+  };
+
+  const handleCancel = () => {
+    setFormData({
+      name: '',
+      model: '',
+      serial_number: '',
+      latitude: '',
+      brand: '',
+      longitude: '',
+    });
+  };
+
+  const handleAccept = () => {
+    setShowSuccessDialog(false);
   };
 
   return (
@@ -73,12 +118,7 @@ export const RequestForm = ({ open, handleClose }) => {
                         label="Nombre"
                         variant="outlined"
                         value={formData.name}
-                        onChange={(e) =>
-                          setFormData((prevFormData) => ({
-                            ...prevFormData,
-                            name: e.target.value,
-                          }))
-                        }
+                        onChange={(e) => handleInputChange('name', e.target.value)}
                     />
                 </Grid>
                 <Grid item xs={6}>
@@ -89,12 +129,7 @@ export const RequestForm = ({ open, handleClose }) => {
                         label="Modelo"
                         variant="outlined"
                         value={formData.model}
-                        onChange={(e) =>
-                          setFormData((prevFormData) => ({
-                            ...prevFormData,
-                            model: e.target.value,
-                          }))
-                        }
+                        onChange={(e) => handleInputChange('model', e.target.value)}
                     />
                 </Grid>
                 <Grid item xs={6}>
@@ -105,12 +140,7 @@ export const RequestForm = ({ open, handleClose }) => {
                         label="Nº de Serie"
                         variant="outlined"
                         value={formData.serial_number}
-                        onChange={(e) =>
-                          setFormData((prevFormData) => ({
-                            ...prevFormData,
-                            serial_number: e.target.value,
-                          }))
-                        }
+                        onChange={(e) => handleInputChange('serial_number', e.target.value)}
                     />
                 </Grid>
                 <Grid item xs={6}>
@@ -122,12 +152,17 @@ export const RequestForm = ({ open, handleClose }) => {
                         variant="outlined"
                         type="number"
                         value={formData.latitude}
-                        onChange={(e) =>
-                          setFormData((prevFormData) => ({
-                            ...prevFormData,
-                            latitude: e.target.value,
-                          }))
-                        }
+                        onChange={(e) => handleInputChange('latitude', e.target.value)}
+                        inputProps={{
+                          min: -90,
+                          max: 90,
+                        }}
+                        InputProps={{
+                          inputProps: {
+                            min: -90,
+                            max: 90,
+                          },
+                        }}
                     />
                 </Grid>
                 <Grid item xs={6}>
@@ -138,12 +173,7 @@ export const RequestForm = ({ open, handleClose }) => {
                         label="Marca"
                         variant="outlined"
                         value={formData.brand}
-                        onChange={(e) =>
-                          setFormData((prevFormData) => ({
-                            ...prevFormData,
-                            brand: e.target.value,
-                          }))
-                        }
+                        onChange={(e) => handleInputChange('brand', e.target.value)}
                     />
                 </Grid>
                 <Grid item xs={6}>
@@ -155,24 +185,44 @@ export const RequestForm = ({ open, handleClose }) => {
                         variant="outlined"
                         type="number"
                         value={formData.longitude}
-                        onChange={(e) =>
-                          setFormData((prevFormData) => ({
-                            ...prevFormData,
-                            longitude: e.target.value,
-                          }))
-                        }
+                        onChange={(e) => handleInputChange('longitude', e.target.value)}
+                        inputProps={{
+                          min: -180,
+                          max: 180,
+                        }}
+                        InputProps={{
+                          inputProps: {
+                            min: -180,
+                            max: 180,
+                          },
+                        }}
                     />
                 </Grid>
             </Grid>
           <DialogActions>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={() => { handleCancel(); handleClose(); }} color="primary">
               Cancelar
             </Button>
-            <Button onClick={handleRequest} color="primary">
+            <Button onClick={handleRequest} disabled={formError} color="primary">
               Solicitar
             </Button>
           </DialogActions>
       </DialogContent>
+      <Dialog
+        open={showSuccessDialog}
+        onClose={handleAccept}
+        aria-labelledby="success-dialog-title"
+      >
+        <DialogTitle id="success-dialog-title">Solicitud enviada con éxito</DialogTitle>
+        <DialogContent>
+          <p>Tu solicitud ha sido procesada correctamente.</p>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleAccept} color="primary">
+            Aceptar
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Dialog>
   );
 };

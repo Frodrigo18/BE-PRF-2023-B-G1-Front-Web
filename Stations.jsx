@@ -38,10 +38,10 @@ export const Stations = () => {
     };
 
     if (rol === "admin") {
-        url = "http://localhost:8080/stations?pageSize=0&page=0";
+        url = "http://localhost:8080/api/v1/stations";
     }
     else {
-        url = `http://localhost:8080/users/${id_user}/stations`;
+        url = `http://localhost:8080/api/v1/users/${id_user}/stations`;
     }
 
     const [radioStatus, setRadioStatus] = useState('ALL');
@@ -139,7 +139,7 @@ export const Stations = () => {
         { field: 'serial_number', headerName: 'Nº de Serie', width: 130 },
         { field: 'brand', headerName: 'Marca', width: 130 },
         { field: 'model', headerName: 'Modelo', width: 130 },
-        { field: 'created_by', headerName: 'Solicitante', width: 130 },
+        { field: 'user_name', headerName: 'Solicitante', width: 130 },
         { field: 'created_at', headerName: 'Fecha de Creación', width: 130, valueFormatter: (params) => formatDate(params.value) },
         {
             field: 'status',
@@ -195,7 +195,9 @@ export const Stations = () => {
                 model: item.model,
                 status: item.status,
                 created_by: item.created_by,
-                created_at: item.created_at
+                created_at: item.created_at,
+                user_name: item.user.user_name,
+                mail: item.user.mail
             }));
 
             setRows(formattedData);
@@ -205,7 +207,7 @@ export const Stations = () => {
     }, []);
 
     const fetchData = () => {
-        fetch(url, options)
+         fetch(url, options)
         .then(response => response.json())
         .then((data) => {
             const formattedData = data.map(item => ({
@@ -218,9 +220,10 @@ export const Stations = () => {
                 model: item.model,
                 status: item.status,
                 created_by: item.created_by,
-                created_at: item.created_at
+                created_at: item.created_at,
+                user_name: item.user.user_name,
+                mail: item.user.mail
             }));
-
             setRows(formattedData);
             setOriginalRows(formattedData);
         })

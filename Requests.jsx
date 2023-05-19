@@ -38,10 +38,10 @@ export const Requests = () => {
     };
 
     if (rol === "admin") {
-        url = "http://localhost:8080/requests?pageSize=0&page=0";
+        url = "http://localhost:8080/api/v1/requests";
     }
     else {
-        url = `http://localhost:8080/users/${id_user}/requests`;
+        url = `http://localhost:8080/api/v1/users/${id_user}/requests`;
     }
 
     const [radioStatus, setRadioStatus] = useState('ALL');
@@ -164,8 +164,8 @@ export const Requests = () => {
 
     const columns = [
         { field: 'id', headerName: 'Id', width: 70 },
-        { field: 'created_by', headerName: 'Solicitante', width: 150 },
-        { field: 'email', headerName: 'Correo Electrónico', width: 170 },
+        { field: 'user_name', headerName: 'Solicitante', width: 150 },
+        { field: 'mail', headerName: 'Correo Electrónico', width: 170 },
         { field: 'created_at', headerName: 'Fecha de Solicitud', width: 130, valueFormatter: (params) => formatDate(params.value) },
         { field: 'name', headerName: 'Estación', width: 130 },
         { field: 'serial_number', headerName: 'Nº de Serie', width: 130 },
@@ -230,7 +230,9 @@ export const Requests = () => {
                 created_by: item.created_by,
                 created_at: item.created_at,
                 approved_by: item.approved_by,
-                approved_at: item.approved_at
+                approved_at: item.approved_at,
+                user_name: item.user.user_name,
+                mail: item.user.mail
             }));
 
             setRows(formattedData);
@@ -255,7 +257,9 @@ export const Requests = () => {
                 created_by: item.created_by,
                 created_at: item.created_at,
                 approved_by: item.approved_by,
-                approved_at: item.approved_at
+                approved_at: item.approved_at,
+                user_name: item.user.user_name,
+                mail: item.user.mail
             }));
 
             setRows(formattedData);

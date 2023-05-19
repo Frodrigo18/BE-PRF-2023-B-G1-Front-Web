@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid } from '@mui/material' ;
 import Cookies from "universal-cookie";
@@ -8,7 +8,6 @@ export const EditStation = ({ open, onClose, rowData }) =>{
   const navigate = useNavigate();
 
   let token = cookies.get("token");
-  let id_user = cookies.get("id_user");
 
   if (!token) {
       navigate('/');
@@ -18,13 +17,20 @@ export const EditStation = ({ open, onClose, rowData }) =>{
       onClose();
   };
 
-  const [formData, setFormData] = useState({
-    name: rowData.name
+  let [formData, setFormData] = useState({
+    name: ""
   });
+
+  useEffect(() => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      name: rowData.name
+    }));
+  }, [rowData]);
 
   const handleEdit = async () => {
     try {
-      const data = {
+      let data = {
         name: formData.name
       };
       
@@ -37,7 +43,7 @@ export const EditStation = ({ open, onClose, rowData }) =>{
         body: JSON.stringify(data)
       };
   
-      await fetch(`http://localhost:8080/users/${id_user}/stations/${rowData.id}/rename`, options);
+      await fetch(`http://localhost:8080/api/v1/users/${rowData.created_by}/stations/${rowData.id}/rename`, options);
   
       handleClose();
       window.location.reload();

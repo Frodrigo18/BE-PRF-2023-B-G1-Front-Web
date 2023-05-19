@@ -39,7 +39,7 @@ export const RejectRequest = ({ open, onClose, rowData }) => {
                 body: JSON.stringify(data)
             };
 
-            await fetch(`http://localhost:8080/users/${rowData.created_by}/requests/${rowData.id}/reject`, options);
+            await fetch(`http://localhost:8080/api/v1/users/${rowData.created_by}/requests/${rowData.id}/reject`, options);
             handleClose();
             window.location.reload();
         } catch (error) {
@@ -52,7 +52,7 @@ export const RejectRequest = ({ open, onClose, rowData }) => {
             <DialogTitle id="form-dialog-title">Rechazar Solicitud de Estación</DialogTitle>
             <DialogContent>
                 <DialogContent dividers>
-                    <Typography align="center">¿Esta seguro de rechazar la Estación {rowData.station} con Nº de Serie {rowData.serial_number}?<br/>Se enviaria un Email de aviso a la dirección {rowData.email}</Typography>
+                    <Typography align="center">¿Esta seguro de rechazar la Estación {rowData.station} con Nº de Serie {rowData.serial_number}?<br/>Se enviaria un Email de aviso a la dirección {rowData.mail}</Typography>
                     <Grid container alignItems="center" justifyContent="center">
                         <Grid item>
                             <TextField

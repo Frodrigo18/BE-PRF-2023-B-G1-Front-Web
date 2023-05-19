@@ -37,11 +37,11 @@ export const RequestDetails = ({ open, onClose, rowData }) =>{
                 <Grid container spacing={2}>
                     <Grid item xs={5}>
                         <Typography>Solicitante</Typography>
-                        <Typography variant="h6">{rowData.created_by}</Typography>
+                        <Typography variant="h6">{rowData.user_name}</Typography>
                     </Grid>
                     <Grid item xs={5}>
                         <Typography>Correo Electrónico</Typography>
-                        <Typography variant="h6">{rowData.email}</Typography>
+                        <Typography variant="h6">{rowData.mail}</Typography>
                     </Grid>
                     <Grid item xs={5}>
                         <Typography>Fecha de Solicitud</Typography>
@@ -90,10 +90,6 @@ export const RequestDetails = ({ open, onClose, rowData }) =>{
                     </Grid>
                     {rowData.status === 'APPROVED' ? (
                         <>  
-                            <Grid item xs={5}>
-                                <Typography>Aprobada Por</Typography>
-                                <Typography variant="h6">{rowData.approved_by}</Typography>
-                            </Grid>
                             <Grid item xs={5}>
                                 <Typography>Fecha de Aprobación</Typography>
                                 <Typography variant="h6">{formatDate(rowData.approved_at)}</Typography>
