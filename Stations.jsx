@@ -113,13 +113,10 @@ export const Stations = () => {
     const [openFormRequest, setOpenFormRequest] = useState(false);
 
     const handleOpenFormRequest = () => {
-
-        debugger;
         setOpenFormRequest(true);
     };
 
     const handleCloseFormRequest = () => {
-        debugger;
         setOpenFormRequest(false);
     };
 

@@ -11,7 +11,6 @@ const Field = styled(TextField)({
 });
 
 export const RequestForm = ({ open, handleClose }) => {
-  debugger;
   const cookies = new Cookies();
   const navigate = useNavigate();
 
@@ -44,7 +43,6 @@ export const RequestForm = ({ open, handleClose }) => {
 
   const handleRequest = async () => {
     try {
-      debugger;
       if (formError) {
         return;
       }
