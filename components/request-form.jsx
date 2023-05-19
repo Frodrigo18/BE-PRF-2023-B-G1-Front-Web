@@ -32,6 +32,8 @@ export const RequestForm = ({ open, handleClose }) => {
 
   const [formError, setFormError] = useState(true);
     
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+
   const handleRequest = async () => {
     try {
       if (formError) {
@@ -56,7 +58,11 @@ export const RequestForm = ({ open, handleClose }) => {
         body: JSON.stringify(data)
       };
   
-      await fetch(`http://localhost:8080/api/v1/users/${id_user}/requests`, options);
+      const response = await fetch(`http://localhost:8080/api/v1/users/${id_user}/requests`, options);
+
+      if (response.status === 200) {
+        setShowSuccessDialog(true);
+      }
   
       handleClose();
       window.location.reload();
@@ -92,6 +98,10 @@ export const RequestForm = ({ open, handleClose }) => {
       brand: '',
       longitude: '',
     });
+  };
+
+  const handleAccept = () => {
+    setShowSuccessDialog(false);
   };
 
   return (
@@ -198,6 +208,21 @@ export const RequestForm = ({ open, handleClose }) => {
             </Button>
           </DialogActions>
       </DialogContent>
+      <Dialog
+        open={showSuccessDialog}
+        onClose={handleAccept}
+        aria-labelledby="success-dialog-title"
+      >
+        <DialogTitle id="success-dialog-title">Solicitud enviada con éxito</DialogTitle>
+        <DialogContent>
+          <p>Tu solicitud ha sido procesada correctamente.</p>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleAccept} color="primary">
+            Aceptar
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Dialog>
   );
 };
