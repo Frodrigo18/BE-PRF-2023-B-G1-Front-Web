@@ -52,6 +52,8 @@ export const EditStation = ({ open, onClose, rowData }) =>{
     }
   };
 
+  const isSaveButtonDisabled = formData.name.trim() === '';
+
   return (
     <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
       <DialogTitle id="form-dialog-title">Editar Estación</DialogTitle>
@@ -80,7 +82,7 @@ export const EditStation = ({ open, onClose, rowData }) =>{
             <Button onClick={handleClose} color="primary">
               Cancelar
             </Button>
-            <Button onClick={handleEdit} color="primary">
+            <Button onClick={handleEdit} disabled={isSaveButtonDisabled} color="primary">
               Guardar
             </Button>
           </DialogActions>
