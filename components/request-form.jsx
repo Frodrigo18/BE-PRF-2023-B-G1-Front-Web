@@ -1,6 +1,6 @@
-import { React , useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid } from '@mui/material' ;
+import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Typography } from '@mui/material' ;
 import { styled } from '@mui/system';
 import Cookies from "universal-cookie";
 
@@ -16,6 +16,7 @@ export const RequestForm = ({ open, handleClose }) => {
 
   let token = cookies.get("token");
   let id_user = parseInt(cookies.get("id_user"));
+  let email = cookies.get("email");
 
   if (!token) {
       navigate('/');
@@ -31,7 +32,13 @@ export const RequestForm = ({ open, handleClose }) => {
   });
 
   const [formError, setFormError] = useState(true);
-    
+
+  const [showRequestDialog, setShowRequestDialog] = useState(open);
+
+  useEffect(() => {
+    setShowRequestDialog(open);
+  }, [open]);
+
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
 
   const handleRequest = async () => {
@@ -60,12 +67,14 @@ export const RequestForm = ({ open, handleClose }) => {
   
       const response = await fetch(`http://localhost:8080/api/v1/users/${id_user}/requests`, options);
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         setShowSuccessDialog(true);
+        setShowRequestDialog(false);
       }
-  
-      handleClose();
-      window.location.reload();
+      else {
+        handleClose();
+        window.location.reload();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -102,120 +111,130 @@ export const RequestForm = ({ open, handleClose }) => {
 
   const handleAccept = () => {
     setShowSuccessDialog(false);
+    handleClose();
+    window.location.reload();
   };
 
   return (
-    <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-      <DialogTitle id="form-dialog-title">Solicitar Estación</DialogTitle>
-      <DialogContent dividers>
-            <Grid container spacing={2}>
-                <Grid item xs={6}>
-                    <Field
-                        required
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Nombre"
-                        variant="outlined"
-                        value={formData.name}
-                        onChange={(e) => handleInputChange('name', e.target.value)}
-                    />
-                </Grid>
-                <Grid item xs={6}>
-                    <Field
-                        required
-                        margin="dense"
-                        id="model"
-                        label="Modelo"
-                        variant="outlined"
-                        value={formData.model}
-                        onChange={(e) => handleInputChange('model', e.target.value)}
-                    />
-                </Grid>
-                <Grid item xs={6}>
-                    <Field
-                        required
-                        margin="dense"
-                        id="serial_number"
-                        label="Nº de Serie"
-                        variant="outlined"
-                        value={formData.serial_number}
-                        onChange={(e) => handleInputChange('serial_number', e.target.value)}
-                    />
-                </Grid>
-                <Grid item xs={6}>
-                    <Field
-                        required
-                        margin="dense"
-                        id="latitude"
-                        label="Latitud"
-                        variant="outlined"
-                        type="number"
-                        value={formData.latitude}
-                        onChange={(e) => handleInputChange('latitude', e.target.value)}
-                        inputProps={{
-                          min: -90,
-                          max: 90,
-                        }}
-                        InputProps={{
-                          inputProps: {
+    <>
+      <Dialog open={showRequestDialog} onClose={handleClose} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">Solicitar Estación</DialogTitle>
+        <DialogContent dividers>
+              <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                      <Field
+                          required
+                          autoFocus
+                          margin="dense"
+                          id="name"
+                          label="Nombre"
+                          variant="outlined"
+                          value={formData.name}
+                          onChange={(e) => handleInputChange('name', e.target.value)}
+                      />
+                  </Grid>
+                  <Grid item xs={6}>
+                      <Field
+                          required
+                          margin="dense"
+                          id="model"
+                          label="Modelo"
+                          variant="outlined"
+                          value={formData.model}
+                          onChange={(e) => handleInputChange('model', e.target.value)}
+                      />
+                  </Grid>
+                  <Grid item xs={6}>
+                      <Field
+                          required
+                          margin="dense"
+                          id="serial_number"
+                          label="Nº de Serie"
+                          variant="outlined"
+                          value={formData.serial_number}
+                          onChange={(e) => handleInputChange('serial_number', e.target.value)}
+                      />
+                  </Grid>
+                  <Grid item xs={6}>
+                      <Field
+                          required
+                          margin="dense"
+                          id="latitude"
+                          label="Latitud"
+                          variant="outlined"
+                          type="number"
+                          value={formData.latitude}
+                          onChange={(e) => handleInputChange('latitude', e.target.value)}
+                          inputProps={{
                             min: -90,
                             max: 90,
-                          },
-                        }}
-                    />
-                </Grid>
-                <Grid item xs={6}>
-                    <Field
-                        required
-                        margin="dense"
-                        id="brand"
-                        label="Marca"
-                        variant="outlined"
-                        value={formData.brand}
-                        onChange={(e) => handleInputChange('brand', e.target.value)}
-                    />
-                </Grid>
-                <Grid item xs={6}>
-                    <Field
-                        required
-                        margin="dense"
-                        id="longitude"
-                        label="Longitud"
-                        variant="outlined"
-                        type="number"
-                        value={formData.longitude}
-                        onChange={(e) => handleInputChange('longitude', e.target.value)}
-                        inputProps={{
-                          min: -180,
-                          max: 180,
-                        }}
-                        InputProps={{
-                          inputProps: {
+                          }}
+                          InputProps={{
+                            inputProps: {
+                              min: -90,
+                              max: 90,
+                            },
+                          }}
+                      />
+                  </Grid>
+                  <Grid item xs={6}>
+                      <Field
+                          required
+                          margin="dense"
+                          id="brand"
+                          label="Marca"
+                          variant="outlined"
+                          value={formData.brand}
+                          onChange={(e) => handleInputChange('brand', e.target.value)}
+                      />
+                  </Grid>
+                  <Grid item xs={6}>
+                      <Field
+                          required
+                          margin="dense"
+                          id="longitude"
+                          label="Longitud"
+                          variant="outlined"
+                          type="number"
+                          value={formData.longitude}
+                          onChange={(e) => handleInputChange('longitude', e.target.value)}
+                          inputProps={{
                             min: -180,
                             max: 180,
-                          },
-                        }}
-                    />
-                </Grid>
-            </Grid>
-          <DialogActions>
-            <Button onClick={() => { handleCancel(); handleClose(); }} color="primary">
-              Cancelar
-            </Button>
-            <Button onClick={handleRequest} disabled={formError} color="primary">
-              Solicitar
-            </Button>
-          </DialogActions>
-      </DialogContent>
+                          }}
+                          InputProps={{
+                            inputProps: {
+                              min: -180,
+                              max: 180,
+                            },
+                          }}
+                      />
+                  </Grid>
+              </Grid>
+            <DialogActions>
+              <Button onClick={() => { handleCancel(); handleClose(); }} color="primary">
+                Cancelar
+              </Button>
+              <Button onClick={handleRequest} disabled={formError} color="primary">
+                Solicitar
+              </Button>
+            </DialogActions>
+        </DialogContent>
+        
+      </Dialog>
+
       <Dialog
         open={showSuccessDialog}
         onClose={handleAccept}
         aria-labelledby="success-dialog-title"
-      >
-        <DialogTitle id="success-dialog-title">Solicitud enviada con éxito</DialogTitle>
-        <DialogContent>
-          <p>Tu solicitud ha sido procesada correctamente.</p>
+        >
+        <DialogTitle id="success-dialog-title">Solicitar Estación</DialogTitle>
+        <DialogContent dividers>
+          <Grid>
+            <Typography align="center">
+              Se enviara un Email a su casilla {email} cuando su solicitud sea aprobada.
+            </Typography>
+          </Grid>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleAccept} color="primary">
@@ -223,6 +242,6 @@ export const RequestForm = ({ open, handleClose }) => {
           </Button>
         </DialogActions>
       </Dialog>
-    </Dialog>
+    </>
   );
 };

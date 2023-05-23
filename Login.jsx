@@ -33,8 +33,6 @@ export const Login = () => {
     cookies.set("userName", JSON.stringify(userName));
     cookies.set("email", JSON.stringify(email));
     cookies.set("rol", JSON.stringify(rol));
-
-    console.log(cookies);
   }
 
   return (

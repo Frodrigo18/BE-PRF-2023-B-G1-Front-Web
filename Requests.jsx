@@ -44,7 +44,7 @@ export const Requests = () => {
         url = `http://localhost:8080/api/v1/users/${id_user}/requests`;
     }
 
-    const [radioStatus, setRadioStatus] = useState('ALL');
+    const [radioStatus, setRadioStatus] = useState('PENDING');
 
     const clearFields = (refs) => {
         refs.forEach((ref) => {
@@ -218,25 +218,45 @@ export const Requests = () => {
         fetch(url, options)
         .then(response => response.json())
         .then((data) => {
-            const formattedData = data.map((item) => ({
-                id: item._id,
-                serial_number: item.serial_number,
-                name: item.name,
-                longitude: item.longitude,
-                latitude: item.latitude,
-                brand: item.brand,
-                model: item.model,
-                status: item.status,
-                created_by: item.created_by,
-                created_at: item.created_at,
-                approved_by: item.approved_by,
-                approved_at: item.approved_at,
-                user_name: item.user.user_name,
-                mail: item.user.mail
+            const formattedData = data
+                .filter(item => item.status === "PENDING")
+                .map((item) => ({
+                    id: item._id,
+                    serial_number: item.serial_number,
+                    name: item.name,
+                    longitude: item.longitude,
+                    latitude: item.latitude,
+                    brand: item.brand,
+                    model: item.model,
+                    status: item.status,
+                    created_by: item.created_by,
+                    created_at: item.created_at,
+                    approved_by: item.approved_by,
+                    approved_at: item.approved_at,
+                    user_name: item.user.user_name,
+                    mail: item.user.mail
+            }));
+
+            const formattedDataAll = data
+                .map((item) => ({
+                    id: item._id,
+                    serial_number: item.serial_number,
+                    name: item.name,
+                    longitude: item.longitude,
+                    latitude: item.latitude,
+                    brand: item.brand,
+                    model: item.model,
+                    status: item.status,
+                    created_by: item.created_by,
+                    created_at: item.created_at,
+                    approved_by: item.approved_by,
+                    approved_at: item.approved_at,
+                    user_name: item.user.user_name,
+                    mail: item.user.mail
             }));
 
             setRows(formattedData);
-            setOriginalRows(formattedData);
+            setOriginalRows(formattedDataAll);
         })
         .catch(error => console.error(error));
     }, []);
