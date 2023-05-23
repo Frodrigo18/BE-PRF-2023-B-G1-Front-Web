@@ -102,18 +102,6 @@ export const Header = () => {
         </IconButton>
         <p>Modo Oscuro</p>
       </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 5 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={5} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notificaciones</p>
-      </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
@@ -151,15 +139,6 @@ export const Header = () => {
               >
                 <DarkModeIcon />
               </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 5 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={5} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
             <IconButton
               size="large"
               edge="end"
