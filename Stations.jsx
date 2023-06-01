@@ -76,14 +76,14 @@ export const Stations = () => {
     const handleBuscarClick = () => {
         let name = textEstacion.current.value;
         let serial_number = textSerie.current.value;
-        let created_by = '';
+        let user_name = '';
         let created_at = '';
         let brand = '';
         let model = '';
         let status = '';
 
         if (rol === "admin") {
-            created_by = textSolicitante.current.value;
+            user_name = textSolicitante.current.value;
             created_at = fechaCreacion.current.value;
         }
         else {
@@ -99,7 +99,7 @@ export const Stations = () => {
           return (
                 (name === '' || row.name.toUpperCase().includes(name.toUpperCase())) &&
                 (serial_number === '' || row.serial_number.toUpperCase().includes(serial_number.toUpperCase())) &&
-                (created_by === '' || row.created_by === created_by) &&
+                (user_name === '' || row.user_name.toUpperCase().includes(user_name.toUpperCase())) &&
                 (created_at === '' || row.created_at.slice(0, 10).includes(created_at)) &&
                 (brand === '' || row.brand.toUpperCase().includes(brand.toUpperCase())) &&
                 (model === '' || row.model.toUpperCase().includes(model.toUpperCase())) &&

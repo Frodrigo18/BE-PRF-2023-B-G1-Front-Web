@@ -76,14 +76,14 @@ export const Requests = () => {
     const handleBuscarClick = () => {
         let name = textEstacion.current.value;
         let created_at = fechaSolicitud.current.value;
-        let created_by = '';
+        let user_name = '';
         let email = '';
         let serial_number = '';
         let brand = '';
         let status = '';
 
         if (rol === "admin") {
-            created_by = textSolicitante.current.value;
+            user_name = textSolicitante.current.value;
             email = textEmail.current.value;
         }
         else {
@@ -97,7 +97,7 @@ export const Requests = () => {
 
         const filteredRows = originalRows.filter(row => {
           return (
-                (created_by === '' || row.created_by === created_by) &&
+                (user_name === '' || row.user_name.toUpperCase().includes(user_name.toUpperCase())) &&
                 (created_at === '' || row.created_at.slice(0, 10).includes(created_at)) &&
                 (name === '' || row.name.toUpperCase().includes(name.toUpperCase())) &&
                 (email === '' || row.email.toUpperCase().includes(email.toUpperCase())) &&
