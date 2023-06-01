@@ -28,22 +28,22 @@ export const StationDetails = ({ open, onClose, rowData }) =>{
     return (
         <Dialog onClose={handleClose} open={open}>
             <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                Detalles de la Solicitud
+                Detalles de la Estación
                 <IconButton onClick={handleClose} sx={{ ml: 'auto' }}>
                     <CloseIcon />
                 </IconButton>
             </DialogTitle>
             <DialogContent dividers>
                 <Grid container spacing={2}>
-                    <Grid item xs={5}>
+                    <Grid item xs={6}>
                         <Typography>Nombre</Typography>
                         <Typography variant="h6">{rowData.name}</Typography>
                     </Grid>
-                    <Grid item xs={5}>
+                    <Grid item xs={6}>
                         <Typography>Nº de Serie</Typography>
                         <Typography variant="h6">{rowData.serial_number}</Typography>
                     </Grid>
-                    <Grid item xs={5}>
+                    <Grid item xs={6}>
                         <Typography>Estado</Typography>
                         <Typography variant="h6">
                             {(() => {
@@ -58,31 +58,31 @@ export const StationDetails = ({ open, onClose, rowData }) =>{
                             })()}
                         </Typography>
                     </Grid>
-                    <Grid item xs={5}>
+                    <Grid item xs={6}>
                         <Typography>Marca</Typography>
                         <Typography variant="h6">{rowData.brand}</Typography>
                     </Grid>
-                    <Grid item xs={5}>
+                    <Grid item xs={6}>
                         <Typography>Modelo</Typography>
                         <Typography variant="h6">{rowData.model}</Typography>
                     </Grid>
-                    <Grid item xs={5}>
+                    <Grid item xs={6}>
                         <Typography>Longitud</Typography>
                         <Typography variant="h6">{rowData.longitude}</Typography>
                     </Grid>
-                    <Grid item xs={5}>
+                    <Grid item xs={6}>
                         <Typography>Latitud</Typography>
                         <Typography variant="h6">{rowData.latitude}</Typography>
                     </Grid>
-                    <Grid item xs={5}>
+                    <Grid item xs={6}>
                         <Typography>Solicitante</Typography>
                         <Typography variant="h6">{rowData.user_name}</Typography>
                     </Grid>
-                    <Grid item xs={5}>
+                    <Grid item xs={6}>
                         <Typography>Correo Electrónico</Typography>
                         <Typography variant="h6">{rowData.mail}</Typography>
                     </Grid>
-                    <Grid item xs={5}>
+                    <Grid item xs={6}>
                         <Typography>Fecha de Creación</Typography>
                         <Typography variant="h6">{formatDate(rowData.created_at)}</Typography>
                     </Grid>
