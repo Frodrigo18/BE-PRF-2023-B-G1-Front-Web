@@ -28,7 +28,7 @@ export const StationDetails = ({ open, onClose, rowData }) =>{
     return (
         <Dialog onClose={handleClose} open={open}>
             <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                Detalles de la Solicitud
+                Detalles de la Estación
                 <IconButton onClick={handleClose} sx={{ ml: 'auto' }}>
                     <CloseIcon />
                 </IconButton>
