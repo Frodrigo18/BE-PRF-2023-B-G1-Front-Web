@@ -1,0 +1,53 @@
+{
+  "name": "my-app",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start --web",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.8",
+    "@emotion/styled": "^11.10.8",
+    "@expo/webpack-config": "^18.0.1",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.13.0",
+    "@mui/styled-engine-sc": "^5.12.0",
+    "@mui/x-data-grid": "^6.3.1",
+    "@mui/x-date-pickers": "^6.3.1",
+    "axios": "^1.4.0",
+    "crypto": "^1.0.1",
+    "crypto-browserify": "^3.12.0",
+    "date-fns": "^2.30.0",
+    "dayjs": "^1.11.7",
+    "expo": "~48.0.15",
+    "expo-app-loading": "^2.1.1",
+    "expo-font": "^11.1.1",
+    "expo-status-bar": "~1.4.4",
+    "jsonwebtoken-promisified": "^1.0.3",
+    "jsrsasign": "^10.8.6",
+    "jwa": "^2.0.0",
+    "jws": "^4.0.0",
+    "jwt-decode": "^3.1.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-native": "0.71.7",
+    "react-native-web": "~0.18.10",
+    "react-router-dom": "^6.11.1",
+    "stream": "^0.0.2",
+    "styled-components": "^5.3.10",
+    "universal-cookie": "^4.0.4",
+    "util": "^0.12.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "browserify": "^17.0.0",
+    "jsonwebtoken": "^9.0.0"
+  },
+  "browser": {
+    "crypto": false
+  },
+  "private": true
+}
