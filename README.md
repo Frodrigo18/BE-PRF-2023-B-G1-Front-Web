@@ -16,7 +16,7 @@ Proyecto Final - Tecnicatura en sistemas ORT - 2023 - 1c - Grupo 1 - FRONT END
 | Juan Ferreyros     | JuanFerreyros  |
 | Johanna Gendler    | JohannaG01     |
 
-## Tecnoligias
+## Tecnologias
 
 * React
 * React Native
