@@ -1,4 +1,3 @@
-
 <div align="center">
   <img src="https://www.ort.edu.ar/img/LogoOrtArgWeb2017.jpg" alt="This is a alt text." />
 </div>
@@ -57,7 +56,3 @@ Proyecto Final - Tecnicatura en sistemas ORT - 2023 - 1c - Grupo 1 - FRONT END
 * styled-components
 * universal-cookie
 * util
-
-
-
-
